@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 require('dotenv').config();
 
-const dbUrl:string = process.env.DB_URL || '';
+const dbUrl:string = process.env.DB_URL || 'mongodb+srv://nphnam:0977187016nam@cluster0.htvbh.mongodb.net/';
 
 const connectDB = async () =>{
     try{
@@ -12,7 +12,7 @@ const connectDB = async () =>{
         })
 
     }catch(error){
-        console.log(error.message);
+        console.log(error);
         setTimeout(connectDB,5000);
 
     }
