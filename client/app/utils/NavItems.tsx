@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import React from 'react'
+import { HiOutlineUserCircle } from 'react-icons/hi';
 
 export const navItemsData = [
     {
@@ -50,24 +51,46 @@ const NavItems: React.FC<Props> = ({ activeItem, isMobile }) => {
                 }
             </div>
             {isMobile && (
-                <div className='800px:hidden mt-5'>
-                    <div className='w-full text-center py-6'>
-                        {
-                            navItemsData && navItemsData.map((i, index) => (
-                                <Link href="/" passHref>
-                                    <span className={`${activeItem === index
-                                            ? "dark:text-[#37a39a] text-[crimson]"
-                                            : "dark:text-white text-black"
-                                        }`}>
-
+                <div className="h-screen w-full  text-white flex flex-col ">
+                    {/* Top Section */}
+                    <div className='w-full'>
+                        <div className='w-full text-center py-6'>
+                            <Link
+                                href={"/"}
+                                className="text-[25px] font-Poppins font-[500] text-black dark:text-white"
+                            >
+                                Elearning
+                            </Link>
+                        </div>
+                        <nav className="space-y-4">
+                            {navItemsData.map((item, index) => (
+                                <Link href={item.url} key={index}>
+                                    <span
+                                        className={`block py-5 text-[18px] px-6 font-Poppins font-[400] ${activeItem === index ? "dark:text-[#37a39a] text-[crimson]" : "dark:text-white text-black"
+                                            } hover:text-green-500`}
+                                    >
+                                        {item.name}
                                     </span>
                                 </Link>
-                            ))
-                        }
+                            ))}
+                        </nav>
 
                     </div>
-
+                    <div className="">
+                        <HiOutlineUserCircle
+                            size={25}
+                            className="cursor-pointer ml-5 my-2 dark:text-white text-black"
+                        />
+                        <br />
+                        <p className="text-[16px] px-2 pl-5 text-black dark:text-white pt-4">
+                            Copyright 2023 Elearning
+                        </p>
+                    </div>
                 </div>
+
+
+
+
             )}
         </>
     )
