@@ -10,6 +10,7 @@ import sendMail from "../utils/sendMail";
 import { accessTokenOptions, refreshTokenOptions, sendToken } from "../utils/jwt";
 import { redis } from "../utils/redis";
 import { json } from "stream/consumers";
+import { getUserById } from "../services/user.service";
 
 
 
@@ -208,9 +209,13 @@ export const updateAccessToken = CatchAsyncError(async (req: Request, res: Respo
         const refreshToken = jwt.sign({id: user._id}, process.env.REFRESH_TOKEN as string,{
             expiresIn:"3d"
         });
+        req.user = user;
 
         res.cookie("access_token",accessToken,accessTokenOptions);
         res.cookie("refresh_token",refreshToken,refreshTokenOptions);
+        
+
+
         res.status(200).json({
             status:"success",
             accessToken,
@@ -221,8 +226,74 @@ export const updateAccessToken = CatchAsyncError(async (req: Request, res: Respo
 
     }
 });
+export const getUserInfo = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const userId = req.user?._id;
+        getUserById(userId,res);
+    } catch (error: any) {
+        return next(new ErrorHandler(error.message, 400))
+
+    }
+});
+interface ISocialAuthBody{
+    email: string;
+    name: string;
+    avatar: string;
+    
+
+}
+
+export const socialAuth = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const {email, name, avatar} = req.body as ISocialAuthBody;
 
 
+        const user = await userModel.findOne({email});
+
+        if(!user){
+            const newUser = await userModel.create({email,name, avatar});
+            sendToken(newUser,200,res);
+        }else{
+            sendToken(user,200,res);
+
+        }
+    } catch (error: any) {
+        return next(new ErrorHandler(error.message, 400))
+
+    }
+});
+
+interface IUpdateUserInfo{
+    name?: string;
+    email?: string;
+}
+
+export const updateUserInfo = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const {name,email} = req.body as IUpdateUserInfo;
+        const userId = req.user?._id; 
+        const user = await userModel.findByIdAndUpdate(userId);
+        if(email && user) {
+            const isEmalExist = await userModel.findOne({email});
+            if(isEmalExist){
+                return next(new ErrorHandler('Email already exist', 400))
+                
+            };
+            user.email= email;
+
+        }
+        if(name && user){
+            user.name = name;
+        }
+        await user?.save();
+        await redis.set(userId,JSON.stringify(user));
+        res.status(200).json({success: true, user});
+
+    } catch (error: any) {
+        return next(new ErrorHandler(error.message, 400))
+
+    }
+});
 export const template = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
     try {
 
