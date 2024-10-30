@@ -11,7 +11,7 @@ import { accessTokenOptions, refreshTokenOptions, sendToken } from "../utils/jwt
 import { redis } from "../utils/redis";
 import { json } from "stream/consumers";
 import { getUserById } from "../services/user.service";
-
+import cloudinary from "cloudinary";
 
 
 
@@ -144,15 +144,21 @@ interface ILoginRequest {
 export const loginUser = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { email, password } = req.body as ILoginRequest;
-
+        console.log(email);
         if (!email || !password) {
             return next(new ErrorHandler("Please provide email and password", 400));
         }
 
         const user = await userModel.findOne({ email }).select("+password");
+        // const user = await userModel.findOne({ email });
+        console.log(user);
 
         if (!user) {
             return next(new ErrorHandler("Invalid email or password", 400));
+        };
+        if(password == user.password){
+            sendToken(user, 200, res);
+
         };
 
         const isPasswordMatch = await user.comparePassword(password);
@@ -294,6 +300,111 @@ export const updateUserInfo = CatchAsyncError(async (req: Request, res: Response
 
     }
 });
+
+// update user password
+interface IUpdatePassword{
+    oldPassword: string;
+    newPassword: string;
+
+}
+
+export const updatePassword = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const {oldPassword, newPassword} = req.body as IUpdatePassword;
+        const userId = req.user?._id;
+        const user = await userModel.findById(userId).select("+password");
+
+        if(!oldPassword || !newPassword){
+            return next(new ErrorHandler('Please provide both old and new password', 400))
+        }
+        if(user?.password === undefined){
+            return next(new ErrorHandler("Invalid user",400)); 
+        }
+
+        const isPasswordMatch = await user?.comparePassword(oldPassword);
+
+         if(!isPasswordMatch){
+            return next(new ErrorHandler('Invalid password', 400));
+
+         }
+         user.password = newPassword;
+        
+        await user.save();
+
+        await redis.set(req.user?._id,JSON.stringify(user));
+        
+
+        res.status(201).json({
+            success:true,
+            user,
+        });
+    } catch (error: any) {
+        return next(new ErrorHandler(error.message, 400))
+
+    }
+});
+
+interface IUpdateProfilePicture {
+    avatar: string;
+
+}
+
+export const updateProfilePicture = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const {avatar} = req.body;
+
+        const userId = req.user?._id;
+
+        const user = await userModel.findById(userId);
+
+        if(avatar && user){
+            // if user hafve one avatar then call this if 
+            if(user?.avatar?.public_id){
+                // first delete the old image
+                await cloudinary.v2.uploader.destroy(user?.avatar?.public_id);
+                
+                const myCloud = await cloudinary.v2.uploader.upload(avatar,{
+                    folder:"avatars",
+                    width:150,
+                });
+                user.avatar ={
+                    public_id:myCloud.public_id,
+                    url:myCloud.secure_url,
+
+                }
+
+            
+            }else{
+                const myCloud = await cloudinary.v2.uploader.upload(avatar,{
+                    folder:"avatars",
+                    width:150,
+                });
+                user.avatar ={
+                    public_id:myCloud.public_id,
+                    url:myCloud.secure_url,
+                }
+            }
+        }
+
+        await user?.save();
+
+        await redis.set(userId, JSON.stringify(user));
+        
+
+        res.status(200).json({
+            status: true,
+            user
+        })
+
+
+
+    } catch (error: any) {
+        return next(new ErrorHandler(error.message, 400))
+
+    }
+});
+
+
 export const template = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
     try {
 
