@@ -24,6 +24,12 @@ interface IRegistrationBody {
 
 }
 
+interface IForgotBody {
+    
+    email: string;
+
+}
+
 export const registrationUser = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { name, email, password } = req.body;
@@ -69,6 +75,101 @@ export const registrationUser = CatchAsyncError(async (req: Request, res: Respon
         return next(new ErrorHandler(error.message, 400))
     }
 });
+
+export const forgotPassword = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { email } = req.body;
+       
+        const user: IForgotBody = {
+            email,
+        }
+        const isEmailExist = await userModel.findOne({ email });
+        if (!isEmailExist) {
+            return next(new ErrorHandler("Account doesn't exist", 400))
+        }
+        // jwt create code activation
+        const activationToken = createActivationToken(user);
+
+        const activationCode = activationToken.activationCode;
+        const data = {
+            user: {
+                email: user.email,
+
+            },
+            activationCode
+        }
+        const html = await ejs.renderFile(path.join(__dirname, "../mails/forgot-mail.ejs"), data)
+        try {
+            sendMail({
+                email: user.email,
+                subject: "Activation account",
+                template: "forgot-mail.ejs",
+                data
+            });
+            res.status(201).json({
+                succues: true,
+                message: `Please check your email: ${user.email} to reset your password!`,
+                activationToken: activationToken.token,
+                activationCode
+            })
+        } catch (error: any) {
+            return next(new ErrorHandler(error.message, 400))
+
+        }
+
+    } catch (error: any) {
+        return next(new ErrorHandler(error.message, 400))
+    }
+});
+
+interface IForgotPasswordRequest {
+    activation_token: string;
+    activation_code: string;
+    newPassword: string;
+}
+
+export const verifyForgotPassword = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { activation_token, activation_code, newPassword } = req.body as IForgotPasswordRequest;
+        // using jwt to verify and get activation code 
+        const newUser: { user: IUser; activationCode: string } = jwt.verify(
+            activation_token,
+            process.env.ACTIVATION_SECRET as string
+        ) as { user: IUser; activationCode: string };
+
+        if (newUser.activationCode !== activation_code) {
+            return next(new ErrorHandler("Invalid activation code", 400));
+
+        }
+        const {email } = newUser.user;
+
+        const existUser = await userModel.findOne({email}).select("+password");
+
+        if (existUser) {
+            const isPasswordMatch = await existUser.comparePassword(newPassword);
+            if(isPasswordMatch){
+
+                return next(new ErrorHandler("New password mustn't match with old password", 400));
+            }
+            existUser.password = newPassword;
+            await existUser.save();      
+     
+        }
+  
+        res.status(201).json({
+            existUser,
+            success: true
+        })
+
+
+
+    } catch (error: any) {
+        return next(new ErrorHandler(error.message, 400))
+
+    }
+});
+
+
 interface IActivationToken {
     token: string;
     activationCode: string;
@@ -84,6 +185,7 @@ export const createActivationToken = (user: any): IActivationToken => {
         });
     return { token, activationCode }
 }
+
 
 
 // activate   user
@@ -156,10 +258,10 @@ export const loginUser = CatchAsyncError(async (req: Request, res: Response, nex
         if (!user) {
             return next(new ErrorHandler("Invalid email or password", 400));
         };
-        if(password == user.password){
-            sendToken(user, 200, res);
+        // if(password == user.password){
+        //     sendToken(user, 200, res);
 
-        };
+        // };
 
         const isPasswordMatch = await user.comparePassword(password);
         if (!isPasswordMatch) {
@@ -172,6 +274,7 @@ export const loginUser = CatchAsyncError(async (req: Request, res: Response, nex
 
     }
 });
+
 export const logoutUser = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
     try {
         res.cookie("access_token", "", { maxAge: 1 });
