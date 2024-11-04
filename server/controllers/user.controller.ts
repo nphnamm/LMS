@@ -72,7 +72,7 @@ export const registrationUser = CatchAsyncError(async (req: Request, res: Respon
         }
 
     } catch (error: any) {
-        return next(new ErrorHandler(error.message, 400))
+        return next(new ErrorHandler(error.message, 500))
     }
 });
 
@@ -118,7 +118,7 @@ export const forgotPassword = CatchAsyncError(async (req: Request, res: Response
         }
 
     } catch (error: any) {
-        return next(new ErrorHandler(error.message, 400))
+        return next(new ErrorHandler(error.message, 500))
     }
 });
 
@@ -164,7 +164,7 @@ export const verifyForgotPassword = CatchAsyncError(async (req: Request, res: Re
 
 
     } catch (error: any) {
-        return next(new ErrorHandler(error.message, 400))
+        return next(new ErrorHandler(error.message, 500))
 
     }
 });
@@ -229,7 +229,7 @@ export const activateUser = CatchAsyncError(async (req: Request, res: Response, 
 
 
     } catch (error: any) {
-        return next(new ErrorHandler(error.message, 400))
+        return next(new ErrorHandler(error.message, 500))
 
     }
 });
@@ -270,7 +270,7 @@ export const loginUser = CatchAsyncError(async (req: Request, res: Response, nex
         sendToken(user, 200, res);
 
     } catch (error: any) {
-        return next(new ErrorHandler(error.message, 400))
+        return next(new ErrorHandler(error.message, 500))
 
     }
 });
@@ -331,7 +331,7 @@ export const updateAccessToken = CatchAsyncError(async (req: Request, res: Respo
         })
 
     } catch (error: any) {
-        return next(new ErrorHandler(error.message, 400))
+        return next(new ErrorHandler(error.message, 500))
 
     }
 });
@@ -367,7 +367,7 @@ export const socialAuth = CatchAsyncError(async (req: Request, res: Response, ne
 
         }
     } catch (error: any) {
-        return next(new ErrorHandler(error.message, 400))
+        return next(new ErrorHandler(error.message, 500))
 
     }
 });
@@ -399,7 +399,7 @@ export const updateUserInfo = CatchAsyncError(async (req: Request, res: Response
         res.status(200).json({success: true, user});
 
     } catch (error: any) {
-        return next(new ErrorHandler(error.message, 400))
+        return next(new ErrorHandler(error.message, 500))
 
     }
 });
@@ -442,7 +442,7 @@ export const updatePassword = CatchAsyncError(async (req: Request, res: Response
             user,
         });
     } catch (error: any) {
-        return next(new ErrorHandler(error.message, 400))
+        return next(new ErrorHandler(error.message, 500))
 
     }
 });
@@ -502,7 +502,7 @@ export const updateProfilePicture = CatchAsyncError(async (req: Request, res: Re
 
 
     } catch (error: any) {
-        return next(new ErrorHandler(error.message, 400))
+        return next(new ErrorHandler(error.message, 500))
 
     }
 });
