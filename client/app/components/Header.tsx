@@ -7,6 +7,7 @@ import CustomModal from "../utils/CustomModal";
 import Login from "./Auth/Login";
 import Verification from "../components/Auth/Verification"
 import SignUp from "./Auth/SignUp";
+import { useTranslation } from "react-i18next";
 type Props = {
   open: boolean;
   setOpen: (open: boolean) => void;
@@ -18,6 +19,7 @@ type Props = {
 const Header: FC<Props> = ({ activeItem, setOpen, route, setRoute, open }) => {
   const [openSidebar, setOpenSidebar] = useState(false);
   const [active, setActive] = useState(false);
+
 
   if (typeof window !== "undefined") {
     window.addEventListener("scroll", () => {
@@ -44,6 +46,7 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, setRoute, open }) => {
             : "w-full border-b dark:border-[#ffffff1c] h-[80px] z-[80] dark:shadow"
           }`}
       >
+ 
         <div className="w-[95%] 800px:w-[92%] m-auto py-2 h-full">
           <div className="w-full h-[80px] flex items-center justify-between p-3">
             <div>

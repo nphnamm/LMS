@@ -1,5 +1,7 @@
+import i18n from '@/i18n';
 import Link from 'next/link';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next';
 import { HiOutlineUserCircle } from 'react-icons/hi';
 
 export const navItemsData = [
@@ -30,6 +32,14 @@ type Props = {
 }
 
 const NavItems: React.FC<Props> = ({ activeItem, isMobile }) => {
+    const { t, i18n } = useTranslation();
+    const [language, setLanguage] = useState(i18n.language === 'vi' ? 'vi' : 'en');
+    const toggleLanguage = () => {
+        const newLanguage = language === 'en' ? 'vi' : 'en';
+        setLanguage(newLanguage);
+        i18n.changeLanguage(newLanguage);
+    };
+ 
     return (
         <>
             <div className='hidden 800px:flex'>
@@ -44,11 +54,39 @@ const NavItems: React.FC<Props> = ({ activeItem, isMobile }) => {
                                     } text-[18px] px-6 font-Poppins font-[400]`
                                 }
                             >
-                                {i.name}
+                                {t(`${i.name.toLowerCase()}`)}
                             </span>
                         </Link>
                     ))
                 }
+                <>
+                    <div
+                        className="relative inline-flex h-8 w-20 items-center rounded-full bg-gray-300 cursor-pointer p-1"
+                        onClick={toggleLanguage}
+                    >
+                        {/* Toggle Ball */}
+                        <div
+                            className={`absolute h-6 w-10 rounded-full bg-white shadow-md transition-all duration-300 ${language === 'vi' ? 'translate-x-10 bg-green-500' : 'translate-x-0 bg-blue-500'
+                                }`}
+                        ></div>
+
+                        {/* Text Labels */}
+                        <span
+                            className={`z-10 w-1/2 text-center text-sm font-semibold ${language === 'en' ? 'text-white' : 'text-gray-600'
+                                }`}
+                        >
+                            EN
+                        </span>
+                        <span
+                            className={`z-10 w-1/2 text-center text-sm font-semibold ${language === 'vi' ? 'text-white' : 'text-gray-600'
+                                }`}
+                        >
+                            VI
+                        </span>
+                    </div>
+                </>
+ 
+            
             </div>
             {isMobile && (
                 <div className="h-screen w-full  text-white flex flex-col ">
