@@ -1,6 +1,7 @@
 import { styles } from '@/app/styles/style';
 import React, { FC, useRef, useState } from 'react'
 import { toast } from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 import { VscWorkspaceTrusted } from 'react-icons/vsc';
 type Props = {
     setRoute: (route: string) => void;
@@ -14,6 +15,8 @@ type VerifyNumber = {
 }
 
 const Verification: FC<Props> = ({ setRoute }) => {
+    const { t, i18n } = useTranslation();
+
     const [inValidError, setInValidError] = useState<boolean>(false);
     const inputRefs = [
         useRef<HTMLInputElement>(null),
@@ -46,7 +49,7 @@ const Verification: FC<Props> = ({ setRoute }) => {
 
         <div>
             <h1 className={`${styles.title}`}>
-                Verify Your Account
+            {t('verify')}
             </h1>
             <br />
             <div className='w-full flex items-center justify-center mt-2'>
@@ -83,19 +86,20 @@ const Verification: FC<Props> = ({ setRoute }) => {
                 className={`${styles.button}`}
                 onClick={verificationHandler}
                 >
-                    Verify OTP
+            {t('verifyOTP')}
 
                 </button>
 
             </div>
             <br/>
             <h5 className='text-center pt-4 font-Poppins text-[14px] text-black dark:text-white'>
-                Go back to sign in?{" "}
+            {t('go-back-sign-in')}
+            ?{" "}
                 <span 
                 className='text-[#2190ff] pl-1 cursor-pointer'
                 onClick={()=>setRoute("Login")}
                 >
-                    Sign In
+            {t('sign-in')}
 
                 </span>
 

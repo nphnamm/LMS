@@ -1,6 +1,7 @@
+'use client'
 import i18n from '@/i18n';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { HiOutlineUserCircle } from 'react-icons/hi';
 
@@ -25,40 +26,46 @@ export const navItemsData = [
         name: "FAQ",
         url: "/faq",
     },
-]
+];
+
 type Props = {
     activeItem: number;
-    isMobile: boolean
-}
+    isMobile: boolean;
+};
 
 const NavItems: React.FC<Props> = ({ activeItem, isMobile }) => {
     const { t, i18n } = useTranslation();
     const [language, setLanguage] = useState(i18n.language === 'vi' ? 'vi' : 'en');
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            i18n.changeLanguage(language);
+        }
+    }, [language]);
+
     const toggleLanguage = () => {
         const newLanguage = language === 'en' ? 'vi' : 'en';
         setLanguage(newLanguage);
-        i18n.changeLanguage(newLanguage);
     };
- 
+
     return (
         <>
             <div className='hidden 800px:flex'>
-                {
-                    navItemsData && navItemsData.map((i, index) => (
-                        <Link href={`${i.url}`} key={index} passHref>
-                            <span
-                                className={
-                                    `${activeItem === index
-                                        ? "dark:text-[#37a39a] text-[crimson]"
-                                        : "dark:text-white text-black"
-                                    } text-[18px] px-6 font-Poppins font-[400]`
-                                }
-                            >
-                                {t(`${i.name.toLowerCase()}`)}
-                            </span>
-                        </Link>
-                    ))
-                }
+                {navItemsData && navItemsData.map((i, index) => (
+                    <Link href={`${i.url}`} key={index} passHref>
+                        <span
+                            className={
+                                `${activeItem === index
+                                    ? "dark:text-[#37a39a] text-[crimson]"
+                                    : "dark:text-white text-black"
+                                } text-[18px] px-6 font-Poppins font-[400]`
+                            }
+                            suppressHydrationWarning
+                        >
+                            {t(`${i.name.toLowerCase()}`)}
+                        </span>
+                    </Link>
+                ))}
                 <>
                     <div
                         className="relative inline-flex h-8 w-20 items-center rounded-full bg-gray-300 cursor-pointer p-1"
@@ -85,17 +92,16 @@ const NavItems: React.FC<Props> = ({ activeItem, isMobile }) => {
                         </span>
                     </div>
                 </>
- 
-            
             </div>
             {isMobile && (
-                <div className="h-screen w-full  text-white flex flex-col ">
+                <div className="h-screen w-full text-white flex flex-col">
                     {/* Top Section */}
                     <div className='w-full'>
                         <div className='w-full text-center py-6'>
                             <Link
                                 href={"/"}
                                 className="text-[25px] font-Poppins font-[500] text-black dark:text-white"
+                                suppressHydrationWarning
                             >
                                 Elearning
                             </Link>
@@ -106,13 +112,13 @@ const NavItems: React.FC<Props> = ({ activeItem, isMobile }) => {
                                     <span
                                         className={`block py-5 text-[18px] px-6 font-Poppins font-[400] ${activeItem === index ? "dark:text-[#37a39a] text-[crimson]" : "dark:text-white text-black"
                                             } hover:text-green-500`}
+                                        suppressHydrationWarning
                                     >
-                                        {item.name}
+                                        {t(`${item.name.toLowerCase()}`)}
                                     </span>
                                 </Link>
                             ))}
                         </nav>
-
                     </div>
                     <div className="">
                         <HiOutlineUserCircle
@@ -125,13 +131,9 @@ const NavItems: React.FC<Props> = ({ activeItem, isMobile }) => {
                         </p>
                     </div>
                 </div>
-
-
-
-
             )}
         </>
-    )
-}
+    );
+};
 
-export default NavItems
+export default NavItems;

@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import { styles } from "@/app/styles/style";
 import { AiFillGithub, AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import {FcGoogle} from "react-icons/fc";
+import { useTranslation } from "react-i18next";
 type Props = {
   setRoute: (route: string) => void;
 };
@@ -18,11 +19,13 @@ const schema = Yup.object().shape({
 });
 const SignUp: FC<Props> = ({setRoute}) => {
   const [show, setShow] = useState(false);
+  const { t, i18n } = useTranslation();
+
   const formik = useFormik({
     initialValues: { name:"",email: "", password: "" },
     validationSchema: schema,
-    onSubmit: ({ email, password }) => {
-      console.log(email, password);
+    onSubmit: ({name, email, password }) => {
+      console.log(name,email, password);
     },
   });
 
@@ -30,18 +33,22 @@ const SignUp: FC<Props> = ({setRoute}) => {
 
   return (
     <div className="w-full">
-      <h1 className={`${styles.title}`}>Join to Learning</h1>
+      <h1 className={`${styles.title}`}>
+      {t('join-to')}
+      </h1>
       <form onSubmit={handleSubmit}>
       <div className="mb-3">
       <label className={`${styles.label}`} htmlFor="name">
-          Enter your name
-        </label>
+      {t('name')}
+      </label>
         <input
           type="text"
           name=""
           value={values.name}
           id="name"
-          placeholder="enter your name..."
+          onChange={handleChange}
+
+          placeholder={`${t('name-placeholder')}`}
           className={`${errors.name && touched.name && "border-red-500"} ${
             styles.input
           }`}
@@ -52,14 +59,17 @@ const SignUp: FC<Props> = ({setRoute}) => {
         </div>
         <div className="mb-1">
         <label className={`${styles.label}`} htmlFor="email">
-          Enter your email
+        {t('email')}
+
         </label>
         <input
           type="email"
           name=""
           value={values.email}
           id="email"
-          placeholder="loginmail@gmail.com"
+          onChange={handleChange}
+
+          placeholder={`${t('email-placeholder')}`}
           className={`${errors.email && touched.email && "border-red-500"} ${
             styles.input
           }`}
@@ -69,14 +79,17 @@ const SignUp: FC<Props> = ({setRoute}) => {
         )}
         </div>
         <div className="w-full mt-5 relative mb-1">
-          <label className={`${styles.label}`}>Enter your password</label>
+          <label className={`${styles.label}`}>
+          {t('password')}
+
+          </label>
           <input
             type={!show ? "password" : "text"}
             name="password"
             value={values.password}
             onChange={handleChange}
             id="password"
-            placeholder="password!@%" 
+            placeholder={`${t('password-placeholder')}`}
             className={`${
               errors.password && touched.password && "border-red-500"
             } ${styles.input}`}
@@ -102,7 +115,7 @@ const SignUp: FC<Props> = ({setRoute}) => {
         <div className="w-full mt-5">
             <input
                 type="submit"
-                value="Sign Up"
+                value={`${t('btn-sign-up')}`}
                 className={`${styles.button}`}
                 onClick={()=> setRoute("Verification")}
 
@@ -111,19 +124,19 @@ const SignUp: FC<Props> = ({setRoute}) => {
         </div>
         <br/>
         <h5 className="text-center pt-4 font-Poppins text-[14px] text-black dark:text-white">
-            Or join with
+        {t('join-with')}
         </h5>
         <div className="flex items-center justify-center my-3">
             <FcGoogle size={30} className="cursor-pointer mr-2"/>
             <AiFillGithub size={30} className="cursor-pointer mr-2"/>
         </div>
         <h5 className="text-center pt-4 font-Poppins text-[14px]">
-            Already have an account?{" "}
+        {t('have-account')}{" "}
             <span
             className="text-[#2190ff] pl-1 cursor-pointer"
             onClick={()=> setRoute("Sign-In")}
             >
-              Sign in
+            {t('sign-in')}
             </span>
 
         </h5>

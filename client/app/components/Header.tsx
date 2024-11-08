@@ -19,6 +19,7 @@ type Props = {
 const Header: FC<Props> = ({ activeItem, setOpen, route, setRoute, open }) => {
   const [openSidebar, setOpenSidebar] = useState(false);
   const [active, setActive] = useState(false);
+  const { t, i18n } = useTranslation();
 
 
   if (typeof window !== "undefined") {
