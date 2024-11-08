@@ -59,6 +59,7 @@ export const authApi = apiSlice.injectEndpoints({
                     // console.log("Full API response:", result);
                     // console.log("API response data:", result.data);
                     dispatch(userLoggedIn({
+                        accessToken:result?.data.accessToken,
                         user:result?.data.user
                     }))
                 
