@@ -8,6 +8,7 @@ import Login from "./Auth/Login";
 import Verification from "../components/Auth/Verification"
 import SignUp from "./Auth/SignUp";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 type Props = {
   open: boolean;
   setOpen: (open: boolean) => void;

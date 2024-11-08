@@ -1,11 +1,13 @@
 "use client";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { styles } from "@/app/styles/style";
 import { AiFillGithub, AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { useTranslation } from "react-i18next";
+import { useLoginMutation } from "@/redux/features/auth/authApi";
+import toast from "react-hot-toast";
 type Props = {
   setRoute: (route: string) => void;
 };
@@ -19,18 +21,34 @@ const schema = Yup.object().shape({
 const Login: FC<Props> = ({ setRoute }) => {
   const { t, i18n } = useTranslation();
 
+  const [login, { isError, data, isSuccess, error }] = useLoginMutation();
 
   const [show, setShow] = useState(false);
   const formik = useFormik({
     initialValues: { email: "", password: "" },
     validationSchema: schema,
-    onSubmit: ({ email, password }) => {
-      console.log(email, password);
+    onSubmit: async({ email, password }) => {
+      const data={
+        email,password
+      };
+      await login(data);
     },
   });
 
   const { errors, touched, values, handleChange, handleSubmit } = formik;
-
+  useEffect(() => {
+    if (isSuccess) {
+      const message = data?.message || "Login Successfully";
+      toast.success(message);
+      setRoute("Verification");
+    }
+    if (error) {
+      if ("data" in error) {
+        const errorData = error as any;
+        toast.error(errorData.data.message);
+      }
+    }
+  },[isSuccess,error])
   return (
     <div className="w-full">
       <h1 className={`${styles.title}`}>
