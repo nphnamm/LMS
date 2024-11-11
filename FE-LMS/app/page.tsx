@@ -4,6 +4,8 @@ import Heading from './utils/Heading';
 import Header from './components/Header';
 import Hero from './components/Route/Hero';
 import { useSelector } from 'react-redux';
+import Loader from './components/Loader/Loader';
+import Profile from './components/Profile/Profile';
 interface Props {
 
 }
@@ -21,6 +23,7 @@ const Page: FC<Props> = (props) => {
         description='ELearning is a platform for students to learn and get help from teachers'
         keywords='Programming, MERN, Redux, Machine Learning'
       />
+      {/* <Loader/> */}
       <Header
         open={open}
         setOpen={setOpen}
@@ -28,7 +31,7 @@ const Page: FC<Props> = (props) => {
         route={route}
         setRoute={setRoute}
       />
-      <Hero/>
+      
     </div>
 
   )
