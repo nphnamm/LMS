@@ -31,7 +31,7 @@ const Page: FC<Props> = (props) => {
         route={route}
         setRoute={setRoute}
       />
-      
+          <Hero/>
     </div>
 
   )
