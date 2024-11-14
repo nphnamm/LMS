@@ -4,22 +4,24 @@ import SideBarProfile from './SideBarProfile'
 import { useLogOutQuery } from '@/redux/features/auth/authApi'
 import { signOut } from 'next-auth/react'
 import { redirect } from 'next/navigation';
+import ProfileInfo from './ProfileInfo'
 
 type Props = {
-    user:Object
+    avatar
+    user: Object
 }
 
-const Profile: FC<Props> = ({user}) => {
+const Profile: FC<Props> = ({ user }) => {
     const [scroll, setScroll] = useState(false);
-    const [avatar,setAvatar] = useState(null);
-    const [active,setActive] = useState(1);
-    const [logout,setLogout] = useState(false);
-    const {} = useLogOutQuery(
+    const [avatar, setAvatar] = useState(user?.avatar?.url);
+    const [active, setActive] = useState(1);
+    const [logout, setLogout] = useState(false);
+    const { } = useLogOutQuery(
         undefined,
-      {skip: !logout ? true :false}
+        { skip: !logout ? true : false }
     );
 
-    const logOutHandler = async () =>{
+    const logOutHandler = async () => {
         signOut();
         setLogout(true);
         redirect("/")
@@ -35,20 +37,26 @@ const Profile: FC<Props> = ({user}) => {
     }
 
     return (
+
         <div className="w-[85%] flex mx-auto">
             <div
                 className={` w-[60px] 800px:w-[310px] h-[450px]  ${scroll ? "top-[120px]" : "top-[30px]"} 
-                dark:bg-slate-900 bg-opacity-90 border bg-white dark:border-[#ffffff1d] border-[#00000014] rounded-xl overflow-hidden shadow-sm mt-[80px] mb-[80px] sticky ${scroll ? "top-120px" :"top-[30px]"} left-[30px]`}
+                dark:bg-slate-900 bg-opacity-90 border bg-white dark:border-[#ffffff1d] border-[#00000014] rounded-xl overflow-hidden shadow-sm mt-[80px] mb-[80px] sticky ${scroll ? "top-120px" : "top-[30px]"} left-[30px]`}
             >
                 <SideBarProfile
-                 user={user}
-                 active={active}
-                 avatar={avatar}
-                 setActive={setActive}
-                 logOutHandler={logOutHandler}
-                 />
+                    user={user}
+                    active={active}
+                    avatar={avatar}
+                    setActive={setActive}
+                    logOutHandler={logOutHandler}
+                />
             </div>
+            {
+                active===1 && (<ProfileInfo user={user} avatar={avatar} />)    
+            }
         </div>
+
+
     )
 }
 
