@@ -12,6 +12,7 @@ import categoryRouter from "./routes/category.route";
 import flashcardRouter from "./routes/flashcard.route";
 import studySessionRouter from "./routes/studysession.route";
 import orderRouter from "./routes/order.route";
+import notificationRouter from "./routes/notification.route";
 
 // body parser
 app.use(express.json({limit: "50mb"}));
@@ -35,6 +36,7 @@ app.use("/api/v1",setRouter)
 app.use("/api/v1",categoryRouter)
 app.use("/api/v1",flashcardRouter)
 app.use("/api/v1",studySessionRouter)
+app.use("/api/v1",notificationRouter)
 
 
 

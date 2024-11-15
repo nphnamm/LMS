@@ -7,7 +7,7 @@ import CourseModel from "../models/course.model";
 import path from "path";
 import ejs from "ejs";
 import sendMail from "../utils/sendMail";
-import NotificationModel from "../models/notificationModel";
+import NotificationModel from "../models/notification.model";
 import ErrorHandler from "../utils/ErrorHandler";
 import { newOrder } from "../services/order.service";
 

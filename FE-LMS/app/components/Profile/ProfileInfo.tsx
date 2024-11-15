@@ -4,7 +4,7 @@ import avatarIcon from "../../../public/images/avatar.png";
 import { styles } from '@/app/styles/style';
 import { AiOutlineCamera } from 'react-icons/ai';
 import { useLoadUserQuery } from '@/redux/features/api/apiSlice';
-import { useUpdateAvatarMutation } from '@/redux/features/user/userApi';
+import { useUpdateAvatarMutation,useEditProfileMutation } from '@/redux/features/user/userApi';
 
 type Props = {
     avatar:string | null;
@@ -14,6 +14,8 @@ type Props = {
 const ProfileInfo: FC<Props> = ({ avatar, user }) => {
     const [name, setName] = useState(user && user.name);
     const [updateAvatar,{isSuccess, error}] = useUpdateAvatarMutation();
+    const [editProfile,{isSuccess:success, error:updateError}] = useEditProfileMutation();
+
     const [loadUser,setLoadUser] = useState(false);
     const {} = useLoadUserQuery(undefined,{skip:loadUser ? false :true});
     
@@ -48,7 +50,7 @@ const ProfileInfo: FC<Props> = ({ avatar, user }) => {
                         alt='avatar'
                         width={120}
                         height={120}
-                        className='w-[120px] h-[120px] cursor-pointer border-[3px] border-[#37a39a] rounded-full'
+                        className='w-[120px] h-[120px] cursor-pointer border-[3px] border-[#37a39a] rounded-full object-cover'
                     />
                     <input
                         type='file'

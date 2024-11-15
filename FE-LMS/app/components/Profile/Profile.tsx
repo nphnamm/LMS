@@ -7,8 +7,8 @@ import { redirect } from 'next/navigation';
 import ProfileInfo from './ProfileInfo'
 
 type Props = {
-    avatar
-    user: Object
+    
+    user: any
 }
 
 const Profile: FC<Props> = ({ user }) => {

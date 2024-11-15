@@ -516,15 +516,3 @@ export const updateProfilePicture = CatchAsyncError(async (req: Request, res: Re
 });
 
 
-export const template = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
-    try {
-
-
-
-
-
-    } catch (error: any) {
-        return next(new ErrorHandler(error.message, 400))
-
-    }
-});
