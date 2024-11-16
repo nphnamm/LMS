@@ -348,14 +348,14 @@ interface ISocialAuthBody{
     email: string;
     name: string;
     avatar: string;
-    
+    provider:string;
 
 }
 
 export const socialAuth = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const {email, name, avatar} = req.body as ISocialAuthBody;
-     
+        const {email, name, avatar, provider} = req.body as ISocialAuthBody;
+        
 
         const user = await userModel.findOne({email});
       
@@ -365,7 +365,10 @@ export const socialAuth = CatchAsyncError(async (req: Request, res: Response, ne
                     public_id: uuidv4(),  // Generate ID ngẫu nhiên
                     url: avatar    // Gán chuỗi avatar vào thuộc tính url
                 };
-                const newUser = await userModel.create({email,name, newavatar});
+                console.log('check avatar', avatar)
+
+                console.log('check avatar', newavatar)
+                const newUser = await userModel.create({email,name, avatar:newavatar, loginMethod: provider,});
                 sendToken(newUser,200,res);
             }
             const newUser = await userModel.create({email,name, avatar});

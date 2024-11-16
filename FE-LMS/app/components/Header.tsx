@@ -30,7 +30,6 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, setRoute, open }) => {
   const { user } = useSelector((state: any) => state.auth);
   const { data } = useSession();
   const [socialAuth, { isSuccess, error }] = useSocialAuthMutation()
-  console.log('data from google', data)
   if (typeof window !== "undefined") {
     window.addEventListener("scroll", () => {
       if (window.scrollY > 85) {
@@ -40,13 +39,17 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, setRoute, open }) => {
       }
     });
   }
+  
   useEffect(() => {
     if (!user) {
       if (data) {
+        console.log(data);
         socialAuth({
           email: data?.user?.email,
           name: data?.user?.name,
-          avatar: data?.user?.image
+          avatar: data?.user?.image,
+          provider: data?.user?.provider
+
         })
       }
     }
@@ -99,8 +102,8 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, setRoute, open }) => {
                 user ? (
                   <Link href="/profile">
                     <Image
-                      src={user?.avatar?.url ? user?.avatar?.url: avatar}
-                      alt=""
+                    src={user.avatar?.url || avatar}
+                    alt=""
                       width={30}
                       height={30}
                       className="w-[30px] h-[30px] rounded-full cursor-pointer object-cover"
