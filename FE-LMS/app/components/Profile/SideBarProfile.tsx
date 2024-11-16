@@ -4,6 +4,8 @@ import avatarDefault from "../../../public/images/avatar.png";
 import { RiLockPasswordLine } from 'react-icons/ri'
 import { SiCoursera } from 'react-icons/si'
 import { AiOutlineLogout } from 'react-icons/ai'
+import { MdOutlineAdminPanelSettings } from 'react-icons/md';
+import Link from "next/link";
 
 type Props = {
     user: any;
@@ -19,19 +21,16 @@ const SideBarProfile: FC<Props> = ({
     setActive,
     logOutHandler,
 }) => {
-    const logoutHandle = () =>{
+    const logoutHandle = () => {
         logOutHandler();
     }
     return (
         <div className='w-full'>
-
-
-            
             <div className={`w-full flex items-center px-3 py-4 cursor-pointer ${active === 1 ? "dark:bg-slate-800 bg-[#f0f6ff]" : "bg-transparent"}`}
                 onClick={() => setActive(1)}
             >
                 <Image
-                    src={ avatar ? avatar : avatarDefault}
+                    src={avatar ? avatar : avatarDefault}
                     alt=""
                     width={20}
                     height={20}
@@ -50,9 +49,9 @@ const SideBarProfile: FC<Props> = ({
                 onClick={() => setActive(2)}
 
             >
-                <RiLockPasswordLine size={20} fill="#fff"  />
+                <RiLockPasswordLine size={20} fill="#fff" />
                 <h5 className='pl-2 800px:block hidden font-Poppins dark:text-white text-black'>
-                    Change Password                
+                    Change Password
                 </h5>
 
             </div>
@@ -63,12 +62,26 @@ const SideBarProfile: FC<Props> = ({
                 onClick={() => setActive(3)}
 
             >
-                <SiCoursera size={20} fill="#fff"  />
+                <SiCoursera size={20} fill="#fff" />
                 <h5 className='pl-2 800px:block hidden font-Poppins dark:text-white text-black'>
-                    Enrolled Courses                
+                    Enrolled Courses
                 </h5>
 
             </div>
+            {user.role === "admin" && (
+                <Link className={`w-full flex items-center px-3 py-4 cursor-pointer 
+                ${active === 5 ? "dark:bg-slate-800 bg-[#f0f6ff]" : "bg-transparent"
+                    }`}
+                    href={"/admin"}
+                >
+                    <MdOutlineAdminPanelSettings size={20} fill="#fff" />
+                    <h5 className='pl-2 800px:block hidden font-Poppins dark:text-white text-black'>
+                        Admin Dashboard
+                    </h5>
+
+                </Link>
+            )}
+
 
             <div className={`w-full flex items-center px-3 py-4 cursor-pointer 
                 ${active === 4 ? "dark:bg-slate-800 bg-[#f0f6ff]" : "bg-transparent"
@@ -76,9 +89,9 @@ const SideBarProfile: FC<Props> = ({
                 onClick={() => logoutHandle()}
 
             >
-                <AiOutlineLogout size={20} fill="#fff"  />
+                <AiOutlineLogout size={20} fill="#fff" />
                 <h5 className='pl-2 800px:block hidden font-Poppins dark:text-white text-black'>
-                    Log Out                
+                    Log Out
                 </h5>
 
             </div>
