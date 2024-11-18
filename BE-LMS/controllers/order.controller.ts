@@ -9,7 +9,7 @@ import ejs from "ejs";
 import sendMail from "../utils/sendMail";
 import NotificationModel from "../models/notification.model";
 import ErrorHandler from "../utils/ErrorHandler";
-import { newOrder } from "../services/order.service";
+import { getAllOrdersService, newOrder } from "../services/order.service";
 
 
 //create order
@@ -76,6 +76,18 @@ export const createOrder = CatchAsyncError(async (req: Request, res: Response, n
 
     } catch (error: any) {
         return next(new ErrorHandler(error.message, 400))
+
+    }
+});
+export const getAllOrders = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        try{    
+            getAllOrdersService(res);
+        }catch(error:any){
+            return next(new ErrorHandler(error.message,400))
+        }
+    } catch (error: any) {
+        return next(new ErrorHandler(error.message, 500))
 
     }
 });
