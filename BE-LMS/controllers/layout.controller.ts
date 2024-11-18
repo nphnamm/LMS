@@ -20,7 +20,7 @@ export const createLayout = CatchAsyncError(async (req: Request, res: Response, 
 
             });
             const banner = {
-                type="Banner",
+                type: "Banner",
                 image: {
                     public_id: myCloud.public_id,
                     url: myCloud.secure_url
@@ -86,7 +86,7 @@ export const editLayout = CatchAsyncError(async (req: Request, res: Response, ne
                 folder: "Layout",
             });
             const banner = {
-                type="Banner",
+                type :"Banner",
                 image: {
                     public_id: myCloud.public_id,
                     url: myCloud.secure_url
@@ -134,9 +134,15 @@ export const editLayout = CatchAsyncError(async (req: Request, res: Response, ne
 export const getLayoutByType = CatchAsyncError(
     async(req:Request,res: Response, next:NextFunction)=>{
         try{
+            const {type} = req.body;
+            const layout = await LayoutModel.findOne(type);
+            res.status(201).json({
+                success:true,
+                layout
+            });
 
         }catch(error:any){
-            return next
+            return next(new ErrorHandler(error.message,500))
         }
     }
 )
