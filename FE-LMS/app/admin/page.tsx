@@ -1,32 +1,40 @@
 'use client'
-import React from 'react';
+import React, { useState } from 'react';
 import Heading from '../utils/Heading';
 import AdminSidebar from '../components/Admin/sidebar/AdminSidebar';
 import AdminProtected from '../hooks/adminProtected';
 
-type Props = {
+const Page: React.FC = () => {
+    // State để quản lý trạng thái Sidebar
+    const [collapsed, setCollapsed] = useState(false);
 
-}
-const page = (props: Props) => {
     return (
         <div>
             <AdminProtected>
                 <Heading
-                    title='ELearning'
-                    description='ELearning is a platform for students to learn and get help from teachers'
-                    keywords='Programming, MERN, Redux, Machine Learning'
+                    title="ELearning"
+                    description="ELearning is a platform for students to learn and get help from teachers"
+                    keywords="Programming, MERN, Redux, Machine Learning"
                 />
                 <div className="flex h-[200vh]">
-                    <div className="1500px:w-[16%] w-1/5">
-                        <AdminSidebar />
+                    {/* Sidebar */}
+                    <div style={{ width: collapsed ? "80px" : "250px", transition: "width 0.3s ease" }}>
+                        <AdminSidebar collapsed={collapsed} setCollapsed={setCollapsed} />
                     </div>
-                    <div className="w-85%">
-
+                    {/* Right Section */}
+                    <div
+                        style={{
+                            flex: 1, // Chiếm toàn bộ không gian còn lại
+                            transition: "margin-left 0.3s ease",
+                        }}
+                        className="bg-black-100"
+                    >
+                        <h1 className="text-center p-4 text-lg bg-gray-100">Right Section</h1>
                     </div>
                 </div>
             </AdminProtected>
         </div>
+    );
+};
 
-    )
-}
-export default page;
+export default Page;

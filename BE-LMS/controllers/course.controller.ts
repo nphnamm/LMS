@@ -100,20 +100,17 @@ export const getSingleCourse = CatchAsyncError(async (req: Request, res: Respons
         } else {
             const course = await CourseModel.findById(req.params.id).select("-courseData.videoUrl -courseData.suggestion -courseData.question -courseData.links");
 
-            console.log('get from mongoDB')
-            await redis.set(courseId, JSON.stringify(course));
+
+            // console.log('get from mongoDB')
+            await redis.set(courseId, JSON.stringify(course),'EX',604800);
             res.status(200).json({
                 success: true,
                 course
             })
 
         }
-
-
-
     } catch (error: any) {
         return next(new ErrorHandler(error.message, 400))
-
     }
 });
 
@@ -132,8 +129,6 @@ export const getAllCourses = CatchAsyncError(async (req: Request, res: Response,
         } else {
             const course = await CourseModel.find().select("-courseData.videoUrl -courseData.suggestion -courseData.question -courseData.links");
             console.log('get from mongoDB')
-
-
             res.status(200).json({
                 success: true,
                 course
@@ -207,9 +202,9 @@ export const addQuestion = CatchAsyncError(async (req: Request, res: Response, n
         // add this question to our course content
         courseContent.questions.push(newQuestion);
         await NotificationModel.create({
-            user:req.user?._id,
-            title:"New Question Received",
-            message:`You have a new question in ${course?.name}`
+            user: req.user?._id,
+            title: "New Question Received",
+            message: `You have a new question in ${course?.name}`
         });
 
         // save the updated course
@@ -219,8 +214,6 @@ export const addQuestion = CatchAsyncError(async (req: Request, res: Response, n
             success: true,
             course,
         })
-
-
 
     } catch (error: any) {
         return next(new ErrorHandler(error.message, 500))
@@ -272,11 +265,11 @@ export const addAnswer = CatchAsyncError(async (req: Request, res: Response, nex
         await course?.save();
         if (req.user?._id === question.user?._id) {
             await NotificationModel.create({
-                user:req.user?._id,
-                title:"New Question Reply Received",
-                message:`You have a new question reply in ${courseContent?.title}`
+                user: req.user?._id,
+                title: "New Question Reply Received",
+                message: `You have a new question reply in ${courseContent?.title}`
             });
-    
+
         } else {
             const data = {
                 name: question.user.name,
@@ -295,17 +288,12 @@ export const addAnswer = CatchAsyncError(async (req: Request, res: Response, nex
             } catch (error: any) {
                 return next(new ErrorHandler(error.message, 500))
             }
-
-
         }
 
         res.status(200).json({
             success: true,
             course,
         })
-
-
-
     } catch (error: any) {
         return next(new ErrorHandler(error.message, 500))
 
@@ -324,7 +312,7 @@ export const addReview = CatchAsyncError(async (req: Request, res: Response, nex
     try {
         const userCourseList = req.user?.courses;
         const courseId = req.params.id;
-        console.log('course',userCourseList);
+        console.log('course', userCourseList);
         // check if courseId already exists in userCourseList based on _id
         const courseExists = userCourseList?.some((course: any) => course._id.toString() === courseId.toString());
         if (!courseExists) {
@@ -406,9 +394,6 @@ export const addReplyToReview = CatchAsyncError(async (req: Request, res: Respon
             course
         });
 
-
-
-
     } catch (error: any) {
         return next(new ErrorHandler(error.message, 400))
 
@@ -416,10 +401,10 @@ export const addReplyToReview = CatchAsyncError(async (req: Request, res: Respon
 });
 export const getAllCoursesAdmin = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
     try {
-        try{    
+        try {
             getAllCoursesService(res);
-        }catch(error:any){
-            return next(new ErrorHandler(error.message,400))
+        } catch (error: any) {
+            return next(new ErrorHandler(error.message, 400))
         }
     } catch (error: any) {
         return next(new ErrorHandler(error.message, 500))
