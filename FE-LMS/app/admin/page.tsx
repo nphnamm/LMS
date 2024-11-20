@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Heading from '../utils/Heading';
 import AdminSidebar from '../components/Admin/sidebar/AdminSidebar';
 import AdminProtected from '../hooks/adminProtected';
+import DashboardHero from '../components/Admin/DashboardHero';
 
 const Page: React.FC = () => {
     // State để quản lý trạng thái Sidebar
@@ -29,7 +30,7 @@ const Page: React.FC = () => {
                         }}
                         className="bg-black-100"
                     >
-                        <h1 className="text-center p-4 text-lg bg-gray-100">Right Section</h1>
+                        <DashboardHero/>
                     </div>
                 </div>
             </AdminProtected>

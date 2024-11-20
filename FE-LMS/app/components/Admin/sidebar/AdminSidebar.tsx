@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import "react-pro-sidebar/dist/css/styles.css";
 import { IconButton, Typography, Box } from "@mui/material";
@@ -13,9 +13,11 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import Image from "next/image";
 import avatarDefault from "../../../../public/images/avatar.png";
-
+import './customSidebar.css';
+import { useTheme } from "next-themes";
 const Sidebar: React.FC<{ collapsed: boolean; setCollapsed: React.Dispatch<React.SetStateAction<boolean>> }> = ({ collapsed, setCollapsed }) => {
     const [selected, setSelected] = useState<string>("Dashboard");
+    const { theme } = useTheme();
 
     const handleToggle = () => {
         setCollapsed(!collapsed);
@@ -28,6 +30,12 @@ const Sidebar: React.FC<{ collapsed: boolean; setCollapsed: React.Dispatch<React
         backgroundColor: selected === item ? "#3b82f6" : "transparent",
         color: selected === item ? "#FFF" : "#A0AEC0",
     });
+
+    useEffect(() => {
+      // Dynamically add theme class to the body
+      document.body.classList.remove("light-theme", "dark-theme");
+      document.body.classList.add(theme === "dark" ? "dark-theme" : "light-theme");
+    }, [theme]);
     return (
         <Box
             sx={{
@@ -37,18 +45,18 @@ const Sidebar: React.FC<{ collapsed: boolean; setCollapsed: React.Dispatch<React
                 height: "100vh",
                 display: "flex",
                 color: "#FFF",
-                transition: "width 0.3s ease",
+                transition: "all 1s ease", // Transition duration set to 1s (1000ms)
             }}
         >
             <ProSidebar collapsed={collapsed}
-            // style={{
-            //     backgroundColor: "#1A202C",
-            //     height: "100vh",
-            //     overflow: "hidden",
-            //     width: "100%", // Sidebar chiếm toàn bộ chiều ngang Box
-            // }}
-            >
 
+                style={{
+                    height: "100vh",
+                    overflow: "hidden",
+                    transition: "all 1s ease", // Transition duration set to 1s (1000ms)
+
+                }}
+            >
                 {/* Sidebar Header */}
                 <Box
                     sx={{
@@ -99,7 +107,7 @@ const Sidebar: React.FC<{ collapsed: boolean; setCollapsed: React.Dispatch<React
 
                 {/* Menu */}
                 <Menu iconShape="circle">
-                <MenuItem
+                    <MenuItem
                         icon={<HomeOutlinedIcon />}
                         onClick={() => handleMenuItemClick("Dashboard")}
                         style={getMenuItemStyle("Dashboard")}
@@ -131,52 +139,52 @@ const Sidebar: React.FC<{ collapsed: boolean; setCollapsed: React.Dispatch<React
                         Invoices
                     </MenuItem>
 
-                {/* Content Section */}
-                {!collapsed && (
-                    <Typography variant="body2" sx={{ color: "#A0AEC0", margin: "10px 20px" }}>
-                        Content
-                    </Typography>
-                )}
-                <MenuItem icon={<VideoLibraryIcon />}>Create Course</MenuItem>
-                <MenuItem icon={<VideoLibraryIcon />}>Live Courses</MenuItem>
+                    {/* Content Section */}
+                    {!collapsed && (
+                        <Typography variant="body2" sx={{ color: "#A0AEC0", margin: "10px 20px" }}>
+                            Content
+                        </Typography>
+                    )}
+                    <MenuItem icon={<VideoLibraryIcon />}>Create Course</MenuItem>
+                    <MenuItem icon={<VideoLibraryIcon />}>Live Courses</MenuItem>
 
-                {/* Customization Section */}
-                {!collapsed && (
-                    <Typography variant="body2" sx={{ color: "#A0AEC0", margin: "10px 20px" }}>
-                        Customization
-                    </Typography>
-                )}
-                <MenuItem icon={<CategoryIcon />}>Hero</MenuItem>
-                <MenuItem icon={<HelpOutlineIcon />}>FAQ</MenuItem>
-                <MenuItem icon={<CategoryIcon />}>Categories</MenuItem>
+                    {/* Customization Section */}
+                    {!collapsed && (
+                        <Typography variant="body2" sx={{ color: "#A0AEC0", margin: "10px 20px" }}>
+                            Customization
+                        </Typography>
+                    )}
+                    <MenuItem icon={<CategoryIcon />}>Hero</MenuItem>
+                    <MenuItem icon={<HelpOutlineIcon />}>FAQ</MenuItem>
+                    <MenuItem icon={<CategoryIcon />}>Categories</MenuItem>
 
-                {/* Settings */}
-                {!collapsed && (
-                    <Typography variant="body2" sx={{ color: "#A0AEC0", margin: "10px 20px" }}>
-                        Controllers
-                    </Typography>
-                )}
-                <MenuItem icon={<SettingsIcon />}>Manage Team</MenuItem>
+                    {/* Settings */}
+                    {!collapsed && (
+                        <Typography variant="body2" sx={{ color: "#A0AEC0", margin: "10px 20px" }}>
+                            Controllers
+                        </Typography>
+                    )}
+                    <MenuItem icon={<SettingsIcon />}>Manage Team</MenuItem>
 
-                {/* Analytic */}
-                {!collapsed && (
-                    <Typography variant="body2" sx={{ color: "#A0AEC0", margin: "10px 20px" }}>
-                        Analytics
-                    </Typography>
-                )}
-                <MenuItem icon={<SettingsIcon />}>Courses Analytics</MenuItem>
-                <MenuItem icon={<SettingsIcon />}>Orders Analytics</MenuItem>
-                <MenuItem icon={<SettingsIcon />}>Users Analytics</MenuItem>
-                {/* Analytic */}
-                {!collapsed && (
-                    <Typography variant="body2" sx={{ color: "#A0AEC0", margin: "10px 20px" }}>
-                        Extras
-                    </Typography>
-                )}
-                <MenuItem icon={<SettingsIcon />}>Settings</MenuItem>
-                <MenuItem icon={<SettingsIcon />}>Logout</MenuItem>
-            </Menu>
-        </ProSidebar>
+                    {/* Analytic */}
+                    {!collapsed && (
+                        <Typography variant="body2" sx={{ color: "#A0AEC0", margin: "10px 20px" }}>
+                            Analytics
+                        </Typography>
+                    )}
+                    <MenuItem icon={<SettingsIcon />}>Courses Analytics</MenuItem>
+                    <MenuItem icon={<SettingsIcon />}>Orders Analytics</MenuItem>
+                    <MenuItem icon={<SettingsIcon />}>Users Analytics</MenuItem>
+                    {/* Analytic */}
+                    {!collapsed && (
+                        <Typography variant="body2" sx={{ color: "#A0AEC0", margin: "10px 20px" }}>
+                            Extras
+                        </Typography>
+                    )}
+                    <MenuItem icon={<SettingsIcon />}>Settings</MenuItem>
+                    <MenuItem icon={<SettingsIcon />}>Logout</MenuItem>
+                </Menu>
+            </ProSidebar>
         </Box >
     );
 };
