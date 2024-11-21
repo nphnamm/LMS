@@ -15,7 +15,7 @@ import Image from "next/image";
 import avatarDefault from "../../../../public/images/avatar.png";
 import './customSidebar.css';
 import { useTheme } from "next-themes";
-const Sidebar: React.FC<{ collapsed: boolean; setCollapsed: React.Dispatch<React.SetStateAction<boolean>> }> = ({ collapsed, setCollapsed }) => {
+const AdminSidebar: React.FC<{ collapsed: boolean; setCollapsed: React.Dispatch<React.SetStateAction<boolean>> }> = ({ collapsed, setCollapsed }) => {
     const [selected, setSelected] = useState<string>("Dashboard");
     const { theme } = useTheme();
 
@@ -32,9 +32,9 @@ const Sidebar: React.FC<{ collapsed: boolean; setCollapsed: React.Dispatch<React
     });
 
     useEffect(() => {
-      // Dynamically add theme class to the body
-      document.body.classList.remove("light-theme", "dark-theme");
-      document.body.classList.add(theme === "dark" ? "dark-theme" : "light-theme");
+        // Dynamically add theme class to the body
+        document.body.classList.remove("light-theme", "dark-theme");
+        document.body.classList.add(theme === "dark" ? "dark-theme" : "light-theme");
     }, [theme]);
     return (
         <Box
@@ -72,9 +72,15 @@ const Sidebar: React.FC<{ collapsed: boolean; setCollapsed: React.Dispatch<React
                             ELEARNING
                         </Typography>
                     )}
-                    <IconButton onClick={handleToggle} sx={{ color: "#FFF" }}>
-                        {collapsed ? <ArrowForwardIosIcon /> : <ArrowBackIosIcon />}
-                    </IconButton>
+                    <div
+                        className=" flex items-center justify-center w-12 h-12 cursor-pointer hover:text-[#a0aec0]"
+                        onClick={handleToggle}
+                    >
+
+                        {collapsed ? <ArrowForwardIosIcon sx={{ fontSize: '24px' }} /> : <ArrowBackIosIcon sx={{ fontSize: '24px' }} />}
+
+                    </div>
+
                 </Box>
 
                 {/* Avatar Section */}
@@ -189,4 +195,4 @@ const Sidebar: React.FC<{ collapsed: boolean; setCollapsed: React.Dispatch<React
     );
 };
 
-export default Sidebar;
+export default AdminSidebar;
