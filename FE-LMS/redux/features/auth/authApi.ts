@@ -47,16 +47,16 @@ export const authApi = apiSlice.injectEndpoints({
             query: ({ email, password }) => ({
                 url: "login-user",
                 method: "POST",
+
                 body: {
                     email, password
                 },
                 credentials: "include",
-
             }),
             async onQueryStarted(arg, { queryFulfilled, dispatch }) {
                 try {
                     const result = await queryFulfilled
-                    // console.log("Full API response:", result);
+                    console.log("Full API response:", result);
                     // console.log("API response data:", result.data);
                     dispatch(userLoggedIn({
                         accessToken: result?.data.accessToken,
