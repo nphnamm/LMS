@@ -16,15 +16,38 @@ const CourseInformation: FC<Props> = ({ courseInfo, setCourseInfo, active, setAc
         e.preventDefault();
         setActive(active + 1);
     }
-    const handleFileChange = (e:any) =>{
+    const handleFileChange = (e: any) => {
         const file = e.target.files?.[0];
-        if(file){
+        if (file) {
             const reader = new FileReader()
-            reader.onload = (e:any)=>{
-                if(reader.readyState  ===2){
-                    setCourseInfo({...courseInfo,thumbnail:reader.result})
+            reader.onload = (e: any) => {
+                if (reader.readyState === 2) {
+                    setCourseInfo({ ...courseInfo, thumbnail: reader.result })
                 }
-            }
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+    const handleDragOver = (e: any) => {
+        e.preventDefault();
+        setDragging(true);
+    }
+    const handleDragLeave = (e: any) => {
+        e.preventDefault();
+        setDragging(false);
+    }
+    const handleDrop = (e: any) => {
+        e.preventDefault();
+        setDragging(false);
+        const file = e.dataTransfer.files?.[0];
+        if (file) {
+            const reader = new FileReader()
+            reader.onload = (e: any) => {
+
+                setCourseInfo({ ...courseInfo, thumbnail: reader.result })
+
+            };
+            reader.readAsDataURL(file);
         }
     }
     return (
@@ -119,7 +142,7 @@ const CourseInformation: FC<Props> = ({ courseInfo, setCourseInfo, active, setAc
                         `}
                     />
                 </div>
-                <br/>
+                <br />
                 <div className='w-full flex justify-between'>
                     <div className='w-[45%]'>
                         <label className={`${styles.label}`}>Course Level</label>
@@ -154,7 +177,7 @@ const CourseInformation: FC<Props> = ({ courseInfo, setCourseInfo, active, setAc
                     </div>
 
                 </div>
-                <br/>
+                <br />
                 <div className='w-full'>
                     <input
                         type='file'
@@ -163,12 +186,41 @@ const CourseInformation: FC<Props> = ({ courseInfo, setCourseInfo, active, setAc
                         className='hidden'
                         onChange={handleFileChange}
                     />
+                    <label htmlFor='file'
+                        className={`w-full min-h-[10vh] dark:border-white border-[#00000026] p-3 border flex items-center justify-center ${
+                            dragging ? "bg-blue-500" :"bg-transparent"
+                        }`}
+                        onDragOver={handleDragOver}
+                        onDragLeave={handleDragLeave}
+                        onDrop={handleDrop}
+                    >
+                        {courseInfo.thumbnail ? (
+                            <img
+                             src={courseInfo.thumbnail}
+                            alt=''
+                            className='max-h-full w-full object-cover'
+                             />
+
+                        ) : (
+                            <span className='text-black dark:text-white'>  
+                                Drag and drop your thumbnail here or click to browse
+                            </span>
+                        )}
+
+
+                    </label>
+                </div>
+                <br/>
+                <div className='w-full flex items-center justify-end'>
+                        <input
+                        type='submit'
+                        value="Next"
+                        className='w-full 800px:w-[180px] h-[40px] bg-[#37a39a] text-center text-[#fff] rounded mt-8 cursor-pointer'
+                        />
 
                 </div>
 
             </form>
-
-
         </div>
     )
 }
