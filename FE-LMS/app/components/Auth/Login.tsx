@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { styles } from "@/app/styles/style";
@@ -29,7 +29,6 @@ const Login: FC<Props> = ({ setRoute }) => {
 
   const [login, { isError, data, isSuccess, error }] = useLoginMutation();
   const [socialAuth, { isSuccess: socialSuccess, error: socialError }] = useSocialAuthMutation();
-
   const [show, setShow] = useState(false);
 
   // Formik for Local Login
@@ -67,6 +66,7 @@ const Login: FC<Props> = ({ setRoute }) => {
       toast.error("Social login failed.");
     }
   }, [isSuccess, isError, socialSuccess, socialError]);
+  // Handle click outside modal
 
   return (
     <div className="w-full">

@@ -15,7 +15,6 @@ const Page: FC<Props> = (props) => {
   const [activeItem, setActiveItem] = useState(0);
   const [route, setRoute] = useState("");
   const {user} = useSelector((state:any)=> state.auth);
-  console.log('user',route);
   return (
     <div>
       <Heading
@@ -31,7 +30,7 @@ const Page: FC<Props> = (props) => {
         route={route}
         setRoute={setRoute}
       />
-          <Hero/>
+        <Hero/>
     </div>
 
   )

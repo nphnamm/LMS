@@ -24,6 +24,7 @@ type Props = {
 };
 
 const Header: FC<Props> = ({ activeItem, setOpen, route, setRoute, open }) => {
+  console.log('route,', route);
   const [openSidebar, setOpenSidebar] = useState(false);
   const [active, setActive] = useState(false);
   const { t, i18n } = useTranslation();
@@ -39,7 +40,7 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, setRoute, open }) => {
       }
     });
   }
-  
+
   useEffect(() => {
     if (!user) {
       if (data) {
@@ -60,12 +61,14 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, setRoute, open }) => {
     }
   }, [data, isSuccess, route])
 
-  // Close sidebar when clicking outside
+  // Modify the handleClose function
   const handleClose = (e: any) => {
+    // Check if the event target is the screen (outside the modal)
     if (e.target.id === "screen") {
-      setOpenSidebar(false);
+      setOpenSidebar(false);  // Close sidebar
     }
   };
+
 
   return (
     <div className="w-full relative">
@@ -102,12 +105,12 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, setRoute, open }) => {
                 user ? (
                   <Link href="/profile">
                     <Image
-                    src={user.avatar?.url || avatar}
-                    alt=""
+                      src={user.avatar?.url || avatar}
+                      alt=""
                       width={30}
                       height={30}
                       className="w-[30px] h-[30px] rounded-full cursor-pointer object-cover"
-                      style={{border : activeItem === 0 ? "2px solid #37a39a":"none"}}
+                      style={{ border: activeItem === 0 ? "2px solid #37a39a" : "none" }}
                     />
                   </Link>
                 ) : (
