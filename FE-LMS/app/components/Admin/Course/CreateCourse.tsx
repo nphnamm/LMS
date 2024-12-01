@@ -36,8 +36,13 @@ const CreateCourse = (props: Props) => {
         },
     ]);
     const [courseData, setCourseData] = useState({});
+<<<<<<< HEAD
     const handleSubmit = async(e:any) =>{
         e.preventDefault();
+=======
+    const handleSubmit = asnyc () => {
+
+>>>>>>> b393845a1fae59fa7b4de70d5d61bfcb3c5c9263
     }
     return (
         <div className='w-full flex min-h-screen'>
@@ -61,11 +66,19 @@ const CreateCourse = (props: Props) => {
                         setActive={setActive}
                     />
                 )}
+<<<<<<< HEAD
+=======
+
+>>>>>>> b393845a1fae59fa7b4de70d5d61bfcb3c5c9263
                 {active === 2 && (
                     <CourseContent
                         active={active}
                         setActive={setActive}
+<<<<<<< HEAD
                         courseContentData={courseContentData}
+=======
+                        setCourseContent={courseContentData}
+>>>>>>> b393845a1fae59fa7b4de70d5d61bfcb3c5c9263
                         setCourseContentData={setCourseContentData}
                         handleSubmit={handleSubmit}
                     />

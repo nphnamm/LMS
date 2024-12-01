@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { styles } from '@/app/styles/style';
 import React, { FC, useState } from 'react'
 import { AiOutlineDelete } from 'react-icons/ai';
@@ -229,6 +230,52 @@ const CourseContent: FC<Props> = ({
 
             </form>
 
+=======
+import React, { FC } from 'react'
+import { IoMdCheckmark } from 'react-icons/io';
+
+type Props = {
+    active:number; 
+    setActive:(active:number) => void;
+    courseContentData:any;
+    setCourseContentData: (courseContentData:any) =>void;
+    handleSubmit:any;
+
+}
+
+const CourseContent: FC<Props> = ({  }) => {
+    const options = [
+        "Course Information",
+        "Course Options",
+        "Course Content",
+        "Course Preview"
+    ]
+    return (
+        <div>
+            {options.map((option: any, index: number) => (
+                <div key={index} className={`w-full flex py-5 rounded-full`}>
+                    <div
+                        className={`w-[35px] h-[35px] rounded-full flex items-center justify-center ${active + 1 > index ? "bg-blue-500" : "bg-[#384766]"
+                            } relative`}
+                    >
+                        <IoMdCheckmark className='text-[25px]' />
+                        {index !== options.length && (
+                            <div
+                                className={`absolute h-[30px] w-1 ${active + 1 > index ? "bg-blue-500" : "bg-[#384766]"
+                                    } bottom-[-100%]`}
+
+                            />
+
+                        )}
+                    </div>
+                    <h5 className={`pl-3 ${active === index ? "dark:text-white text-black" : "dark:text-white text-bl;ack"
+                        } text-[20px]`}>
+                            {option}
+
+                    </h5>
+                </div>
+            ))}
+>>>>>>> b393845a1fae59fa7b4de70d5d61bfcb3c5c9263
         </div>
     )
 }
