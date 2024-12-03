@@ -1,8 +1,10 @@
 import { styles } from '@/app/styles/style';
 import React, { FC, useState } from 'react'
-import { AiOutlineDelete } from 'react-icons/ai';
+import { AiOutlineDelete, AiOutlinePlusCircle } from 'react-icons/ai';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import { FaPencilAlt } from 'react-icons/fa'; // From Font Awesome set
+import { BsLink45Deg } from 'react-icons/bs';
+import toast from 'react-hot-toast';
 
 type Props = {
     active: number
@@ -37,6 +39,38 @@ const CourseContent: FC<Props> = ({
         updateData[index].links.splice(linkIndex, 1);
         setCourseContentData(updateData);
     }
+    const handleAddLink = (index: number) => {
+        const updatedData = [...courseContentData];
+        updatedData[index].links.push({ title: "", url: "" });
+        setCourseContentData(updatedData);
+
+    }
+    const newContentHandler = (item: any) => {
+        console.log('item', item);
+        if (item.title === "" || item.description === "" || item.videoUrl === "") {
+            toast.error("Please fill all the filed first ")
+        } else {
+            let newVideoSection = "";
+            if (courseContentData.length > 0) {
+                const lastVideoSection = courseContentData[courseContentData.length - 1].videoSection;
+                // use the last videoSection if available, else use user input
+                if (lastVideoSection) {
+                    newVideoSection = lastVideoSection
+                }
+
+            }
+            const newContent = {
+                videoUrl: "",
+                title: "",
+                description: "",
+                videoSection: newVideoSection,
+                links: [{ title: "", url: "" }]
+            };
+            setCourseContentData([...courseContentData, newContent]);
+
+        }
+    }
+    console.log('courseData',courseContentData)
     return (
         <div className='w-[80%] m-auto mt-24 p-3'>
             <form>
@@ -160,10 +194,10 @@ const CourseContent: FC<Props> = ({
                                                 cols={30}
                                                 placeholder="sdder"
                                                 className={`${styles.input} !h-min py-2`}
-                                                value={item.videoUrl}
+                                                value={item.description}
                                                 onChange={(e) => {
                                                     const updateData = [...courseContentData];
-                                                    updateData[index].videoUrl = e.target.value;
+                                                    updateData[index].description = e.target.value;
                                                     setCourseContentData(updateData)
                                                 }}
 
@@ -211,15 +245,34 @@ const CourseContent: FC<Props> = ({
                                                                 setCourseContentData(updateData)
                                                             }}
                                                         />
-
                                                     </div>
-                                                ))
-                                            }
+                                                ))}
+                                            <br />
+                                            <div className='inline-block mb-4'>
+                                                <p
+                                                    onClick={() => handleAddLink(index)}
+                                                    className='flex items-center text-[18px] dark:text-white text-black cursor-pointer'>
+                                                    <BsLink45Deg className="mr-2" /> Add Link
+
+                                                </p>
+                                            </div>
+
                                         </div>
-
                                     </>
-
                                 )}
+                                <br />
+                                {
+                                    index === courseContentData.length - 1 && (
+                                        <div>
+                                            <p className='flex items-center text-[18px] dark:text-white text-black cursor-pointer'
+                                                onClick={(e: any) => newContentHandler(item)}
+
+                                            >
+                                                <AiOutlinePlusCircle className='mr-2' /> Add New Content
+                                            </p>
+                                        </div>
+                                    )
+                                }
 
                             </div>
                         </>
