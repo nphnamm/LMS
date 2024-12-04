@@ -11,6 +11,7 @@ import path from "path"
 import sendMail from "../utils/sendMail";
 import NotificationModel from "../models/notification.model";
 import { getAllUsersService } from "../services/user.service";
+import axios from "axios";
 
 // upload course
 export const uploadCourse = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
@@ -429,6 +430,33 @@ export const deleteCourse = CatchAsyncError(async (req: Request, res: Response, 
 
     } catch (error: any) {
         return next(new ErrorHandler(error.message, 500))
+
+    }
+});
+
+
+export const generateVideoUrl = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const {videoId} = req.body;
+        console.log('videoId',videoId);
+        console.log('process.env.VDOCIPHER_API_SECRET',process.env.VDOCIPHER_API_SECRET);
+
+        const response = await axios.post(
+            `https://dev.vdocipher.com/api/videos/${videoId}/otp`,
+            {ttl:300},
+            {
+                headers:{
+                    Accept:'application/json',
+                    'Content-Type':'application/json',
+                    Authorization: `Apisecret ${process.env.VDOCIPHER_API_SECRET}`
+                }
+            }
+        )
+
+        res.json(response.data);
+    } catch (error: any) {
+        console.log('err',error)
+        return next(new ErrorHandler(error.message, 400))
 
     }
 });

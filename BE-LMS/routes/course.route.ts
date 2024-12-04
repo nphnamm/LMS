@@ -1,7 +1,7 @@
 import express from 'express';
 import { authorizeRoles, isAuthenticated } from '../middleware/auth';
 const courseRouter = express.Router();
-import { addAnswer, addQuestion, addReplyToReview, addReview, deleteCourse, getAllCourses, getAllCoursesAdmin, getCourseByUser, getSingleCourse, updateCourse, uploadCourse } from '../controllers/course.controller';
+import { addAnswer, addQuestion, addReplyToReview, addReview, deleteCourse, generateVideoUrl, getAllCourses, getAllCoursesAdmin, getCourseByUser, getSingleCourse, updateCourse, uploadCourse } from '../controllers/course.controller';
 
 courseRouter.post(
     '/create-course',
@@ -62,10 +62,16 @@ courseRouter.get(
 );
 
 courseRouter.delete(
-    '/delete-user', 
+    '/delete-course', 
     isAuthenticated, 
     authorizeRoles("admin"), 
     deleteCourse
+);
+
+courseRouter.post(
+    '/getVideoCipherOTP', 
+    isAuthenticated, 
+    generateVideoUrl
 );
 
 

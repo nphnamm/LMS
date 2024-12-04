@@ -1,4 +1,5 @@
 import React, { FC } from 'react'
+import CoursePlayer from './CoursePlayer';
 
 type Props = {
     active: number;
