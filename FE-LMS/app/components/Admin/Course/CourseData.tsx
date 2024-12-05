@@ -1,4 +1,5 @@
 import { styles } from '@/app/styles/style';
+import { useTheme } from 'next-themes';
 import React, { FC } from 'react'
 import toast from 'react-hot-toast';
 import { MdAddCircle } from 'react-icons/md';
@@ -18,6 +19,8 @@ const CourseData: FC<Props> = ({ benefits, setBenefits, prerequisites, setPrereq
         updatedBenefits[index].title = value;
         setBenefits(updatedBenefits);
     }
+    const { theme } = useTheme();
+    console.log('thême',theme)
     const handlePrerequisitesChange = (index: number, value: any) => {
         const updatedPrerequisites = [...prerequisites];
         updatedPrerequisites[index].title = value;
@@ -61,7 +64,7 @@ const CourseData: FC<Props> = ({ benefits, setBenefits, prerequisites, setPrereq
                     />
                 ))}
                 <MdAddCircle
-                    style={{ margin: "10px 0px", cursor: "pointer", width: "30px" }}
+                    style={{ margin: "10px 0px", cursor: "pointer", width: "30px", color:`${theme=="dark" ? "white" : "black"}`}}
                     onClick={handleAddBenefit}
                 />
             </div>
@@ -84,7 +87,7 @@ const CourseData: FC<Props> = ({ benefits, setBenefits, prerequisites, setPrereq
                     />
                 ))}
                 <MdAddCircle
-                    style={{ margin: "10px 0px", cursor: "pointer", width: "30px" }}
+                    style={{ margin: "10px 0px", cursor: "pointer", width: "30px", color:`${theme=="dark" ? "white" : "black"}`}}
                     onClick={handleAddPrerequisite}
                 />
             </div>
@@ -92,12 +95,12 @@ const CourseData: FC<Props> = ({ benefits, setBenefits, prerequisites, setPrereq
                 <div className='w-full 800px:w-[180px] flex items-center justify-center h-[40px] bg-[#37a39a] text-center text-[#fff] rounded mt-8'
                     onClick={() => preButton()}
                 >
-
+                    Previous 
                 </div>
                 <div className='w-full 800px:w-[180px] flex items-center justify-center h-[40px] bg-[#37a39a] text-center text-[#fff] rounded mt-8'
                     onClick={() => handleOption()}
                 >
-
+                    Next
                 </div>
             </div>
         </div>

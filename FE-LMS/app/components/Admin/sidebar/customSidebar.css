@@ -1,10 +1,7 @@
 /* General styles for ProSidebar */
 
 /* Light Theme */
-.light-theme .pro-sidebar > .pro-sidebar-inner {
-    background-color: #ffffff !important;
-    color: #1a202c !important;
-}
+
 
 /* .light-theme .pro-menu-item {
     color: #718096;
@@ -16,7 +13,7 @@
 } */
 
 /* Dark Theme */
-.dark-theme .pro-sidebar>.pro-sidebar-inner {
+.pro-sidebar>.pro-sidebar-inner {
     background-color: #1a202c !important;
     color: #ffffff !important;
 }

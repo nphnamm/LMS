@@ -54,8 +54,7 @@ const CourseInformation: FC<Props> = ({ courseInfo, setCourseInfo, active, setAc
         <div className='w-[80%] m-auto mt-24'>
             <form onSubmit={handleSubmit} className="${styles.label}">
                 <div >
-                    <label htmlFor="">
-
+                    <label  className={`${styles.label}`} htmlFor="">
                         Course Name
                     </label>
 
@@ -178,7 +177,7 @@ const CourseInformation: FC<Props> = ({ courseInfo, setCourseInfo, active, setAc
 
                 </div>
                 <br />
-                <div className='w-full'>
+                <div className='w-full max-h-[300px]'>
                     <input
                         type='file'
                         accept='image/*'
@@ -187,7 +186,7 @@ const CourseInformation: FC<Props> = ({ courseInfo, setCourseInfo, active, setAc
                         onChange={handleFileChange}
                     />
                     <label htmlFor='file'
-                        className={`w-full min-h-[10vh] dark:border-white border-[#00000026] p-3 border flex items-center justify-center ${
+                        className={`w-full min-h-[10vh]  dark:border-white border-[#00000026] p-3 border flex items-center justify-center ${
                             dragging ? "bg-blue-500" :"bg-transparent"
                         }`}
                         onDragOver={handleDragOver}
@@ -198,7 +197,7 @@ const CourseInformation: FC<Props> = ({ courseInfo, setCourseInfo, active, setAc
                             <img
                              src={courseInfo.thumbnail}
                             alt=''
-                            className='max-h-full w-full object-cover'
+                            className='max-w-[300px] w-full object-cover'
                              />
 
                         ) : (

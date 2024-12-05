@@ -119,14 +119,11 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, setRoute, open }) => {
                     <HiOutlineUserCircle
                       size={25}
                       className="hidden 800px:block cursor-pointer dark:text-white text-black"
-
-
                     />
                   </div>
 
                 )
               }
-
             </div>
           </div>
         </div>

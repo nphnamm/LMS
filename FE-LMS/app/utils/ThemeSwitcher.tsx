@@ -25,8 +25,6 @@ const ThemeSwitcher = () => {
                     onClick={() => setTheme('light')}
                 />
             )}
-
-
         </div>
     )
 }

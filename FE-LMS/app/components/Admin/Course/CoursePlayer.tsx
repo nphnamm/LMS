@@ -11,9 +11,15 @@ const CoursePlayer: FC<Props> = ({ videoUrl }) => {
         playbackInfo: ""
     });
     useEffect(() => {
-        axios.post(`${process.env.NEXT_PUBLIC_SERVER_URI}getVideoCipherOTP`, {
-
-        }).then(res => {
+        axios.post(
+            `${process.env.NEXT_PUBLIC_SERVER_URI}/getVideoCipherOTP`,
+            {
+                videoId: videoUrl
+            },
+            {
+                withCredentials: true, // This allows cookies to be sent with the request
+            }
+        ).then(res => {
             setVideoData(res.data)
         })
     }, [videoUrl])

@@ -69,7 +69,7 @@ const CreateCourse = (props: Props) => {
             demoUrl: courseInfo.demoUrl,
             totalVideos: courseContentData.length,
             benefits: formattedBenefits,
-            prerequisites: formattedBenefits,
+            prerequisites: formattedPrerequisites,
             courseContent: formattedCourseContentData
         };
         setCourseData(data)
