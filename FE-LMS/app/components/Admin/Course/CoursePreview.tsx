@@ -1,6 +1,8 @@
 import React, { FC } from 'react'
 import CoursePlayer from './CoursePlayer';
 import { styles } from '@/app/styles/style';
+import Ratings from '@/app/utils/Ratings';
+import { IoIosCheckmarkCircle } from 'react-icons/io';
 
 type Props = {
     active: number;
@@ -22,6 +24,9 @@ const CoursePreview: FC<Props> = ({
     const prevButton = () => {
         setActive(active - 1);
 
+    }
+    const createCourse = () =>{
+        handleCourseCreate()
     }
     return (
 
@@ -50,41 +55,65 @@ const CoursePreview: FC<Props> = ({
                         </div>
 
                     </div>
-                    <div className='flex items-center'>
-                        <input
-                            type='text'
-                            name=''
-                            id=''
-                            placeholder='Discount code...'
-                            className={`${styles.input} !w-[50%] ml-3 !mt-0`}
-                        />
-                        <div className={`${styles.button} !w-[120px] my-3 ml-4 font-Poppins cursor-pointer`}>
-                            Apply
-                        </div>
-                    </div>
-                    <p className='pb-1'>* Source code included</p>
-                    <p className='pb-1'>* Full lifetime access</p>
-                    <p className='pb-1'>* Certificate of completion</p>
-                    <p className='pb-1 800px:pb-1'>* Premium Support</p>
+
                 </div>
-                
-                <div className='w-full'>
-                    <div className='w-full 800px:pr-5'>
-                        <h1 className='text-[25px] font-Poppins font-[600]'>
-                            {courseData?.name}
-                        </h1>
-                        <div className='flex items-center justify-between pt-3'>
-                            <div className='flex items-center'>
-                                <Ratings />
-                                <h5>0 Reviews</h5>
-                            </div>
-                            <h5>0 Students</h5>
-                        </div>
+                <div className='flex items-center'>
+                    <input
+                        type='text'
+                        name=''
+                        id=''
+                        placeholder='Discount code...'
+                        className={`${styles.input} !w-[50%] ml-3 !mt-0`}
+                    />
+                    <div className={`${styles.button} !w-[120px] my-3 ml-4 font-Poppins cursor-pointer`}>
+                        Apply
                     </div>
-                    
+                </div>
+                <p className='pb-1'>* Source code included</p>
+                <p className='pb-1'>* Full lifetime access</p>
+                <p className='pb-1'>* Certificate of completion</p>
+                <p className='pb-1 800px:pb-1'>* Premium Support</p>
+            </div>
+            <div className='w-full'>
+                <div className='w-full 800px:pr-5'>
+                    <h1 className='text-[25px] font-Poppins font-[600]'>
+                        {courseData?.name}
+                    </h1>
+                    <div className='flex items-center justify-between pt-3'>
+                        <div className='flex items-center'>
+                            <Ratings rating={4.4} />
+                            <h5>0 Reviews</h5>
+                        </div>
+                        <h5>0 Students</h5>
+                    </div>
+                    <br />
+                    <h1 className='text-[25px] font-Poppins font-[600]'>
+                        What you will learn from this course?
+                    </h1>
+                </div>
+                {courseData?.benefits?.map((item: any, index: number) => (
+                    <div className='w-full flex 800px:items-center py-2' key={index}>
+                        <div className='w-[15px] mr-1'>
+                            <IoIosCheckmarkCircle size={20} />
+                        </div>
+                        <p className='pl-2'>
+                            {item.title}
+                        </p>
+
+
+                    </div>
+                ))}
+                <br />
+                <br />
+                {/* //course description */}
+                <div className='w-full'>
+                    <h1 className='text-[25px] font-Poppins font-[600]'>
+                        Course Details
+                    </h1>
+
+                    {courseData?.description}
                 </div>
             </div>
-
 
             <br />
 
@@ -97,7 +126,7 @@ const CoursePreview: FC<Props> = ({
                     Prev
                 </div>
                 <div className='w-full 800px:w-[180px] flex items-center justify-center h-[40px] bg-[#37a39a] text-center text-[#fff] rounded mt-8 cursor-pointer'
-                // onClick={() => handleOptions()}
+                    onClick={() => createCourse()}
                 >
                     Next
                 </div>
