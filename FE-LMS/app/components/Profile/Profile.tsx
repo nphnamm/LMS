@@ -1,11 +1,13 @@
 'use client'
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import SideBarProfile from './SideBarProfile'
 import { useLogOutQuery } from '@/redux/features/auth/authApi'
 import { signOut } from 'next-auth/react'
 import { redirect } from 'next/navigation';
 import ProfileInfo from './ProfileInfo';
 import ChangePassword from './ChangePassword';
+import { sign } from 'crypto'
+import toast from 'react-hot-toast'
 type Props = {
 
     user: any
@@ -16,16 +18,17 @@ const Profile: FC<Props> = ({ user }) => {
     const [avatar, setAvatar] = useState(user?.avatar?.url);
     const [active, setActive] = useState(1);
     const [logout, setLogout] = useState(false);
-    const { } = useLogOutQuery(
+
+    const { data, isLoading, error } = useLogOutQuery(
         undefined,
-        { skip: !logout ? true : false }
+        { skip: !logout }
     );
 
     const logOutHandler = async () => {
-        signOut();
+        await signOut()
         setLogout(true);
-        redirect("/")
-    }
+    };
+
     if (typeof window !== "undefined") {
         window.addEventListener("scroll", () => {
             if (window.scrollY > 85) {
@@ -35,6 +38,15 @@ const Profile: FC<Props> = ({ user }) => {
             }
         });
     }
+    useEffect(() => {
+        if (!isLoading && !error && data) { // Check for successful logout
+          console.log('Logged out successfully:', data); // Or other success handling
+          toast.success("Logged out successfully")
+        } else if (!isLoading && error) {  // Add error handling if necessary
+            console.error("Logout error:", error) // Log the error for debugging
+        }
+    
+      }, [data, isLoading, error]); 
 
     return (
 

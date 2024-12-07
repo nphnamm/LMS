@@ -46,7 +46,7 @@ const CourseContent: FC<Props> = ({
 
     }
     const newContentHandler = (item: any) => {
-        console.log('item', item);
+        // console.log('item', item);
         if (item.title === "" || item.description === "" || item.videoUrl === "") {
             toast.error("Please fill all the filed first ")
         } else {
@@ -95,7 +95,7 @@ const CourseContent: FC<Props> = ({
 
     }
     const handleOptions = () => {
-        console.log('1', courseContentData[courseContentData.length - 1])
+        // console.log('1', courseContentData[courseContentData.length - 1])
         if (courseContentData[courseContentData.length - 1]?.title === "" ||
             courseContentData[courseContentData.length - 1]?.description === "" ||
             courseContentData[courseContentData.length - 1]?.videoUrl === "" ||

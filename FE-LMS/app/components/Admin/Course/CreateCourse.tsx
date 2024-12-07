@@ -46,7 +46,7 @@ const CreateCourse = (props: Props) => {
         // e.preventDefault();
         // formatted benefits array
         const formattedBenefits = benefits.map((benefit) => ({ title: benefit.title }));
-        console.log(formattedBenefits);
+        // console.log(formattedBenefits);
         //formatted prerequisited array
         const formattedPrerequisites = prerequisites.map((prerequisites) => ({ title: prerequisites.title }));
 
@@ -81,7 +81,7 @@ const CreateCourse = (props: Props) => {
     }
     const handleCourseCreate = async (e:any) =>{
         const data = courseData;
-        console.log('data', data);
+        // console.log('data', data);
         if(!isLoading){
             await createCourse(data);
         }
@@ -100,7 +100,7 @@ const CreateCourse = (props: Props) => {
             }
         }
     },[isLoading, isSuccess,error])
-    console.log('check', courseData)
+    // console.log('check', courseData)
     return (
         <div className='w-full flex min-h-screen'>
             <div className='w-[80%]'>

@@ -29,11 +29,7 @@ router.get(
     isAuthenticated,
     getUserInfo
 );
-router.get(
-    '/me',
-    isAuthenticated,
-    getUserInfo
-);
+
 
 router.post(
     '/social-auth',

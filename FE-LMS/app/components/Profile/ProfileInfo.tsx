@@ -22,7 +22,7 @@ const ProfileInfo: FC<Props> = ({ user, avatar }) => {
   const [loadUser, setLoadUser] = useState(false);
   const { } = useLoadUserQuery(undefined, { skip: loadUser ? false : true });
 
-  console.log('user', user);
+  // console.log('user', user);
 
   const imageHandler = async (e: any) => {
     // const file = e.target.files[0];
@@ -42,7 +42,7 @@ const ProfileInfo: FC<Props> = ({ user, avatar }) => {
       setLoadUser(true);
     }
     if(error || updateError){
-      console.log(error);
+      // console.log(error);
     }
     if(success){
       toast.success("Profile updated successfully!")

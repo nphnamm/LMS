@@ -30,6 +30,7 @@ const Login: FC<Props> = ({ setRoute }) => {
   const [login, { isError, data, isSuccess, error }] = useLoginMutation();
   const [socialAuth, { isSuccess: socialSuccess, error: socialError }] = useSocialAuthMutation();
   const [show, setShow] = useState(false);
+  console.log('check',  process.env.GOOGLE_CLIENT_SECRET)
 
   // Formik for Local Login
   const formik = useFormik({

@@ -9,7 +9,7 @@ import Verification from "../components/Auth/Verification"
 import SignUp from "./Auth/SignUp";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import { useSession } from 'next-auth/react';
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import avatar from "../../public/images/avatar.png";
 import { useSocialAuthMutation } from "@/redux/features/auth/authApi";
@@ -24,7 +24,7 @@ type Props = {
 };
 
 const Header: FC<Props> = ({ activeItem, setOpen, route, setRoute, open }) => {
-  console.log('route,', route);
+  // console.log('route,', route);
   const [openSidebar, setOpenSidebar] = useState(false);
   const [active, setActive] = useState(false);
   const { t, i18n } = useTranslation();
@@ -44,12 +44,12 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, setRoute, open }) => {
   useEffect(() => {
     if (!user) {
       if (data) {
-        console.log(data);
+        // console.log(data);
         socialAuth({
           email: data?.user?.email,
           name: data?.user?.name,
           avatar: data?.user?.image,
-          provider: data?.user?.provider
+          provider: data?.user?.provider,
 
         })
       }

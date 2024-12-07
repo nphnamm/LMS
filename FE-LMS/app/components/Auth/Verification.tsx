@@ -21,7 +21,7 @@ const Verification: FC<Props> = ({ setRoute }) => {
     const {token} = useSelector((state:any)=> state.auth);
     const [activation, {  isSuccess, error }] = useActivationMutation();
     const [inValidError, setInValidError] = useState<boolean>(false);
-    console.log(token);
+    // console.log(token);
     const inputRefs = [
         useRef<HTMLInputElement>(null),
         useRef<HTMLInputElement>(null),
@@ -51,12 +51,12 @@ const Verification: FC<Props> = ({ setRoute }) => {
             setInValidError(true);
 
           }else{
-            console.log('An error occured', error);
+            // console.log('An error occured', error);
           }
         }
       },[isSuccess,error])
     const verificationHandler = async () => {
-        console.log('test');
+        // console.log('test');
         const verificationNumber = Object.values(verifyNumber).join("");
         if(verificationNumber.length !== 4){
             setInValidError(true);

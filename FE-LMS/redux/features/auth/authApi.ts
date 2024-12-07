@@ -28,7 +28,7 @@ export const authApi = apiSlice.injectEndpoints({
                     }))
 
                 } catch (error: any) {
-                    console.log(error);
+                    // console.log(error);
                 }
             }
         }),
@@ -56,7 +56,7 @@ export const authApi = apiSlice.injectEndpoints({
             async onQueryStarted(arg, { queryFulfilled, dispatch }) {
                 try {
                     const result = await queryFulfilled
-                    console.log("Full API response:", result);
+                    // console.log("Full API response:", result);
                     // console.log("API response data:", result.data);
                     dispatch(userLoggedIn({
                         accessToken: result?.data.accessToken,
@@ -64,12 +64,12 @@ export const authApi = apiSlice.injectEndpoints({
                     }))
 
                 } catch (error: any) {
-                    console.log(error);
+                    // console.log(error);
                 }
             }
         }),
         socialAuth: builder.mutation({
-            query: ({ email, name, avatar, provider }) => ({
+            query: ({ email, name, avatar, provider  }) => ({
                 url: "social-auth",
                 method: "POST",
                 body: {
@@ -89,7 +89,7 @@ export const authApi = apiSlice.injectEndpoints({
                     }))
 
                 } catch (error: any) {
-                    console.log(error);
+                    // console.log(error);
                 }
             }
         }),
@@ -106,7 +106,7 @@ export const authApi = apiSlice.injectEndpoints({
                     dispatch(userLoggedOut())
 
                 } catch (error: any) {
-                    console.log(error);
+                    // console.log(error);
                 }
             }
         })

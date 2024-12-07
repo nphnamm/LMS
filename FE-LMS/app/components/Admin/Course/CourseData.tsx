@@ -20,7 +20,7 @@ const CourseData: FC<Props> = ({ benefits, setBenefits, prerequisites, setPrereq
         setBenefits(updatedBenefits);
     }
     const { theme } = useTheme();
-    console.log('thême',theme)
+    // console.log('thême',theme)
     const handlePrerequisitesChange = (index: number, value: any) => {
         const updatedPrerequisites = [...prerequisites];
         updatedPrerequisites[index].title = value;
