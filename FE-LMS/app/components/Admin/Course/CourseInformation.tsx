@@ -210,7 +210,7 @@ const CourseInformation: FC<Props> = ({ courseInfo, setCourseInfo, active, setAc
                     </label>
                 </div>
                 <br/>
-                <div className='w-full flex items-center justify-end'>
+                <div className='w-full flex items-center justify-end pt-[24px] pb-[24px]'>
                         <input
                         type='submit'
                         value="Next"

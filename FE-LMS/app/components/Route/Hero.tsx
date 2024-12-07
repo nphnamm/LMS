@@ -19,7 +19,7 @@ const Hero = (props: Props) => {
                 />
             </div>
             <div className="1000px:w-[60%] flex flex-col items-center 1000px:mt-[0px] text-center 1000px:text-left mt-[150px]">
-                <h2 className="dark:text-white text-[#000000c7] text-[30px] px-5 w-full 1000px:text-[70px] font-[600] font-Josefin py-2 1000px:leading-[75px] 1500px:w-[60%] max-h-80">
+                <h2 className="dark:text-white text-[#000000c7] text-[30px] px-5 w-full 1000px:text-[50px] font-[900] font-Josefin py-2 1000px:leading-[75px] 1500px:w-[60%] max-h-80">
                 {t('slogan')}
                 </h2>
                 <br />

@@ -38,7 +38,7 @@ const Profile: FC<Props> = ({ user }) => {
 
     return (
 
-        <div className="w-[85%] flex mx-auto">
+        <div className="w-[100%] flex mx-auto h-[100vh]">
             <div
                 className={` w-[60px] 800px:w-[310px] h-[450px]  ${scroll ? "top-[120px]" : "top-[30px]"} 
                 dark:bg-slate-900 bg-opacity-90 border bg-white dark:border-[#ffffff1d] border-[#00000014] rounded-xl overflow-hidden shadow-sm mt-[80px] mb-[80px] sticky ${scroll ? "top-120px" : "top-[30px]"} left-[30px]`}

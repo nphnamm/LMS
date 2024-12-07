@@ -15,9 +15,11 @@ import Image from "next/image";
 import avatarDefault from "../../../../public/images/avatar.png";
 import './customSidebar.css';
 import { useTheme } from "next-themes";
+import { useRouter } from "next/navigation";
 const AdminSidebar: React.FC<{ collapsed: boolean; setCollapsed: React.Dispatch<React.SetStateAction<boolean>> }> = ({ collapsed, setCollapsed }) => {
     const [selected, setSelected] = useState<string>("Dashboard");
     const { theme } = useTheme();
+    const router = useRouter();
 
     const handleToggle = () => {
         setCollapsed(!collapsed);
@@ -31,11 +33,16 @@ const AdminSidebar: React.FC<{ collapsed: boolean; setCollapsed: React.Dispatch<
         color: selected === item ? "#FFF" : "#A0AEC0",
     });
 
+    const handleCreateCourse = () =>{
+        router.push("/admin/create-course");
+    }
+
     useEffect(() => {
         // Dynamically add theme class to the body
         document.body.classList.remove("light-theme", "dark-theme");
         document.body.classList.add(theme === "dark" ? "dark-theme" : "light-theme");
     }, [theme]);
+
     return (
         <Box
             sx={{
@@ -151,7 +158,7 @@ const AdminSidebar: React.FC<{ collapsed: boolean; setCollapsed: React.Dispatch<
                             Content
                         </Typography>
                     )}
-                    <MenuItem icon={<VideoLibraryIcon />}>Create Course</MenuItem>
+                    <MenuItem onClick={handleCreateCourse} icon={<VideoLibraryIcon />}>Create Course</MenuItem>
                     <MenuItem icon={<VideoLibraryIcon />}>Live Courses</MenuItem>
 
                     {/* Customization Section */}

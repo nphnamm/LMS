@@ -17,7 +17,7 @@ const Page: React.FC = () => {
                     description="ELearning is a platform for students to learn and get help from teachers"
                     keywords="Programming, MERN, Redux, Machine Learning"
                 />
-                <div className="flex h-[200vh]">
+                <div className="flex ">
                     {/* Sidebar */}
                     <div style={{ width: collapsed ? "80px" : "270px", transition: "width 0.3s ease" }}>
                         <AdminSidebar collapsed={collapsed} setCollapsed={setCollapsed} />

@@ -1,12 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CourseOptions from './CourseOptions';
 import CourseInformation from './CourseInformation';
 import CourseData from './CourseData';
 import CourseContent from './CourseContent';
 import CoursePreview from './CoursePreview';
+import { useCreateCourseMutation} from '@/redux/features/courses/coursesApi';
+import toast from 'react-hot-toast';
+
+
 type Props = {}
 
 const CreateCourse = (props: Props) => {
+    const [createCourse,{isLoading,isSuccess, error}] = useCreateCourseMutation()
     const [active, setActive] = useState(0);
     const [courseInfo, setCourseInfo] = useState({
         name: "",
@@ -76,8 +81,25 @@ const CreateCourse = (props: Props) => {
     }
     const handleCourseCreate = async (e:any) =>{
         const data = courseData;
+        console.log('data', data);
+        if(!isLoading){
+            await createCourse(data);
+        }
+        
 
     }
+    useEffect(()=>{
+        if(isSuccess){
+            toast.success("Course created successfully");
+        
+        }   
+        if(error){
+            if("data" in error){
+                const errorMessage = error as any; 
+                toast.error(errorMessage.data.message);
+            }
+        }
+    },[isLoading, isSuccess,error])
     console.log('check', courseData)
     return (
         <div className='w-full flex min-h-screen'>

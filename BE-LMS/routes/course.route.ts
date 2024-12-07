@@ -2,9 +2,11 @@ import express from 'express';
 import { authorizeRoles, isAuthenticated } from '../middleware/auth';
 const courseRouter = express.Router();
 import { addAnswer, addQuestion, addReplyToReview, addReview, deleteCourse, generateVideoUrl, getAllCourses, getAllCoursesAdmin, getCourseByUser, getSingleCourse, updateCourse, uploadCourse } from '../controllers/course.controller';
+import { updateAccessToken } from '../controllers/user.controller';
 
 courseRouter.post(
     '/create-course',
+    updateAccessToken,
     isAuthenticated,
     authorizeRoles('admin'),
     uploadCourse
@@ -70,6 +72,7 @@ courseRouter.delete(
 
 courseRouter.post(
     '/getVideoCipherOTP', 
+    updateAccessToken,
     isAuthenticated, 
     generateVideoUrl
 );

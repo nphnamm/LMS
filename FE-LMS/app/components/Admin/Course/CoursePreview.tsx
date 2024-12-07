@@ -49,14 +49,15 @@ const CoursePreview: FC<Props> = ({
                     <h4 className='pl-5 pt-4 text-[22px]'>
                         {discountPercentage}% Off
                     </h4>
-                    <div className='flex items-center'>
+
+
+                </div>
+                <div className='flex items-center'>
                         <div className={`${styles.button} !w-[180px] my-3 font-Poppins !bg-[crimson] cursor-not-allowed`}>
                             Buy Now {courseData.price}
                         </div>
 
                     </div>
-
-                </div>
                 <div className='flex items-center'>
                     <input
                         type='text'
