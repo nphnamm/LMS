@@ -17,6 +17,7 @@ router.post(
 );
 router.get(
     '/logout',
+    updateAccessToken,
     isAuthenticated,
     logoutUser
 );
@@ -26,6 +27,7 @@ router.get(
 );
 router.get(
     '/me',
+    updateAccessToken,
     isAuthenticated,
     getUserInfo
 );
@@ -38,18 +40,21 @@ router.post(
 
 router.put(
     '/update-user-info',
+    updateAccessToken,
     isAuthenticated,
     updateUserInfo
 );
 
 router.put(
     '/update-user-password',
+    updateAccessToken,
     isAuthenticated,
     updatePassword
 );
 
 router.put(
     '/update-user-avatar',
+    updateAccessToken,
     isAuthenticated,
     updateProfilePicture
 );
@@ -66,11 +71,13 @@ router.post(
 
 router.get(
     '/get-all-users',
+    updateAccessToken,
     getAllUsers
 );
 //only -- admin
 router.put(
     '/update-user-role',
+    updateAccessToken,
     isAuthenticated,
     authorizeRoles("admin"),
     updateUserRole
@@ -78,6 +85,7 @@ router.put(
 //only -- admin
 router.delete(
     '/delete-user',
+    updateAccessToken,
     isAuthenticated,
     authorizeRoles("admin"),
     deleteUser

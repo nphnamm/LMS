@@ -6,6 +6,7 @@ import CourseContent from './CourseContent';
 import CoursePreview from './CoursePreview';
 import { useCreateCourseMutation} from '@/redux/features/courses/coursesApi';
 import toast from 'react-hot-toast';
+import { redirect } from 'next/navigation';
 
 
 type Props = {}
@@ -91,7 +92,7 @@ const CreateCourse = (props: Props) => {
     useEffect(()=>{
         if(isSuccess){
             toast.success("Course created successfully");
-        
+            redirect('/admin/all-courses')
         }   
         if(error){
             if("data" in error){

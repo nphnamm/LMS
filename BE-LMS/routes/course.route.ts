@@ -14,6 +14,7 @@ courseRouter.post(
 
 courseRouter.put(
     '/update-course/:id',
+    updateAccessToken,
     isAuthenticated,
     authorizeRoles('admin'),
     updateCourse
@@ -31,11 +32,13 @@ courseRouter.get(
 
 courseRouter.get(
     '/get-course-content/:id',
+    updateAccessToken,
     isAuthenticated,
     getCourseByUser
 );
 courseRouter.put(
     '/add-question',
+    updateAccessToken,
     isAuthenticated,
     addQuestion
 );
@@ -46,11 +49,13 @@ courseRouter.put(
 );
 courseRouter.post(
     '/add-review/:id',
+    updateAccessToken,
     isAuthenticated,
     addReview
 );
 courseRouter.post(
     '/add-reply',
+    updateAccessToken,
     isAuthenticated,
     authorizeRoles("admin"),
     addReplyToReview
@@ -64,16 +69,17 @@ courseRouter.get(
 );
 
 courseRouter.delete(
-    '/delete-course', 
-    isAuthenticated, 
-    authorizeRoles("admin"), 
+    '/delete-course/:id',
+    updateAccessToken,
+    isAuthenticated,
+    authorizeRoles("admin"),
     deleteCourse
 );
 
 courseRouter.post(
-    '/getVideoCipherOTP', 
+    '/getVideoCipherOTP',
     updateAccessToken,
-    isAuthenticated, 
+    isAuthenticated,
     generateVideoUrl
 );
 

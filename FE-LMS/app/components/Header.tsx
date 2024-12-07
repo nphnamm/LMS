@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import NavItems from "../utils/NavItems";
 import ThemeSwitcher from "../utils/ThemeSwitcher";
 import { HiOutlineMenuAlt3, HiOutlineUserCircle } from "react-icons/hi";
@@ -23,52 +23,60 @@ type Props = {
   setRoute: (route: string) => void
 };
 
+interface SessionUser {
+  email?: string;
+  name?: string;
+  image?: string;
+  provider?: string | null;
+}
+
 const Header: FC<Props> = ({ activeItem, setOpen, route, setRoute, open }) => {
-  // console.log('route,', route);
   const [openSidebar, setOpenSidebar] = useState(false);
   const [active, setActive] = useState(false);
   const { t, i18n } = useTranslation();
   const { user } = useSelector((state: any) => state.auth);
   const { data } = useSession();
-  const [socialAuth, { isSuccess, error }] = useSocialAuthMutation()
-  if (typeof window !== "undefined") {
-    window.addEventListener("scroll", () => {
-      if (window.scrollY > 85) {
-        setActive(true);
-      } else {
-        setActive(false);
-      }
-    });
-  }
+  const socialUser = data?.user as SessionUser | undefined;
+  const [socialAuth, { isSuccess, error }] = useSocialAuthMutation();
+
+  const handleScroll = useCallback(() => {
+    if (window.scrollY > 85) {
+      setActive(true);
+    } else {
+      setActive(false);
+    }
+  }, []);
 
   useEffect(() => {
-    if (!user) {
-      if (data) {
-        // console.log(data);
-        socialAuth({
-          email: data?.user?.email,
-          name: data?.user?.name,
-          avatar: data?.user?.image,
-          provider: data?.user?.provider,
+    if (typeof window !== "undefined") {
+      window.addEventListener("scroll", handleScroll);
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }
+  }, [handleScroll]);
 
-        })
-      }
+  useEffect(() => {
+    if (!user && socialUser) {
+      socialAuth({
+        email: socialUser.email,
+        name: socialUser.name,
+        avatar: socialUser.image,
+        provider: socialUser.provider,
+      });
     }
     if (isSuccess) {
-      setRoute("/")
-      toast.success("Login Sucessfully");
-
+      setRoute("/");
+      toast.success("Login Successfully");
     }
-  }, [data, isSuccess, route])
-
-  // Modify the handleClose function
-  const handleClose = (e: any) => {
-    // Check if the event target is the screen (outside the modal)
+  }, [user, socialUser, socialAuth, isSuccess, setRoute]);
+  console.log('user',user);
+  console.log('user-session',data)
+  const handleClose = useCallback((e: any) => {
     if (e.target.id === "screen") {
-      setOpenSidebar(false);  // Close sidebar
+      setOpenSidebar(false); // Close sidebar
     }
-  };
-
+  }, []);
 
   return (
     <div className="w-full relative">
