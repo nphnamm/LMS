@@ -2,9 +2,9 @@ import { NextFunction, Request, Response } from "express";
 import { CatchAsyncError } from "../middleware/cacthAsyncErrors";
 import ErrorHandler from "../utils/ErrorHandler";
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+import Conversation from "../models/conversation.model";
 
 
-let conversationSession: string | null = null;
 export const askAIbyText = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { prompt } = req.body;
@@ -32,7 +32,22 @@ export const conversation = CatchAsyncError(async (req: Request, res: Response, 
         const { prompt } = req.body;
         const genAI = new GoogleGenerativeAI("AIzaSyD-2AcVG3K3SBs57BXLSzvCOgxhDroJjWk"); // Use environment variable for security
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        if (!prompt) {
+            return next(new ErrorHandler("Prompt is required", 400));
+        }
 
+        const userId = req.user?._id;
+        if (!userId) {
+            return next(new ErrorHandler("Unauthorized", 401));
+        }
+
+        let conversationSession = await Conversation.findOne({ userId });
+        if (!conversationSession) {
+            conversationSession = new Conversation({
+                userId,
+                messages: [],
+            });
+        }
         // Check if a conversation session exists
         if (!conversationSession) {
             // If no session exists, create a new one

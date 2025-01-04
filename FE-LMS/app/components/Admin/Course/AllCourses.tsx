@@ -3,12 +3,16 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Box, Button } from "@mui/material";
 import { AiOutlineDelete } from 'react-icons/ai';
 import { useTheme } from "next-themes";
+import { useGetAllCoursesQuery } from '@/redux/features/courses/coursesApi';
 
 
 type Props = {}
 
 const AllCourses = (props: Props) => {
     const { theme, setTheme } = useTheme();
+    const {isLoading, data,error} = useGetAllCoursesQuery({});
+
+
     const columns = [
         { field: "id", headerName: "ID", flex: 0.5 },
         { field: "title", headerName: "Course Title", flex: 1 },
@@ -33,16 +37,19 @@ const AllCourses = (props: Props) => {
             }
         },
     ];
-    const rows = [
-        {
-            id: "1234",
-            title: "React",
-            purchased: "30",
-            ratings: "5",
-            created_at: "12/12/04"
-        }
-    ];
-
+    
+    const rows:any = [];
+    {
+        data && data.courses.forEach((item:any)=>{
+                rows.push({
+                    id:item.id,
+                    title:item.name,
+                    ratings:item.ratings,
+                    purchased:item.purchased,
+                    created_at: item.createdAt
+                })
+        })
+    }
 
     return (
         <div className='mt-[120px]'>

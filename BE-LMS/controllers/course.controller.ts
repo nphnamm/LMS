@@ -118,23 +118,23 @@ export const getSingleCourse = CatchAsyncError(async (req: Request, res: Respons
 // get all courses --without purchasing 
 export const getAllCourses = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const isCachedExist = await redis.get("allCourses");
-        if (isCachedExist) {
-            console.log('get from redis ')
+        // const isCachedExist = await redis.get("allCourses");
+        // if (isCachedExist) {
+        //     console.log('get from redis ')
 
-            const courses = JSON.parse(isCachedExist);
-            res.status(200).json({
-                success: true,
-                courses
-            });
-        } else {
+        //     const courses = JSON.parse(isCachedExist);
+        //     res.status(200).json({
+        //         success: true,
+        //         courses
+        //     });
+        // } else {
             const course = await CourseModel.find().select("-courseData.videoUrl -courseData.suggestion -courseData.question -courseData.links");
             console.log('get from mongoDB')
             res.status(200).json({
                 success: true,
                 course
             })
-        }
+        // }
 
     } catch (error: any) {
         return next(new ErrorHandler(error.message, 400))

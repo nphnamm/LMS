@@ -12,7 +12,7 @@ export const navItemsData = [
     },
     {
         name: "Courses",
-        url: "/courses",
+        url: "/ai",
     },
     {
         name: "About",
@@ -73,9 +73,9 @@ const NavItems: React.FC<Props> = ({ activeItem, isMobile }) => {
                     >
                         {/* Toggle Ball */}
                         <div
-    className={`absolute h-6 w-10 rounded-full shadow-md transition-all duration-300 ${language === 'vi' ? 'translate-x-12 bg-green-500 text-gray-600' : 'translate-x-0 bg-white text-black'
-        }`}
-></div>
+                            className={`absolute h-6 w-10 rounded-full shadow-md transition-all duration-300 ${language === 'vi' ? 'translate-x-12 bg-green-500 text-gray-600' : 'translate-x-0 bg-white text-black'
+                                }`}
+                        ></div>
 
                         {/* Text Labels */}
                         <span

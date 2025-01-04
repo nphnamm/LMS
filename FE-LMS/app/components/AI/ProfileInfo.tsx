@@ -21,7 +21,7 @@ const ProfileInfo: FC<Props> = ({ user, avatar }) => {
     setLoading(true);
     setError('');
     try {
-      const res = await axios.post('http://localhost:8000/api/v1/generateText', { prompt },{ withCredentials: true, });
+      const res = await axios.post('https://lms-0g6w.onrender.com/api/v1/generateText', { prompt },{ withCredentials: true, });
       setResponse(res.data.message);
       console.log(res.data.message);
     } catch (err) {
