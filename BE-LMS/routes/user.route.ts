@@ -1,6 +1,7 @@
 import { activateUser, deleteUser, forgotPassword, getAllUsers, getUserInfo, loginUser, logoutUser, registrationUser, socialAuth, updateAccessToken, updatePassword, updateProfilePicture, updateUserInfo, updateUserRole, verifyForgotPassword } from '../controllers/user.controller';
 import express from 'express';
 import { authorizeRoles, isAuthenticated } from '../middleware/auth';
+import { access } from 'fs';
 const router = express.Router();
 
 router.post(
@@ -23,7 +24,16 @@ router.get(
 );
 router.get(
     '/refresh',
-    updateAccessToken
+    updateAccessToken,
+    // (req, res) => {
+    //     res.status(200).json({
+    //         success: true,
+    //         message: "Token refreshed successfully"
+    //         ,accessToken: req.body.accessToken,
+    //         refreshToken: req.body.refreshToken
+
+    //     });
+    // }
 );
 router.get(
     '/me',
@@ -72,6 +82,8 @@ router.post(
 router.get(
     '/get-all-users',
     updateAccessToken,
+    isAuthenticated,
+    authorizeRoles("admin"),
     getAllUsers
 );
 //only -- admin

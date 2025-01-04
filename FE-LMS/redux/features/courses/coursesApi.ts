@@ -17,8 +17,8 @@ export const userApi = apiSlice.injectEndpoints({
         getAllCourses: builder.query({
             query: () => (
                 { 
-                url:"get-all-courses",
-                method: 'POST',
+                url:"get-courses",
+                method: 'GET',
                 credentials: 'include' as const
             })
         }),

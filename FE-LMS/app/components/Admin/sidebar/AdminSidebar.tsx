@@ -25,6 +25,7 @@ const AdminSidebar: React.FC<{ collapsed: boolean; setCollapsed: React.Dispatch<
         setCollapsed(!collapsed);
     };
     const handleMenuItemClick = (item: string) => {
+        router.push("/admin/users");
         setSelected(item);
     };
 
@@ -42,6 +43,9 @@ const AdminSidebar: React.FC<{ collapsed: boolean; setCollapsed: React.Dispatch<
         document.body.classList.remove("light-theme", "dark-theme");
         document.body.classList.add(theme === "dark" ? "dark-theme" : "light-theme");
     }, [theme]);
+    const navigateAllCourse = () =>{
+        router.push("/admin/courses");
+    }
 
     return (
         <Box
@@ -159,7 +163,7 @@ const AdminSidebar: React.FC<{ collapsed: boolean; setCollapsed: React.Dispatch<
                         </Typography>
                     )}
                     <MenuItem onClick={handleCreateCourse} icon={<VideoLibraryIcon />}>Create Course</MenuItem>
-                    <MenuItem icon={<VideoLibraryIcon />}>Live Courses</MenuItem>
+                    <MenuItem icon={<VideoLibraryIcon />} onClick={navigateAllCourse}>Live Courses</MenuItem>
 
                     {/* Customization Section */}
                     {!collapsed && (

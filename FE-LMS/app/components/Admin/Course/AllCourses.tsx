@@ -4,6 +4,7 @@ import { Box, Button } from "@mui/material";
 import { AiOutlineDelete } from 'react-icons/ai';
 import { useTheme } from "next-themes";
 import { useGetAllCoursesQuery } from '@/redux/features/courses/coursesApi';
+import { format } from 'timeago.js';
 
 
 type Props = {}
@@ -40,15 +41,15 @@ const AllCourses = (props: Props) => {
     
     const rows:any = [];
     {
-        data && data.courses.forEach((item:any)=>{
-                rows.push({
-                    id:item.id,
-                    title:item.name,
-                    ratings:item.ratings,
-                    purchased:item.purchased,
-                    created_at: item.createdAt
-                })
-        })
+        data && data.course.forEach((item:any, index:number)=>{
+            rows.push({
+                id: item._id || index, // Ensure each row has a unique id
+                title: item.name,
+                ratings: item.ratings,
+                purchased: item.purchased,
+                created_at: format(item.createdAt)
+            })
+    })
     }
 
     return (
