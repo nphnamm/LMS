@@ -37,14 +37,14 @@ const AllCourses = (props: Props) => {
         return (
           <>
             <Link href={`/admin/course/edit/${params.row.id}`}>
-              <FiEdit2 className="dark:text-white text-blackm " size={20} />
+              <FiEdit2 className="dark:text-white text-black " size={20} />
             </Link>
           </>
         );
       },
     },
     {
-      field: " ",
+      field: "Delete",
       headerName: "Delete",
       flex: 0.2,
       renderCell: (params: any) => {
@@ -52,7 +52,8 @@ const AllCourses = (props: Props) => {
           <>
             <Button
               onClick={() => {
-                setCourseId(params.row._id);
+                console.log(params.row.id);
+                setCourseId(params.row.id);
                 setOpen(!open);
               }}
             >
@@ -172,15 +173,15 @@ const AllCourses = (props: Props) => {
               <h1 className={`${styles.title}`}>
                 Are you sure you want to delete this course?
               </h1>
-              <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2">
+              <div className="flex w-full items-center justify-between mt-5 ">
                 <div
-                  className={`${styles.button} !w-120px h-30px bg-[#57c7]`}
+                  className={`${styles.button} !w-[120px] h-30px focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800`}
                   onClick={() => setOpen(!open)}
                 >
                   Cancel
                 </div>
                 <div
-                  className={`${styles.button} !w-120px h-30px bg-[#57c7]`}
+                  className={`${styles.button} !w-[120px] h-30px bg-[#f00] focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900`}
                   onClick={handleDelete}
                 >
                   Delete
