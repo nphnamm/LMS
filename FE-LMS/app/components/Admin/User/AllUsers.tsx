@@ -1,27 +1,33 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { Box, Button } from "@mui/material";
-import { AiOutlineDelete, AiOutlineMail } from 'react-icons/ai';
+import { AiOutlineDelete, AiOutlineMail } from "react-icons/ai";
 import { useTheme } from "next-themes";
-import { useGetAllUserQuery } from '@/redux/features/user/userApi';
-import { format } from 'timeago.js';
-import { styles } from '@/app/styles/style';
+import { useGetAllUserQuery } from "@/redux/features/user/userApi";
+import { format } from "timeago.js";
+import { styles } from "@/app/styles/style";
 
 type Props = {
-  isTeam: boolean
-}
+  isTeam: boolean;
+};
 
 const AllUsers: FC<Props> = ({ isTeam }) => {
   const { theme, setTheme } = useTheme();
   const { isLoading, data, error } = useGetAllUserQuery({});
-  const [active,setActive] = useState(false);
+  const [active, setActive] = useState(false);
+  const [emnail, setEmail] = useState("");
+  const [role, setRole] = useState("admin");
+  const [open, setOpen] = useState(false);
+  const [userId, setUserId] = useState("");
+  // const [updateUserRole,{error:updateError,isSuccess}] = useUpdateUserRoleMutation();
+  // const [deleteUser, {isSuccess:deleteSuccess, error:deleteError}] = useDeleteUserMutation();
 
   const columns = [
     { field: "id", headerName: "ID", flex: 0.3 },
     { field: "name", headerName: "User Name", flex: 0.5 },
     { field: "email", headerName: "Email", flex: 0.5 },
-    { field: "role", headerName: "Role", flex: .5 },
-    { field: "courses", headerName: "Purchased Courses", flex: .5 },
+    { field: "role", headerName: "Role", flex: 0.5 },
+    { field: "courses", headerName: "Purchased Courses", flex: 0.5 },
     { field: "created_at", headerName: "Joined At", flex: 0.5 },
     {
       field: " ",
@@ -32,13 +38,13 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
           <>
             <Button>
               <AiOutlineDelete
-                className='dark:text-white text-black'
+                className="dark:text-white text-black"
                 size={20}
               />
             </Button>
           </>
-        )
-      }
+        );
+      },
     },
     {
       field: "sendEmail",
@@ -47,62 +53,59 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
       renderCell: (params: any) => {
         return (
           <>
-            <a
-              href={`mailto:${params.row.email}`}
-            >
-              <AiOutlineMail
-                className='dark:text-white text-black'
-                size={20}
-              />
+            <a href={`mailto:${params.row.email}`}>
+              <AiOutlineMail className="dark:text-white text-black" size={20} />
             </a>
           </>
-        )
-      }
+        );
+      },
     },
   ];
 
   const rows: any = [];
 
   if (isTeam) {
-    const newData = data && data.users.filter((item: any) => item.role === "Admin");
+    const newData =
+      data && data.users.filter((item: any) => item.role === "Admin");
     {
-      newData && newData.forEach((item: any) => {
-        rows.push({
-          id: item._id,
-          name: item.name,
-          email: item.email,
-          role: item.role,
-          courses: item.courses.length,
-          created_at: format(item.createdAt)
-        })
-      })
+      newData &&
+        newData.forEach((item: any) => {
+          rows.push({
+            id: item._id,
+            name: item.name,
+            email: item.email,
+            role: item.role,
+            courses: item.courses.length,
+            created_at: format(item.createdAt),
+          });
+        });
     }
   } else {
     {
-      data && data.users.forEach((item: any) => {
-        rows.push({
-          id: item._id,
-          name: item.name,
-          email: item.email,
-          role: item.role,
-          courses: item.courses.length,
-          created_at: format(item.createdAt)
-        })
-      })
+      data &&
+        data.users.forEach((item: any) => {
+          rows.push({
+            id: item._id,
+            name: item.name,
+            email: item.email,
+            role: item.role,
+            courses: item.courses.length,
+            created_at: format(item.createdAt),
+          });
+        });
     }
   }
 
-
   return (
-    <div className='mt-[120px]'>
+    <div className="mt-[120px]">
       <Box m="20px">
-        <div className='w-full flex justify-end'>
-          <div className={`${styles.button} !w-[200px] dark:bg-[#57c7a3] h-[35px] dark:border dark:border-[#ffffff6c]`}
-           onClick={()=>setActive(!active)}
+        <div className="w-full flex justify-end">
+          <div
+            className={`${styles.button} !w-[200px] dark:bg-[#57c7a3] h-[35px] dark:border dark:border-[#ffffff6c]`}
+            onClick={() => setActive(!active)}
           >
             Add new member
           </div>
-
         </div>
         <Box
           m="40px 0 0 0"
@@ -112,7 +115,6 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
               border: "none",
               outline: "none",
               backgroundColor: theme === "dark" ? "#3e4396" : "#A4A9FC",
-
             },
             "& .css-pqjvzv-MuiSvgIcon-root-MuiSelect-icon": {
               color: theme === "dark" ? "#fff" : "#000",
@@ -150,29 +152,26 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
               backgroundColor: theme === "dark" ? "#3e4396" : "#A4A9FC",
             },
             "& .MuiCheckbox-root": {
-              color: theme === "dark" ? `#b7ebde !important` : `#000 !important`,
+              color:
+                theme === "dark" ? `#b7ebde !important` : `#000 !important`,
             },
             "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
               color: `#fff !important`,
             },
             "&. MuiDataGrid-container--top": {
               backgroundColor: theme === "dark" ? "#3e4396" : "#A4A9FC",
-
             },
 
             "& .MuiDataGrid-row--borderBottom": {
               background: "none !important",
             },
-
-
           }}
         >
           <DataGrid checkboxSelection rows={rows} columns={columns} />
-
         </Box>
       </Box>
     </div>
-  )
-}
+  );
+};
 
-export default AllUsers
+export default AllUsers;
