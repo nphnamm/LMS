@@ -1,7 +1,7 @@
 import nodemailer, {Transporter} from 'nodemailer';
 import ejs from 'ejs';
 import path from 'path';
-import { template } from '../controllers/user.controller';
+// import { template } from '../controllers/user.controller';
 
 interface EmailOptions{
     email:string;

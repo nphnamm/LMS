@@ -42,8 +42,8 @@ export const registrationUser = CatchAsyncError(async (req: Request, res: Respon
             email,
             password
         }
-        // jwt create code activation
         const activationToken = createActivationToken(user);
+        // jwt create code activation
 
         const activationCode = activationToken.activationCode;
         const data = {

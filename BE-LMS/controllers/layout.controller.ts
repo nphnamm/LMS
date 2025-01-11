@@ -81,17 +81,19 @@ export const editLayout = CatchAsyncError(async (req: Request, res: Response, ne
         if (type === "Banner") {
             const bannerData: any = await LayoutModel.findOne({ type: "Banner" });
             const { image, title, subTitle } = req.body;
+
+            const data = image.startsWith("http") ? bannerData : await cloudinary.v2.uploader.upload(image,{folder : "Layout"});
             if (bannerData) {
                 await cloudinary.v2.uploader.destroy(bannerData.image.public_id);
             }
-            const myCloud = await cloudinary.v2.uploader.upload(image, {
-                folder: "Layout",
-            });
+            // const myCloud = await cloudinary.v2.uploader.upload(image, {
+            //     folder: "Layout",
+            // });
             const banner = {
                 type :"Banner",
                 image: {
-                    public_id: myCloud.public_id,
-                    url: myCloud.secure_url
+                    public_id: image.startsWith("http") ? bannerData.image.public_id : data.public_id,
+                    url: image.startsWith("http") ? bannerData.image.url : data.secure_url
                 },
                 title,
                 subTitle
@@ -136,7 +138,7 @@ export const editLayout = CatchAsyncError(async (req: Request, res: Response, ne
 export const getLayoutByType = CatchAsyncError(
     async(req:Request,res: Response, next:NextFunction)=>{
         try{
-            const {type} = req.body;
+            const {type} = req.params;
             const layout = await LayoutModel.findOne({type});
             res.status(201).json({
                 success:true,
