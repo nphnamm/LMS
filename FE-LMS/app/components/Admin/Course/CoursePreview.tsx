@@ -9,13 +9,15 @@ type Props = {
     setActive: (active: number) => void;
     courseData: any;
     handleCourseCreate: any;
+    isEdit?: boolean;
 }
 
 const CoursePreview: FC<Props> = ({
     courseData,
     handleCourseCreate,
     setActive,
-    active
+    active,
+    isEdit
 }) => {
 
     const discountPercentage = ((courseData?.estimatedPrice - courseData?.price) / courseData?.estimatedPrice) * 100;

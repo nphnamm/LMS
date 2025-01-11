@@ -4,6 +4,7 @@ import { IoMdCheckmark } from 'react-icons/io';
 type Props = {
     active: number;
     setActive: (active: number) => void;
+    isEdit?: boolean;
 
 }
 

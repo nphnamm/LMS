@@ -71,7 +71,7 @@ const AllCourses = (props: Props) => {
   const rows: any = [];
   {
     data &&
-      data.course.forEach((item: any, index: number) => {
+      data.courses.forEach((item: any, index: number) => {
         rows.push({
           id: item._id || index, // Ensure each row has a unique id
           title: item.name,

@@ -7,6 +7,7 @@ import CoursePreview from "./CoursePreview";
 import {
   useCreateCourseMutation,
   useGetAllCoursesQuery,
+  useUpdateCourseMutation,
 } from "@/redux/features/courses/coursesApi";
 import toast from "react-hot-toast";
 import { redirect } from "next/navigation";
@@ -18,14 +19,14 @@ type Props = {
 const EditCourse: FC<Props> = ({ id }) => {
   const [active, setActive] = useState(0);
   console.log(id);
-
+ const [editCourse, { isSuccess, error }] = useUpdateCourseMutation();
   const { isLoading, data, refetch } = useGetAllCoursesQuery(
     {},
     { refetchOnMountOrArgChange: true }
   );
   console.log(data);
   const editCourseData =
-    data && data.course.find((course: any) => course._id === id);
+    data && data.courses.find((course: any) => course._id === id);
   const [courseInfo, setCourseInfo] = useState({
     name: "",
     description: "",
@@ -69,7 +70,7 @@ const EditCourse: FC<Props> = ({ id }) => {
       });
       setBenefits(editCourseData.benefits);
       setPrerequisites(editCourseData.prerequisites);
-      setCourseContentData(editCourseData.courseContent);
+      setCourseContentData(editCourseData.courseData);
     }
   }, [editCourseData]);
 
@@ -112,30 +113,28 @@ const EditCourse: FC<Props> = ({ id }) => {
       totalVideos: courseContentData.length,
       benefits: formattedBenefits,
       prerequisites: formattedPrerequisites,
-      courseContent: formattedCourseContentData,
+      courseData: formattedCourseContentData,
     };
     setCourseData(data);
   };
   const handleCourseCreate = async (e: any) => {
     const data = courseData;
     // console.log('data', data);
-    if (!isLoading) {
-      //   await createCourse(data);
-    }
+    await editCourse({ id:id, data });
   };
-  //   useEffect(() => {
-  //     if (isSuccess) {
-  //       toast.success("Course created successfully");
-  //       redirect("/admin/all-courses");
-  //     }
-  //     if (error) {
-  //       if ("data" in error) {
-  //         const errorMessage = error as any;
-  //         toast.error(errorMessage.data.message);
-  //       }
-  //     }
-  //   }, [isLoading, isSuccess, error]);
-  // console.log('check', courseData)
+    useEffect(() => {
+      if (isSuccess) {
+        toast.success("Course updated successfully");
+        redirect("/admin/courses");
+      }
+      if (error) {
+        if ("data" in error) {
+          const errorMessage = error as any;
+          toast.error(errorMessage.data.message);
+        }
+      }
+    }, [isLoading, isSuccess, error]);
+  console.log('check', courseContentData)
   return (
     <div className="w-full flex min-h-screen">
       <div className="w-[80%]">
@@ -173,11 +172,12 @@ const EditCourse: FC<Props> = ({ id }) => {
             setActive={setActive}
             courseData={courseData}
             handleCourseCreate={handleCourseCreate}
+            isEdit={true}
           />
         )}
       </div>
       <div className="w-[20%] mt-[100px] h-screen fixed z-[-1] top-18 right-0">
-        <CourseOptions active={active} setActive={setActive} />
+        <CourseOptions active={active} setActive={setActive} isEdit={true}/>
       </div>
     </div>
   );
