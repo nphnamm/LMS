@@ -7,6 +7,7 @@ import DashboardHeader from '@/app/components/Admin/DashboardHeader';
 import CreateCourse from '@/app/components/Admin/Course/CreateCourse';
 import DashboardHero from '@/app/components/Admin/DashboardHero';
 import AllCourses from '@/app/components/Admin/Course/AllCourses';
+import EditHero from '@/app/components/Admin/Customization/EditHero';
 
 const Page: React.FC = () => {
     // State để quản lý trạng thái Sidebar

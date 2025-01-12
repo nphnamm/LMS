@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { useGetHeroDataQuery } from '@/redux/features/layout/layoutApi';
+import { useGetHeroDataQuery, useUpdateLayoutMutation } from '@/redux/features/layout/layoutApi';
 import { AiOutlineCamera } from 'react-icons/ai';
+import toast from 'react-hot-toast';
 type Props = {}
 
 const EditHero = (props: Props) => {
     const [image, setImage] = useState('');
     const [title, setTitle] = useState('');
     const [subTitle, setSubTitle] = useState('');
-    const { data } = useGetHeroDataQuery("Banner", {
+    const { data ,refetch} = useGetHeroDataQuery("Banner", {
         refetchOnMountOrArgChange: true
     })
+    const [editLayout, { isLoading, isSuccess, error}] = useUpdateLayoutMutation();
+
 
     useEffect(() => {
         if (data) {
@@ -17,11 +20,35 @@ const EditHero = (props: Props) => {
             setTitle(data?.layout?.banner?.title)
             setSubTitle(data?.layout?.banner?.subTitle)
         }
-    }, [data]);
+        if (isSuccess) {
+            refetch()
+            toast.success("Hero updated successfully!");
+        }
+        if (error) {
+            if ("data" in error) {
+                const errorData = error as any;
+                toast.error(errorData.data.message);
+            }
+        }
+    }, [data, isSuccess, error]);
     const handleUpdate = (e: any) => {
-
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                setImage(reader.result as string);
+            }
+            reader.readAsDataURL(file);
+        }
     }
-
+    const handleEdit = async () => {
+        await editLayout({
+            type: "Banner",
+            image,
+            title,
+            subTitle
+        })
+    }
 
     return (
         <>
@@ -57,26 +84,26 @@ const EditHero = (props: Props) => {
                         />
                         <br />
                         <textarea
-                        value={subTitle}
-                        onChange={(e) => setSubTitle(e.target.value)}
-                        placeholder='We have the best courses for you'
-                        className='dark:text-[#edfff4] text-[#000000ac] font-Josefin font-[600] text-[18px] 1500px:!w-[50%] 1100px:!-[74%] bg-transparent'
+                            value={subTitle}
+                            onChange={(e) => setSubTitle(e.target.value)}
+                            placeholder='We have the best courses for you'
+                            className='dark:text-[#edfff4] text-[#000000ac] font-Josefin font-[600] text-[18px] 1500px:!w-[50%] 1100px:!-[74%] bg-transparent'
                         />
                         <br />
                         <br />
                         <br />
                         <div>
-                            
+
                         </div>
 
-                    
+
+                    </div>
+
+
                 </div>
 
 
-            </div>
-
-
-        </div >
+            </div >
 
         </>
     )
