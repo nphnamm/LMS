@@ -115,6 +115,10 @@ export const editLayout = CatchAsyncError(async (req: Request, res: Response, ne
         }
         if (type === "Categories") {
             const { categories } = req.body;
+            const categoryData = await LayoutModel.findOne({ type: "Categories" });
+              if (!categoryData) {
+                return next(new ErrorHandler("Categories layout not found", 404));
+            }
             const categoryItems = await Promise.all(
                 categories.map(async (item: any) => {
                     return {
@@ -122,7 +126,7 @@ export const editLayout = CatchAsyncError(async (req: Request, res: Response, ne
                     }
                 })
             )
-            await LayoutModel.findByIdAndUpdate( { type: "Categories", categories: categoryItems });
+            await LayoutModel.findByIdAndUpdate(categoryData._id, { categories: categoryItems });
         }
         res.status(200).json({
             success: true,
