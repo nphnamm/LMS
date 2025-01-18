@@ -17,12 +17,12 @@ const CourseAnalytics = (props: Props) => {
   //   { name: "December 2023", uv: 7 },
 
   // ]
-  const analyticsData: any =[];
+  const analyticsData: any = [];
   data && data.courses.last12Months.forEach((item: any) => {
     analyticsData.push({ name: item.month, uv: item.count })
   })
-  if(data){
-    console.log('data',data);
+  if (data) {
+    console.log('data', data);
   }
   const minValue = 0;
   return (
@@ -43,7 +43,7 @@ const CourseAnalytics = (props: Props) => {
           </div>
           <div className='w-full h-[90%] flex items-center justify-center'>
             <ResponsiveContainer width="90%" height="50%">
-              <BarChart width={150} height={300} data={analyticsData}  barCategoryGap="30%">
+              <BarChart width={150} height={300} data={analyticsData} barCategoryGap="30%">
                 <XAxis dataKey="name">
                   <Label offset={0} position="insideBottom" />
 
