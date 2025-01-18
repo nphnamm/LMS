@@ -1,5 +1,6 @@
 import { styles } from '@/app/styles/style';
-import React, { FC, useState } from 'react'
+import { useGetHeroDataQuery } from '@/redux/features/layout/layoutApi';
+import React, { FC, useEffect, useState } from 'react'
 
 type Props = {
 
@@ -12,6 +13,20 @@ type Props = {
 
 const CourseInformation: FC<Props> = ({ courseInfo, setCourseInfo, active, setActive }) => {
     const [dragging, setDragging] = useState(false);
+    const [categories, setCategories] = useState([]);
+
+
+    const { data, isLoading, refetch } = useGetHeroDataQuery("Categories", {
+        refetchOnMountOrArgChange: true
+    });
+    console.log('data',data);
+    console.log('categories',categories);
+
+    useEffect(() => {
+        if(data){
+            setCategories(data?.layout?.categories);
+        }
+    }, [data])
     const handleSubmit = (e: any) => {
         e.preventDefault();
         setActive(active + 1);
@@ -54,7 +69,7 @@ const CourseInformation: FC<Props> = ({ courseInfo, setCourseInfo, active, setAc
         <div className='w-[80%] m-auto mt-24'>
             <form onSubmit={handleSubmit} className="${styles.label}">
                 <div >
-                    <label  className={`${styles.label}`} htmlFor="">
+                    <label className={`${styles.label}`} htmlFor="">
                         Course Name
                     </label>
 
@@ -125,21 +140,44 @@ const CourseInformation: FC<Props> = ({ courseInfo, setCourseInfo, active, setAc
 
                 </div>
                 <br />
-                <div>
-                    <label className={`${styles.label}`}>Course Tags</label>
-                    <input
-                        type="text"
-                        name=""
-                        required
-                        value={courseInfo?.tags}
-                        onChange={(e: any) => setCourseInfo({ ...courseInfo, tags: e.target.value })}
-                        id='tags'
-                        placeholder='MERN, Next 13, Socket io, tailwind css, LMS'
+                <div className='w-full flex justify-between'>
+                    <div className='w-[45%]'>
+                        <label className={`${styles.label}`}>Course Tags</label>
+                        <input
+                            type="text"
+                            name=""
+                            required
+                            value={courseInfo?.tags}
+                            onChange={(e: any) => setCourseInfo({ ...courseInfo, tags: e.target.value })}
+                            id='tags'
+                            placeholder='MERN, NEXT 13, SOCKET IO, Tailwind css, LMS'
 
-                        className={`
+                            className={`
                         ${styles.input}
                         `}
-                    />
+                        />
+                    </div>
+                    <div className='w-[45%]'>
+                        <label className={`${styles.label} w-[45%]`}>Course Categories</label>
+                        <select name='' id=''
+                            onChange={(e: any) => setCourseInfo({ ...courseInfo, category: e.target.value })}
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full h-[40px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-[10px] px-2 "
+                        >
+                            <option value="">
+                                Select Category
+                            </option>
+                            {categories?.map((item: any) =>
+                                <option 
+                                value={item?._id} 
+                                key={item._id}
+                          
+                                >
+                                    {item.title}
+                                </option>
+                            )}
+                        </select>
+                    </div>
+
                 </div>
                 <br />
                 <div className='w-full flex justify-between'>
@@ -186,22 +224,21 @@ const CourseInformation: FC<Props> = ({ courseInfo, setCourseInfo, active, setAc
                         onChange={handleFileChange}
                     />
                     <label htmlFor='file'
-                        className={`w-full min-h-[10vh]  dark:border-white border-[#00000026] p-3 border flex items-center justify-center ${
-                            dragging ? "bg-blue-500" :"bg-transparent"
-                        }`}
+                        className={`w-full min-h-[10vh]  dark:border-white border-[#00000026] p-3 border flex items-center justify-center ${dragging ? "bg-blue-500" : "bg-transparent"
+                            }`}
                         onDragOver={handleDragOver}
                         onDragLeave={handleDragLeave}
                         onDrop={handleDrop}
                     >
                         {courseInfo.thumbnail ? (
                             <img
-                             src={courseInfo.thumbnail}
-                            alt=''
-                            className='max-w-[300px] w-full object-cover'
-                             />
+                                src={courseInfo.thumbnail}
+                                alt=''
+                                className='max-w-[300px] w-full object-cover'
+                            />
 
                         ) : (
-                            <span className='text-black dark:text-white'>  
+                            <span className='text-black dark:text-white'>
                                 Drag and drop your thumbnail here or click to browse
                             </span>
                         )}
@@ -209,13 +246,13 @@ const CourseInformation: FC<Props> = ({ courseInfo, setCourseInfo, active, setAc
 
                     </label>
                 </div>
-                <br/>
+                <br />
                 <div className='w-full flex items-center justify-end pt-[24px] pb-[24px]'>
-                        <input
+                    <input
                         type='submit'
                         value="Next"
                         className='w-full 800px:w-[180px] h-[40px] bg-[#37a39a] text-center text-[#fff] rounded mt-8 cursor-pointer'
-                        />
+                    />
 
                 </div>
 
