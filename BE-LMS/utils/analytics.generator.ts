@@ -33,6 +33,11 @@ export async function generateLast12MonthsData<T extends Document>(
             year: "numeric",
             day: "2-digit"
         })}`;
+        const newMonth = `${startDate.toLocaleDateString("default", {
+            month: "short",
+            year: "numeric",
+            day: "2-digit"
+        })}`;
 
         const count = await model.countDocuments({
             createdAt: {
@@ -41,7 +46,7 @@ export async function generateLast12MonthsData<T extends Document>(
             },
         });
 
-        last12Months.push({ month, count });
+        last12Months.push({ month: newMonth, count });
     }
 
     return { last12Months };
