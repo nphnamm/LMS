@@ -30,7 +30,8 @@ const Page: React.FC = () => {
                         }}
                         className="bg-black-100"
                     >
-                        <DashboardHero/>
+                        <DashboardHero isDashboard={true}/>
+                        <h1></h1>
                     </div>
                 </div>
             </AdminProtected>
