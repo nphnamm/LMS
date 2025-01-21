@@ -8,8 +8,8 @@ type Props = {
 }
 
 const OrderAnalytics = ({ isDashboard }: Props) => {
-    const { isLoading, error } = useGetOrdersAnalyticsQuery({});
-    const data ={
+    const { data,isLoading, error } = useGetOrdersAnalyticsQuery({});
+    const mockData ={
         "success": true,
         "orders": {
             "last12Months": [
@@ -64,19 +64,29 @@ const OrderAnalytics = ({ isDashboard }: Props) => {
             ]
         }
     }
+
+
     useEffect(() => {
 
     }, [])
     const analyticsData: any = [];
 
 
+    // if (mockData) {
+    //     console.log('data', mockData);
+    //     mockData && mockData.orders.last12Months.forEach((item: any) => {
+    //         analyticsData.push({ name: item.name, Count: item.count })
+    //     });
+    // }
+
     if (data) {
-        console.log('data', data);
+        
         data && data.orders.last12Months.forEach((item: any) => {
-            analyticsData.push({ name: item.month, Count: item.count })
+            analyticsData.push({ name: item.name, Count: item.count })
         });
     }
     console.log('analyticsData', analyticsData);
+    console.log('data', data);
 
     const minValue = 0;
     return (
@@ -110,7 +120,6 @@ const OrderAnalytics = ({ isDashboard }: Props) => {
                             >
                                 <CartesianGrid strokeDasharray="3 3"/>
                                 <XAxis dataKey="name">
-
                                 </XAxis>
                                 <YAxis/>
                                 <Tooltip/>
