@@ -52,6 +52,9 @@ const DashboardWidgets: FC<Props> = ({ open }) => {
                 </div>
                 <div className='pt-[80px] pr-8'>
                     <div className='w-full dark:bg-[#111c43] rounded-sm shadow'>
+                    <div className='flex items-center p-5 justify-between'>
+
+
                         <div className=''>
                             <BiBorderLeft className='dark:text-[#45cba0] text-[#000] text-[30px]' />
                             <h5 className='pt-2 font-Poppins dark:text-[#fff] text-black text-[20px]'>
@@ -68,8 +71,9 @@ const DashboardWidgets: FC<Props> = ({ open }) => {
                             </h5>
                         </div>
                     </div>
-                </div>
+                    </div>
 
+                    
                 <div className='w-full dark:bg-[#111c43] rounded-sm shadow my-8'>
                     <div className='flex items-center p-5 justify-between'>
                         <div className=''>
@@ -90,6 +94,8 @@ const DashboardWidgets: FC<Props> = ({ open }) => {
                     </div>
 
                 </div>
+                </div>
+
 
             </div>
             <div className='grid grid-cols-[65%,35%] mt-[20px]'>

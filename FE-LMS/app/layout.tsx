@@ -9,6 +9,8 @@ import { SessionProvider } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
 import Loader from './components/Loader/Loader';
 import { useLoadUserQuery } from '@/redux/features/api/apiSlice';
+import ErrorBoundary from './hooks/errorBoundary';
+
 const poppins = Poppins({
   subsets: ['latin'],
   weight: ["400", "500", "600", "700"],
@@ -68,7 +70,11 @@ const Custom: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   }
   return (
     <>
-      {isLoading ? <Loader /> : <>{children} </>}
+    <ErrorBoundary>
+      {isLoading ? <Loader /> : <>{children}</>}
+    </ErrorBoundary>
     </>
   )
 }
+
+

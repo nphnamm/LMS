@@ -32,7 +32,7 @@ const Page: React.FC = () => {
                         className="bg-black-100"
                     >
                         <DashboardHeader/>
-                        <UsersAnalytics isDashboard={true}/>  
+                        <UsersAnalytics />  
                         
                     </div>
                     

@@ -6,8 +6,8 @@ import React, { FC, useEffect, useState } from 'react'
 import { AiOutlineMail } from 'react-icons/ai'
 import Loader from '../../Loader/Loader'
 import { DataGrid, GridToolbar } from '@mui/x-data-grid'
-import { format } from 'timeago.js'
-import {useGetAllOrdersQuery} from "@/redux/features/courses/coursesApi";
+import { format } from 'timeago.js';
+import {useGetAllOrdersQuery} from '@/redux/features/orders/ordersApi';
 type Props = {
     isDashboard?: boolean
 }
@@ -22,7 +22,7 @@ const AllInvoices: FC<Props> = ({ isDashboard }) => {
     console.log("data",data)
     useEffect(() => {
         if (data) {
-            const temp = data..map((item: any) => {
+            const temp = data.map((item: any) => {
                 const user = usersData?.users.find((user: any) => user._id === item.userId);
                 const course = coursesData.courses.find((course: any) => course._id === item.courseId)
                 return {
@@ -148,7 +148,7 @@ const AllInvoices: FC<Props> = ({ isDashboard }) => {
                             "& .name-column--cell": {
                                 color: theme === "dark" ? "#fff" : "#000",
                             },
-                            "& .MuiDataGrid-columnHeaders": {
+                            "& .MuiDataGrid-headerContainer": {
                                 backgroundColor: theme === "dark" ? "#3e4396" : "#A4A9FC",
                                 borderBottom: "none",
                                 color: theme === "dark" ? "#fff" : "#000",
