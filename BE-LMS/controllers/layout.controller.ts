@@ -80,12 +80,26 @@ export const editLayout = CatchAsyncError(async (req: Request, res: Response, ne
         const { type } = req.body;
         if (type === "Banner") {
             const bannerData: any = await LayoutModel.findOne({ type: "Banner" });
+            console.log(bannerData);
             const { image, title, subTitle } = req.body;
+            // console.log(image,title,subTitle);
 
-            const data = image.startsWith("http") ? bannerData : await cloudinary.v2.uploader.upload(image,{folder : "Layout"});
+            const data = image?.startsWith("http") ? bannerData : await cloudinary.v2.uploader.upload(image,{folder : "Layout"});
             if (bannerData) {
                 await cloudinary.v2.uploader.destroy(bannerData.image.public_id);
+                const banner = {
+                    type :"Banner",
+                    image: {
+                        public_id: image.startsWith("http") ? bannerData.image.public_id : data.public_id,
+                        url: image.startsWith("http") ? bannerData.image.url : data.secure_url
+                    },
+                    title,
+                    subTitle
+                };
+                await LayoutModel.findByIdAndUpdate(bannerData.id, { banner });
+
             }
+            console.log('data',data);
             // const myCloud = await cloudinary.v2.uploader.upload(image, {
             //     folder: "Layout",
             // });
@@ -98,7 +112,7 @@ export const editLayout = CatchAsyncError(async (req: Request, res: Response, ne
                 title,
                 subTitle
             };
-            await LayoutModel.findByIdAndUpdate(bannerData.id, { banner });
+            await LayoutModel.create({type: "Banner",banner});
 
         }
         if (type === "FAQ") {

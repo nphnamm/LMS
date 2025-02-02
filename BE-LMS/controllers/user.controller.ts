@@ -221,6 +221,7 @@ export const activateUser = CatchAsyncError(async (req: Request, res: Response, 
             email,
             password,
         });
+        
         res.status(201).json({
             user,
             success: true
@@ -339,6 +340,8 @@ export const updateAccessToken = CatchAsyncError(async (req: Request, res: Respo
 
     }
 });
+
+
 export const getUserInfo = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
     try {
         const userId = req.user?._id;

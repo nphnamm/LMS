@@ -1,3 +1,4 @@
+import { useGetHeroDataQuery } from '@/redux/features/layout/layoutApi'
 import Link from 'next/link'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -6,6 +7,8 @@ import { BiSearch } from 'react-icons/bi'
 type Props = {}
 
 const Hero = (props: Props) => {
+    const {data, refetch} = useGetHeroDataQuery("Banner",{});
+    console.log('data',data);
     const { t} = useTranslation();
 
     return (
