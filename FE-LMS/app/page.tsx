@@ -6,8 +6,9 @@ import Hero from './components/Route/Hero';
 import { useSelector } from 'react-redux';
 import Loader from './components/Loader/Loader';
 import Profile from './components/Profile/Profile';
+import Courses from './components/Route/Courses';
 interface Props {
-
+ 
 }
 
 const Page: FC<Props> = (props) => {
@@ -31,6 +32,7 @@ const Page: FC<Props> = (props) => {
         setRoute={setRoute}
       />
         <Hero/>
+        <Courses />
     </div>
 
   )
