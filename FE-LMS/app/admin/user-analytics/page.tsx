@@ -1,10 +1,10 @@
-'use client'
-import React, { useState } from 'react';
-import AdminProtected from '@/app/hooks/adminProtected';
-import Heading from '@/app/utils/Heading';
-import AdminSidebar from '@/app/components/Admin/sidebar/AdminSidebar';
-import DashboardHeader from '@/app/components/Admin/DashboardHeader';
-import UsersAnalytics from '@/app/components/Admin/Analytics/UsersAnalytics';
+"use client";
+import React, { useState } from "react";
+import AdminProtected from "@/app/hooks/adminProtected";
+import Heading from "@/app/utils/Heading";
+import AdminSidebar from "@/app/components/Admin/sidebar/AdminSidebar";
+import DashboardHeader from "@/app/components/Admin/DashboardHeader";
+import UsersAnalytics from "@/app/components/Admin/Analytics/UsersAnalytics";
 
 const Page: React.FC = () => {
     // State để quản lý trạng thái Sidebar
@@ -31,11 +31,9 @@ const Page: React.FC = () => {
                         }}
                         className="bg-black-100"
                     >
-                        <DashboardHeader/>
-                        <UsersAnalytics />  
-                        
+                        <DashboardHeader />
+                        <UsersAnalytics />
                     </div>
-                    
                 </div>
             </AdminProtected>
         </div>

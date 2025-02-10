@@ -1,12 +1,12 @@
-'use client'
-import React, { useState } from 'react';
-import AdminProtected from '@/app/hooks/adminProtected';
-import Heading from '@/app/utils/Heading';
-import AdminSidebar from '@/app/components/Admin/sidebar/AdminSidebar';
-import DashboardHeader from '@/app/components/Admin/DashboardHeader';
-import CreateCourse from '@/app/components/Admin/Course/CreateCourse';
-import EditCategories from '@/app/components/Admin/Customization/EditCategories';
-import CourseAnalytics from '@/app/components/Admin/Analytics/CourseAnalytics';
+"use client";
+import React, { useState } from "react";
+import AdminProtected from "@/app/hooks/adminProtected";
+import Heading from "@/app/utils/Heading";
+import AdminSidebar from "@/app/components/Admin/sidebar/AdminSidebar";
+import DashboardHeader from "@/app/components/Admin/DashboardHeader";
+import CreateCourse from "@/app/components/Admin/Course/CreateCourse";
+import EditCategories from "@/app/components/Admin/Customization/EditCategories";
+import CourseAnalytics from "@/app/components/Admin/Analytics/CourseAnalytics";
 
 const Page: React.FC = () => {
     // State để quản lý trạng thái Sidebar
@@ -33,11 +33,9 @@ const Page: React.FC = () => {
                         }}
                         className="bg-black-100"
                     >
-                        <DashboardHeader/>
-                        <CourseAnalytics/>  
-                        
+                        <DashboardHeader />
+                        <CourseAnalytics />
                     </div>
-                    
                 </div>
             </AdminProtected>
         </div>

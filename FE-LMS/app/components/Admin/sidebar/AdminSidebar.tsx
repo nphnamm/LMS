@@ -13,10 +13,13 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import Image from "next/image";
 import avatarDefault from "../../../../public/images/avatar.png";
-import './customSidebar.css';
+import "./customSidebar.css";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
-const AdminSidebar: React.FC<{ collapsed: boolean; setCollapsed: React.Dispatch<React.SetStateAction<boolean>> }> = ({ collapsed, setCollapsed }) => {
+const AdminSidebar: React.FC<{ collapsed: boolean; setCollapsed: React.Dispatch<React.SetStateAction<boolean>> }> = ({
+    collapsed,
+    setCollapsed,
+}) => {
     const [selected, setSelected] = useState<string>("Dashboard");
     const { theme } = useTheme();
     const router = useRouter();
@@ -34,18 +37,18 @@ const AdminSidebar: React.FC<{ collapsed: boolean; setCollapsed: React.Dispatch<
         color: selected === item ? "#FFF" : "#A0AEC0",
     });
 
-    const handleCreateCourse = () =>{
+    const handleCreateCourse = () => {
         router.push("/admin/create-course");
-    }
+    };
 
     useEffect(() => {
         // Dynamically add theme class to the body
         document.body.classList.remove("light-theme", "dark-theme");
         document.body.classList.add(theme === "dark" ? "dark-theme" : "light-theme");
     }, [theme]);
-    const navigateAllCourse = () =>{
+    const navigateAllCourse = () => {
         router.push("/admin/courses");
-    }
+    };
 
     return (
         <Box
@@ -59,13 +62,12 @@ const AdminSidebar: React.FC<{ collapsed: boolean; setCollapsed: React.Dispatch<
                 transition: "all 1s ease", // Transition duration set to 1s (1000ms)
             }}
         >
-            <ProSidebar collapsed={collapsed}
-
+            <ProSidebar
+                collapsed={collapsed}
                 style={{
                     height: "100vh",
                     overflow: "hidden",
                     transition: "all 1s ease", // Transition duration set to 1s (1000ms)
-
                 }}
             >
                 {/* Sidebar Header */}
@@ -87,11 +89,12 @@ const AdminSidebar: React.FC<{ collapsed: boolean; setCollapsed: React.Dispatch<
                         className=" flex items-center justify-center w-12 h-12 cursor-pointer hover:text-[#a0aec0]"
                         onClick={handleToggle}
                     >
-
-                        {collapsed ? <ArrowForwardIosIcon sx={{ fontSize: '24px' }} /> : <ArrowBackIosIcon sx={{ fontSize: '24px' }} />}
-
+                        {collapsed ? (
+                            <ArrowForwardIosIcon sx={{ fontSize: "24px" }} />
+                        ) : (
+                            <ArrowBackIosIcon sx={{ fontSize: "24px" }} />
+                        )}
                     </div>
-
                 </Box>
 
                 {/* Avatar Section */}
@@ -121,14 +124,12 @@ const AdminSidebar: React.FC<{ collapsed: boolean; setCollapsed: React.Dispatch<
                     </Box>
                 )}
 
-
                 {/* Menu */}
                 <Menu iconShape="circle">
                     <MenuItem
                         icon={<HomeOutlinedIcon />}
                         onClick={() => handleMenuItemClick("Dashboard")}
                         style={getMenuItemStyle("Dashboard")}
-
                     >
                         {!collapsed && "Dashboard"}
                     </MenuItem>
@@ -143,7 +144,6 @@ const AdminSidebar: React.FC<{ collapsed: boolean; setCollapsed: React.Dispatch<
                         icon={<GroupsIcon />}
                         onClick={() => handleMenuItemClick("Users")}
                         style={getMenuItemStyle("Users")}
-
                     >
                         Users
                     </MenuItem>
@@ -151,7 +151,6 @@ const AdminSidebar: React.FC<{ collapsed: boolean; setCollapsed: React.Dispatch<
                         icon={<ReceiptOutlinedIcon />}
                         onClick={() => handleMenuItemClick("Invoices")}
                         style={getMenuItemStyle("Invoices")}
-
                     >
                         Invoices
                     </MenuItem>
@@ -162,8 +161,12 @@ const AdminSidebar: React.FC<{ collapsed: boolean; setCollapsed: React.Dispatch<
                             Content
                         </Typography>
                     )}
-                    <MenuItem onClick={handleCreateCourse} icon={<VideoLibraryIcon />}>Create Course</MenuItem>
-                    <MenuItem icon={<VideoLibraryIcon />} onClick={navigateAllCourse}>Live Courses</MenuItem>
+                    <MenuItem onClick={handleCreateCourse} icon={<VideoLibraryIcon />}>
+                        Create Course
+                    </MenuItem>
+                    <MenuItem icon={<VideoLibraryIcon />} onClick={navigateAllCourse}>
+                        Live Courses
+                    </MenuItem>
 
                     {/* Customization Section */}
                     {!collapsed && (
@@ -202,7 +205,7 @@ const AdminSidebar: React.FC<{ collapsed: boolean; setCollapsed: React.Dispatch<
                     <MenuItem icon={<SettingsIcon />}>Logout</MenuItem>
                 </Menu>
             </ProSidebar>
-        </Box >
+        </Box>
     );
 };
 

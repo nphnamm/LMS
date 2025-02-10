@@ -1,76 +1,89 @@
-import React, { useEffect } from 'react'
-import { BarChart, Bar, ResponsiveContainer, XAxis, Label, YAxis, LabelList, LineChart, CartesianAxis, CartesianGrid, Tooltip, Legend, Line } from "recharts"
-import { useGetCoursesAnalyticsQuery, useGetOrdersAnalyticsQuery } from '../../../../redux/features/analytics/analyticsApi';
-import Loader from '../../Loader/Loader';
-import { styles } from '@/app/styles/style';
+import React, { useEffect } from "react";
+import {
+    BarChart,
+    Bar,
+    ResponsiveContainer,
+    XAxis,
+    Label,
+    YAxis,
+    LabelList,
+    LineChart,
+    CartesianAxis,
+    CartesianGrid,
+    Tooltip,
+    Legend,
+    Line,
+} from "recharts";
+import {
+    useGetCoursesAnalyticsQuery,
+    useGetOrdersAnalyticsQuery,
+} from "../../../../redux/features/analytics/analyticsApi";
+import Loader from "../../Loader/Loader";
+import { styles } from "@/app/styles/style";
 type Props = {
-    isDashboard?: boolean
-}
+    isDashboard?: boolean;
+};
 
 const OrderAnalytics = ({ isDashboard }: Props) => {
-    const { data,isLoading, error } = useGetOrdersAnalyticsQuery({});
-    const mockData ={
-        "success": true,
-        "orders": {
-            "last12Months": [
+    const { data, isLoading, error } = useGetOrdersAnalyticsQuery({});
+    const mockData = {
+        success: true,
+        orders: {
+            last12Months: [
                 {
-                    "month": "Feb 01, 2024",
-                    "count": 2
+                    month: "Feb 01, 2024",
+                    count: 2,
                 },
                 {
-                    "month": "Mar 01, 2024",
-                    "count": 3
+                    month: "Mar 01, 2024",
+                    count: 3,
                 },
                 {
-                    "month": "Apr 01, 2024",
-                    "count": 4
+                    month: "Apr 01, 2024",
+                    count: 4,
                 },
                 {
-                    "month": "May 01, 2024",
-                    "count": 5
+                    month: "May 01, 2024",
+                    count: 5,
                 },
                 {
-                    "month": "Jun 01, 2024",
-                    "count": 6
+                    month: "Jun 01, 2024",
+                    count: 6,
                 },
                 {
-                    "month": "Jul 01, 2024",
-                    "count": 0
+                    month: "Jul 01, 2024",
+                    count: 0,
                 },
                 {
-                    "month": "Aug 01, 2024",
-                    "count": 0
+                    month: "Aug 01, 2024",
+                    count: 0,
                 },
                 {
-                    "month": "Sep 01, 2024",
-                    "count": 0
+                    month: "Sep 01, 2024",
+                    count: 0,
                 },
                 {
-                    "month": "Oct 01, 2024",
-                    "count": 0
+                    month: "Oct 01, 2024",
+                    count: 0,
                 },
                 {
-                    "month": "Nov 01, 2024",
-                    "count": 1
+                    month: "Nov 01, 2024",
+                    count: 1,
                 },
                 {
-                    "month": "Dec 01, 2024",
-                    "count": 0
+                    month: "Dec 01, 2024",
+                    count: 0,
                 },
                 {
-                    "month": "Jan 01, 2025",
-                    "count": 0
-                }
-            ]
-        }
-    }
+                    month: "Jan 01, 2025",
+                    count: 0,
+                },
+            ],
+        },
+    };
 
-
-    useEffect(() => {
-
-    }, [])
+    useEffect(() => {}, []);
     const analyticsData: any = [];
-
 
     // if (mockData) {
     //     console.log('data', mockData);
@@ -80,13 +93,13 @@ const OrderAnalytics = ({ isDashboard }: Props) => {
     // }
 
     if (data) {
-        
-        data && data.orders.last12Months.forEach((item: any) => {
-            analyticsData.push({ name: item.name, Count: item.count })
-        });
+        data &&
+            data.orders.last12Months.forEach((item: any) => {
+                analyticsData.push({ name: item.name, Count: item.count });
+            });
     }
-    console.log('analyticsData', analyticsData);
-    console.log('data', data);
+    console.log("analyticsData", analyticsData);
+    console.log("data", data);
 
     const minValue = 0;
     return (
@@ -99,45 +112,34 @@ const OrderAnalytics = ({ isDashboard }: Props) => {
                         <h1 className={`${styles.title} px-5 ${isDashboard && "!text-[20px]"} px-5 !text-start`}>
                             Orders Analytics
                         </h1>
-                        <p className={`${styles.label} px-5`}>
-                            Last 12 months analytics data {" "}
-
-                        </p>
-
+                        <p className={`${styles.label} px-5`}>Last 12 months analytics data </p>
                     </div>
                     <div className={`w-full ${!isDashboard ? "h-[90%]" : "h-full"} flex items-center justify-center`}>
-                        <ResponsiveContainer
-                            width={isDashboard ? "100%" : "90%"}
-                            height={isDashboard ? "100%" : "50%"}
-                        >
-                            <LineChart width={150} height={300} data={analyticsData}
+                        <ResponsiveContainer width={isDashboard ? "100%" : "90%"} height={isDashboard ? "100%" : "50%"}>
+                            <LineChart
+                                width={150}
+                                height={300}
+                                data={analyticsData}
                                 margin={{
                                     top: 5,
                                     right: 30,
                                     left: 20,
-                                    bottom: 5
+                                    bottom: 5,
                                 }}
                             >
-                                <CartesianGrid strokeDasharray="3 3"/>
-                                <XAxis dataKey="name">
-                                </XAxis>
-                                <YAxis/>
-                                <Tooltip/>
-                                {!isDashboard && <Legend/>}
-                                <Line type="monotone" dataKey="Count" stroke='#82ca9d'/>
-
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="name"></XAxis>
+                                <YAxis />
+                                <Tooltip />
+                                {!isDashboard && <Legend />}
+                                <Line type="monotone" dataKey="Count" stroke="#82ca9d" />
                             </LineChart>
-
                         </ResponsiveContainer>
                     </div>
-
-
                 </div>
-
             )}
-
         </>
-    )
-}
+    );
+};
 
 export default OrderAnalytics;

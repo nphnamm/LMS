@@ -1,13 +1,13 @@
-'use client'
-import React, { useState } from 'react';
-import AdminProtected from '@/app/hooks/adminProtected';
-import Heading from '@/app/utils/Heading';
-import AdminSidebar from '@/app/components/Admin/sidebar/AdminSidebar';
-import DashboardHeader from '@/app/components/Admin/DashboardHeader';
-import CreateCourse from '@/app/components/Admin/Course/CreateCourse';
-import DashboardHero from '@/app/components/Admin/DashboardHero';
-import AllCourses from '@/app/components/Admin/Course/AllCourses';
-import EditHero from '@/app/components/Admin/Customization/EditHero';
+"use client";
+import React, { useState } from "react";
+import AdminProtected from "@/app/hooks/adminProtected";
+import Heading from "@/app/utils/Heading";
+import AdminSidebar from "@/app/components/Admin/sidebar/AdminSidebar";
+import DashboardHeader from "@/app/components/Admin/DashboardHeader";
+import CreateCourse from "@/app/components/Admin/Course/CreateCourse";
+import DashboardHero from "@/app/components/Admin/DashboardHero";
+import AllCourses from "@/app/components/Admin/Course/AllCourses";
+import EditHero from "@/app/components/Admin/Customization/EditHero";
 
 const Page: React.FC = () => {
     // State để quản lý trạng thái Sidebar
@@ -34,10 +34,9 @@ const Page: React.FC = () => {
                         }}
                         className="bg-black-100"
                     >
-                        <DashboardHero/>
-                        <EditHero/>
+                        <DashboardHero />
+                        <EditHero />
                     </div>
-                    
                 </div>
             </AdminProtected>
         </div>

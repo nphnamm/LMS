@@ -1,7 +1,7 @@
-import React, { FC, useState, useEffect} from "react";
-import { styles } from '@/app/styles/style';
+import React, { FC, useState, useEffect } from "react";
+import { styles } from "@/app/styles/style";
 import toast from "react-hot-toast";
-import { useUpdatePasswordMutation } from '@/redux/features/user/userApi';
+import { useUpdatePasswordMutation } from "@/redux/features/user/userApi";
 
 type Props = {};
 
@@ -9,28 +9,27 @@ const ChangePassword: FC<Props> = (props) => {
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [updatePassword,{isSuccess,error}]= useUpdatePasswordMutation();
+    const [updatePassword, { isSuccess, error }] = useUpdatePasswordMutation();
     const passwordChangeHandler = async (e: any) => {
         e.preventDefault();
         // Logic xử lý thay đổi mật khẩu
-        if(newPassword !== confirmPassword){
+        if (newPassword !== confirmPassword) {
             toast.error("Password do not match");
-        }else{
-            await updatePassword({oldPassword,newPassword});
+        } else {
+            await updatePassword({ oldPassword, newPassword });
         }
     };
-    useEffect(()=>{
-        if(isSuccess){
+    useEffect(() => {
+        if (isSuccess) {
             toast.success("Password changed successfully");
         }
-        if(error){
-            if("data" in error){
+        if (error) {
+            if ("data" in error) {
                 const errorData = error as any;
                 toast.error(errorData.data.message);
-
             }
         }
-    },[isSuccess,error])
+    }, [isSuccess, error]);
 
     return (
         <div className="w-full pl-7 px-2 800px:px-5 800px:pl-0">
@@ -38,16 +37,10 @@ const ChangePassword: FC<Props> = (props) => {
                 Change Password
             </h1>
             <div className="w-full">
-                <form
-                    aria-required
-                    onSubmit={passwordChangeHandler}
-                    className="flex flex-col items-center"
-                >
+                <form aria-required onSubmit={passwordChangeHandler} className="flex flex-col items-center">
                     {/* Nhập mật khẩu cũ */}
                     <div className="w-[100%] 800px:w-[60%] mt-5">
-                        <label className="block pb-2 text-black dark:text-[#fff]">
-                            Enter your old password
-                        </label>
+                        <label className="block pb-2 text-black dark:text-[#fff]">Enter your old password</label>
                         <input
                             type="password"
                             className={`${styles.input} !w-[95%] mb-4 800px:mb-0 text-black dark:text-[#fff]`}
@@ -84,7 +77,6 @@ const ChangePassword: FC<Props> = (props) => {
                             required
                         />
                     </div>
-
                 </form>
             </div>
         </div>

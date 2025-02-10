@@ -1,12 +1,12 @@
-'use client'
-import React, { useState } from 'react';
-import AdminProtected from '@/app/hooks/adminProtected';
-import Heading from '@/app/utils/Heading';
-import AdminSidebar from '@/app/components/Admin/sidebar/AdminSidebar';
-import DashboardHeader from '@/app/components/Admin/DashboardHeader';
-import CreateCourse from '@/app/components/Admin/Course/CreateCourse';
-import DashboardHero from '@/app/components/Admin/DashboardHero';
-import AllUsers from '@/app/components/Admin/User/AllUsers';
+"use client";
+import React, { useState } from "react";
+import AdminProtected from "@/app/hooks/adminProtected";
+import Heading from "@/app/utils/Heading";
+import AdminSidebar from "@/app/components/Admin/sidebar/AdminSidebar";
+import DashboardHeader from "@/app/components/Admin/DashboardHeader";
+import CreateCourse from "@/app/components/Admin/Course/CreateCourse";
+import DashboardHero from "@/app/components/Admin/DashboardHero";
+import AllUsers from "@/app/components/Admin/User/AllUsers";
 
 const Page: React.FC = () => {
     // State để quản lý trạng thái Sidebar
@@ -33,10 +33,9 @@ const Page: React.FC = () => {
                         }}
                         className="bg-black-100"
                     >
-                        <DashboardHero/>
-                        <AllUsers isTeam={false}/>
+                        <DashboardHero />
+                        <AllUsers isTeam={false} />
                     </div>
-                    
                 </div>
             </AdminProtected>
         </div>

@@ -1,12 +1,12 @@
-import { useGetUsersAnalyticsQuery } from '@/redux/features/analytics/analyticsApi';
-import React from 'react'
-import Loader from '../../Loader/Loader';
-import { styles } from '@/app/styles/style';
-import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { useGetUsersAnalyticsQuery } from "@/redux/features/analytics/analyticsApi";
+import React from "react";
+import Loader from "../../Loader/Loader";
+import { styles } from "@/app/styles/style";
+import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 type Props = {
     isDashboard?: boolean;
-}
+};
 
 const UsersAnalytics = ({ isDashboard }: Props) => {
     const { data, isLoading } = useGetUsersAnalyticsQuery({});
@@ -58,33 +58,30 @@ const UsersAnalytics = ({ isDashboard }: Props) => {
     // ];
 
     if (data) {
-
-        data && data.users.last12Months.forEach((item: any) => {
-            analyticsData.push({ name: item.month, uv: item.count })
-        })
-        console.log('data', data);
+        data &&
+            data.users.last12Months.forEach((item: any) => {
+                analyticsData.push({ name: item.month, uv: item.count });
+            });
+        console.log("data", data);
     }
-    console.log('analyticsData', analyticsData)
+    console.log("analyticsData", analyticsData);
     return (
         <>
             {isLoading ? (
                 <Loader />
             ) : (
-                <div className={`${!isDashboard ? "mt-[50px]" : "mt-[50px] dark:bg-[#111C43] shadow-sm pb-5 rounded-sm"}`}>
+                <div
+                    className={`${!isDashboard ? "mt-[50px]" : "mt-[50px] dark:bg-[#111C43] shadow-sm pb-5 rounded-sm"}`}
+                >
                     <div className={`${isDashboard ? "!ml-8 mb-5" : ""}`}>
-                        <h1 className={`${styles.title} ${isDashboard && '!text-[20px]'} px-5 !text-start`}>
+                        <h1 className={`${styles.title} ${isDashboard && "!text-[20px]"} px-5 !text-start`}>
                             Users Analytics
                         </h1>
-                        {
-                            !isDashboard && (
-                                <p className={`${styles.label} px-5`}>
-                                    Last 12 months analytics data{" "}
-                                </p>
-                            )
-
-                        }
+                        {!isDashboard && <p className={`${styles.label} px-5`}>Last 12 months analytics data </p>}
                     </div>
-                    <div className={`w-full ${isDashboard ? 'h-[30vh]' : 'h-screen'} flex items-center justify-center `}>
+                    <div
+                        className={`w-full ${isDashboard ? "h-[30vh]" : "h-screen"} flex items-center justify-center `}
+                    >
                         <ResponsiveContainer width="70%" height="70%">
                             <AreaChart
                                 width={500}
@@ -105,11 +102,10 @@ const UsersAnalytics = ({ isDashboard }: Props) => {
                             </AreaChart>
                         </ResponsiveContainer>
                     </div>
-                </div >
+                </div>
             )}
-
         </>
-    )
-}
+    );
+};
 
-export default UsersAnalytics
+export default UsersAnalytics;

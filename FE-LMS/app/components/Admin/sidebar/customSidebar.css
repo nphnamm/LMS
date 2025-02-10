@@ -2,7 +2,6 @@
 
 /* Light Theme */
 
-
 /* .light-theme .pro-menu-item {
     color: #718096;
 }
@@ -13,7 +12,7 @@
 } */
 
 /* Dark Theme */
-.pro-sidebar>.pro-sidebar-inner {
+.pro-sidebar > .pro-sidebar-inner {
     background-color: #1a202c !important;
     color: #ffffff !important;
 }

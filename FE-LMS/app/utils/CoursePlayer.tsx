@@ -1,15 +1,13 @@
-import React from 'react'
+import React from "react";
 
 type Props = {
-    videoUrl:string;
-    title:string;
-    description:string
-}
+    videoUrl: string;
+    title: string;
+    description: string;
+};
 
 const CoursePlayer = (props: Props) => {
-  return (
-    <div>CoursePlayer</div>
-  )
-}
+    return <div>CoursePlayer</div>;
+};
 
-export default CoursePlayer
+export default CoursePlayer;

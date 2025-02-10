@@ -22,12 +22,8 @@ export const analyticsApi = apiSlice.injectEndpoints({
                 method: "GET",
                 credentials: "include" as const,
             }),
-        })
-    })
+        }),
+    }),
 });
 
-export const {
-    useGetCoursesAnalyticsQuery,
-    useGetUsersAnalyticsQuery,
-    useGetOrdersAnalyticsQuery
-} = analyticsApi;
+export const { useGetCoursesAnalyticsQuery, useGetUsersAnalyticsQuery, useGetOrdersAnalyticsQuery } = analyticsApi;
