@@ -3,6 +3,8 @@ import { useGetCourseDetailsQuery } from '@/redux/features/courses/coursesApi';
 import React, { useState } from 'react'
 import Loader from '../Loader/Loader';
 import Heading from '@/app/utils/Heading';
+import CourseDetails from './CourseDetails';
+import Header from '../Header';
 
 type Props = {
     id:string
@@ -27,7 +29,14 @@ const CourseDetailsPage = ({id}: Props) => {
           description={"Elearning is programming comminity which is developed by NAMNPHfor helping programmers"}
         keywords={data?.course?.tags}
 />
-<>hello</>
+<Header
+        open={open}
+        setOpen={setOpen}
+        activeItem={1}
+        route={route}
+        setRoute={setRoute}
+      />
+        <CourseDetails data={data.course}/>
 
         </div>
       )}

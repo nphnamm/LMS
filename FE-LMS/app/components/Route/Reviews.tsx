@@ -11,7 +11,7 @@ export const reviews = [
     avatar: "https://randomuser.me/api/portraits/men/1.jpg",
     profession: "Student | Cambridge university",
     comment:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.",
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem, Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem",
   },
   {
     name: "Verna Santos",
@@ -25,7 +25,7 @@ export const reviews = [
     avatar: "https://randomuser.me/api/portraits/men/2.jpg",
     profession: "computer systems engineering student | Zimbabwe",
     comment:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.",
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.",
   },
   {
     name: "Mina Davidson",
@@ -39,7 +39,7 @@ export const reviews = [
     avatar: "https://randomuser.me/api/portraits/women/2.jpg",
     profession: "Junior Web Developer | Indonesia",
     comment:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.",
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.",
   },
   {
     name: "Laura Mckenize",
@@ -53,7 +53,7 @@ export const reviews = [
 const Reviews = (props: Props) => {
   return (
     <div className="w-[90%] 800px:w-[85%] m-auto">
-      <div className="w-full 800px:flex items-center">
+      <div className="w-full 800px:flex items-center gap-4 ">
         <div className="800px:w-[50%] w-full rounded-md">
           <Image
             src={require("../../../public/images/business.png")}
@@ -66,7 +66,7 @@ const Reviews = (props: Props) => {
 
         <div className="800px:w-[50%] w-full">
           <h3 className={`${styles.title} 800px:!text-[40px]`}>
-            Our Students Are <span className="text-gradient">Our Strength</span>
+            Our Students Are <span className="bg-gradient-to-l from-indigo-500 via-red-500 to-blue-500 text-transparent bg-clip-text">Our Strength</span>
             &apos;{" "}
           </h3>
           <h3 className={`${styles.title} 800px:!text-[40px]`}>

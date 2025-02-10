@@ -16,7 +16,7 @@ const CourseDetails = ({data}: Props) => {
     const handleOrder = (e:any)=>{
         console.log('ggg');
     }
-
+    console.log("data",data);
 
     return (
     <div>
@@ -36,12 +36,13 @@ const CourseDetails = ({data}: Props) => {
                         </h5>
                     </div>
                     <br/>
+                    <div>
+
                     <h1 className='text-[25px] font-Poppins font-[600] text-black dark:text-white'> 
 
                         What you will learn from this course?
 
                     </h1>
-                    <div>
                         {data.benefits?.map((item:any,index:number)=>(
                             <div
                             className='w-full flex 800px:items-center py-2'
@@ -57,6 +58,59 @@ const CourseDetails = ({data}: Props) => {
 
 
                         ))}
+                        <br/>
+                        <br/>
+                        <div >
+                           <h1 className='text-[25px] font-Poppins font-[600] text-black dark:text-white'>
+
+                            Course Overview
+                           </h1>
+
+
+                        </div>
+                        <br/>
+                        <br/>
+                        <div className="w-full">
+                            <h1 className='text-[25px] font-Poppins font-[600] text-black dark:text-white'>
+                                Course Overview
+                            </h1>
+                            
+
+                        </div>
+                        <br/>
+                        <br/>
+                        <div className='w-full'>
+                            <h1 className='text-[25px] font-Poppins font-[600] text-black dark:text-white'>
+                                Course Details
+
+                            </h1>
+                            <p className='text-[18px] mt-[20px] whitespace-pre-line w-full overflow-hidden text-black dark:text-white'>
+                                {data.description}
+                            </p>
+
+                        </div>
+                        <br/>
+                        <br/>
+                        <div className='w-full'>
+                            <div className='800px:flex items-center'>
+                                <Ratings rating={data?.ratings}/>
+                                <h5 className='text-[25px] font-Poppins text-black dark:text-white'>
+                                    {Number.isInteger(data?.ratings) ? data?.ratings.toFixed(1) : data?.ratings.toFixed(2)}{" "}
+                                    Course Rating {data?.reviews.length} Reviews
+                                </h5>
+
+                            </div>
+                            <br/>
+                            {(data?.reviews && [...data.reviews].reverse()).map((item:any,index:number)=>(
+                                <div className='w-full pb=4' key={index}>
+                                    <div>
+
+                                                                </div>
+
+                            ))}
+
+
+                        </div>
 
                     </div>
                 </div>

@@ -19,7 +19,7 @@ const ReviewCard = (props: Props) => {
             height={50}
             className="w-[50px] h-[50px] rounded-full object-cover"
             />
-            <div className='800px:flex justify-between w-full hidden'>
+            <div className='800px:flex justify-between w-full'>
                 <div className='pl-4'>
                     <h5 className='text-[20px] text-black dark:text-white'>
                         {props.item.name}
