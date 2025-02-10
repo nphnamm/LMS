@@ -1,3 +1,4 @@
+'use client'
 import { useGetCourseDetailsQuery } from '@/redux/features/courses/coursesApi';
 import React, { useState } from 'react'
 import Loader from '../Loader/Loader';
@@ -13,7 +14,7 @@ const CourseDetailsPage = ({id}: Props) => {
   const [route,setRoute] = useState("Login");
   const [open,setOpen]=useState(false)
   const {data,isLoading}= useGetCourseDetailsQuery(id);
-    
+  console.log("data",data)
 
   return (
     <>
@@ -22,10 +23,11 @@ const CourseDetailsPage = ({id}: Props) => {
       ):(
         <div>
           <Heading
-          title={data.course.name + "- ELearning"}
+          title={data?.course?.name + "- ELearning"}
           description={"Elearning is programming comminity which is developed by NAMNPHfor helping programmers"}
         keywords={data?.course?.tags}
 />
+<>hello</>
 
         </div>
       )}

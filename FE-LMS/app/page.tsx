@@ -8,6 +8,7 @@ import Loader from './components/Loader/Loader';
 import Profile from './components/Profile/Profile';
 import Courses from './components/Route/Courses';
 import Reviews from './components/Route/Reviews';
+import FAQ from './components/FAQ/FAQ';
 
 
 interface Props {
@@ -37,6 +38,7 @@ const Page: FC<Props> = (props) => {
         <Hero/>
         <Courses />
         <Reviews />
+        <FAQ />
     </div>
 
   )

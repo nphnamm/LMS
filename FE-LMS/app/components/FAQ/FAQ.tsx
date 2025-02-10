@@ -16,6 +16,7 @@ const FAQ = (props: Props) => {
             setQuestions(data.layout.faq)
         }
     }, [data])
+    console.log('faq',data);
     const toggleQuestion = (id: any) => {
         setActiveQuestion(activeQuestion === id ? null : id)
     }
@@ -38,7 +39,7 @@ const FAQ = (props: Props) => {
                                         onClick={() => toggleQuestion(q._id)}
                                     >
                                         <span className='font-medium text-black dark:text-white'>
-                                            {q.questiion}
+                                            {q.question}
                                         </span>
                                         <span className='ml-6 flex-shrink-0'>
                                             {activeQuestion === q._id ? (

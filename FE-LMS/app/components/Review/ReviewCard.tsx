@@ -10,7 +10,7 @@ type Props = {
 const ReviewCard = (props: Props) => {
     console.log("props",props)
   return (
-    <div className='w-full h-max pb-4 dark:bg-slate-500 dark:bg-opacity-[0.20] border border-[#0000002B] dark:border-[#ffffff1d] backdrop-blur '>
+    <div className='w-full h-max  dark:bg-slate-500 dark:bg-opacity-[0.20] border border-[#0000002B] dark:border-[#ffffff1d] backdrop-blur p-4 rounded-xl'>
         <div className='flex w-full'>
             <Image
             src={props?.item?.avatar}
@@ -27,13 +27,19 @@ const ReviewCard = (props: Props) => {
                     <h6 className='text-[16px] text-[#000] dark:text-[#ffffffab]'>
                         {props.item.profession}
                     </h6>
+
                 </div>
-                <Ratings rating={props.item.ratings}/>
+                <Ratings rating={5}/>
 
 
             </div>
-
+        
         </div>
+
+        <p>
+                {props.item.comment}
+            </p>
+
     </div>
 
 )
