@@ -23,7 +23,7 @@ const CourseAnalytics = (props: Props) => {
             analyticsData.push({ name: item.month, uv: item.count });
         });
     if (data) {
-        console.log("data", data);
+        //console.log("data", data);
     }
     const minValue = 0;
     return (

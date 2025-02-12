@@ -26,7 +26,7 @@ const ProfileInfo: FC<Props> = ({ user, avatar }) => {
                 { withCredentials: true }
             );
             setResponse(res.data.message);
-            console.log(res.data.message);
+            //console.log(res.data.message);
         } catch (err) {
             setError("An error occurred while fetching the data.");
         } finally {
@@ -34,7 +34,7 @@ const ProfileInfo: FC<Props> = ({ user, avatar }) => {
         }
     };
     useEffect(() => {}, [content]);
-    console.log("content", content);
+    //console.log("content", content);
 
     return (
         <>

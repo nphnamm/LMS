@@ -63,7 +63,7 @@ const EditFaq = (props: Props) => {
         }
     };
 
-    console.log(questions);
+    //console.log(questions);
     return (
         <>
             {isLoading ? (

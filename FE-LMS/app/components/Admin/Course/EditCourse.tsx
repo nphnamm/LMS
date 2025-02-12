@@ -18,10 +18,10 @@ type Props = {
 
 const EditCourse: FC<Props> = ({ id }) => {
     const [active, setActive] = useState(0);
-    console.log(id);
+    //console.log(id);
     const [editCourse, { isSuccess, error }] = useUpdateCourseMutation();
     const { isLoading, data, refetch } = useGetAllCoursesQuery({}, { refetchOnMountOrArgChange: true });
-    console.log(data);
+    //console.log(data);
     const editCourseData = data && data.courses.find((course: any) => course._id === id);
     const [courseInfo, setCourseInfo] = useState({
         name: "",

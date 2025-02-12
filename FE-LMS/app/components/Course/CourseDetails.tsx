@@ -6,6 +6,7 @@ import React from "react";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { useSelector } from "react-redux";
 import { format } from "timeago.js";
+import CourseContentList from "./CourseContentList";
 
 type Props = {
     data: any;
@@ -18,9 +19,9 @@ const CourseDetails = ({ data }: Props) => {
     const discountPercentengePrice = discountPercentenge.toFixed(0);
     const isPurchased = user && user?.courses?.find((item: any) => item._id === data._id);
     const handleOrder = (e: any) => {
-        console.log("ggg");
+        //console.log("ggg");
     };
-    console.log("data", data);
+    //console.log("data", data);
 
     return (
         <div>
@@ -68,7 +69,10 @@ const CourseDetails = ({ data }: Props) => {
                                 <h1 className="text-[25px] font-Poppins font-[600] text-black dark:text-white">
                                     Course Overview
                                 </h1>
-                                <CourseContentList />
+                                <CourseContentList 
+                                    data={data?.courseData}
+                                    isDemo={true}
+                                />
                             </div>
                             <br />
                             <br />

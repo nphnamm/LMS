@@ -14,7 +14,7 @@ const FAQ = (props: Props) => {
             setQuestions(data.layout.faq);
         }
     }, [data]);
-    console.log("faq", data);
+    //console.log("faq", data);
     const toggleQuestion = (id: any) => {
         setActiveQuestion(activeQuestion === id ? null : id);
     };

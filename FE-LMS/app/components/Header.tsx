@@ -70,8 +70,8 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, setRoute, open }) => {
             toast.success("Login Successfully");
         }
     }, [user, socialUser, socialAuth, isSuccess, setRoute]);
-    console.log("user", user);
-    console.log("user-session", data);
+    //console.log("user", user);
+    //console.log("user-session", data);
     const handleClose = useCallback((e: any) => {
         if (e.target.id === "screen") {
             setOpenSidebar(false); // Close sidebar

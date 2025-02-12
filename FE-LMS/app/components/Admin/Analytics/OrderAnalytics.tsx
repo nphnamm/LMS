@@ -98,8 +98,8 @@ const OrderAnalytics = ({ isDashboard }: Props) => {
                 analyticsData.push({ name: item.name, Count: item.count });
             });
     }
-    console.log("analyticsData", analyticsData);
-    console.log("data", data);
+    //console.log("analyticsData", analyticsData);
+    //console.log("data", data);
 
     const minValue = 0;
     return (

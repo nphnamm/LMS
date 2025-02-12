@@ -46,7 +46,7 @@ const AllCourses = (props: Props) => {
                     <>
                         <Button
                             onClick={() => {
-                                console.log(params.row.id);
+                                //console.log(params.row.id);
                                 setCourseId(params.row.id);
                                 setOpen(!open);
                             }}

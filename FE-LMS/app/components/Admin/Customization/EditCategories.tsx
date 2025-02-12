@@ -45,10 +45,10 @@ const EditCategories = (props: Props) => {
         return JSON.stringify(originalCategories) === JSON.stringify(newCategories);
     };
     const isAnyCategoryTitleEmpty = (categories: any[]) => {
-        console.log("categories", categories);
+        //console.log("categories", categories);
         return categories?.some((q) => q.title === "");
     };
-    console.log("categories", categories);
+   // console.log("categories", categories);
 
     const editCategoriesHandler = async () => {
         if (!areCategoriesUnchanged(data.layout.categories, categories) && !isAnyCategoryTitleEmpty(categories)) {

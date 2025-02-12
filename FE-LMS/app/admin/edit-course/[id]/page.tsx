@@ -11,7 +11,7 @@ const Page: React.FC = ({ params }: any) => {
     // State để quản lý trạng thái Sidebar
     const [collapsed, setCollapsed] = useState(false);
     const id = params.id;
-    console.log(id);
+    //console.log(id);
     return (
         <div>
             <AdminProtected>

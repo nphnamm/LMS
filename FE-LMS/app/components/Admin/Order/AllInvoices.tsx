@@ -19,7 +19,7 @@ const AllInvoices: FC<Props> = ({ isDashboard }) => {
     const { data: coursesData } = useGetAllCoursesQuery({});
 
     const [orderData, setOrderData] = useState<any>([]);
-    console.log("data", data);
+    //console.log("data", data);
     useEffect(() => {
         if (data) {
             const temp = data.map((item: any) => {

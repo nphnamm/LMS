@@ -16,8 +16,8 @@ const CourseInformation: FC<Props> = ({ courseInfo, setCourseInfo, active, setAc
     const { data, isLoading, refetch } = useGetHeroDataQuery("Categories", {
         refetchOnMountOrArgChange: true,
     });
-    console.log("data", data);
-    console.log("categories", categories);
+    //console.log("data", data);
+    //console.log("categories", categories);
 
     useEffect(() => {
         if (data) {

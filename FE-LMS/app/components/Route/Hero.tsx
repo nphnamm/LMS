@@ -9,7 +9,7 @@ type Props = {};
 
 const Hero = (props: Props) => {
     const { data, refetch } = useGetHeroDataQuery("Banner", {});
-    console.log("data", data);
+    //console.log("data", data);
     const { t } = useTranslation();
 
     return (

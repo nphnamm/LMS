@@ -7,7 +7,7 @@ type Props = {
 };
 
 const ReviewCard = (props: Props) => {
-    console.log("props", props);
+    //console.log("props", props);
     return (
         <div className="w-full h-max  dark:bg-slate-500 dark:bg-opacity-[0.20] border border-[#0000002B] dark:border-[#ffffff1d] backdrop-blur p-4 rounded-xl">
             <div className="flex w-full">

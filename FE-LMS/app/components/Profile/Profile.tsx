@@ -37,7 +37,7 @@ const Profile: FC<Props> = ({ user }) => {
     useEffect(() => {
         if (!isLoading && !error && data) {
             // Check for successful logout
-            console.log("Logged out successfully:", data); // Or other success handling
+            //console.log("Logged out successfully:", data); // Or other success handling
             toast.success("Logged out successfully");
         } else if (!isLoading && error) {
             // Add error handling if necessary

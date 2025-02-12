@@ -10,8 +10,8 @@ const Courses = (props: Props) => {
     useEffect(() => {
         setCourses(data?.course);
     }, [data]);
-    console.log("data", data);
-    console.log("coursess", courses);
+    //console.log("data", data);
+    //console.log("coursess", courses);
 
     return (
         <div>

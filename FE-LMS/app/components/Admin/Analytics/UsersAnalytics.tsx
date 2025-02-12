@@ -62,9 +62,9 @@ const UsersAnalytics = ({ isDashboard }: Props) => {
             data.users.last12Months.forEach((item: any) => {
                 analyticsData.push({ name: item.month, uv: item.count });
             });
-        console.log("data", data);
+        //console.log("data", data);
     }
-    console.log("analyticsData", analyticsData);
+    //console.log("analyticsData", analyticsData);
     return (
         <>
             {isLoading ? (
