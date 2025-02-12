@@ -10,13 +10,18 @@ import sendMail from "../utils/sendMail";
 import NotificationModel from "../models/notification.model";
 import ErrorHandler from "../utils/ErrorHandler";
 import { getAllOrdersService, newOrder } from "../services/order.service";
-
-
+const stripe = require('stripe')('sk_test_51PYKQtKvZ8GzQADcyjUg0RpQOM5MsxqM9jBjTzML6Yh7qeLUiOKbscvnjbTWQzgLI2EHlBnMSGe4nVmsSPvdriFW00KvZRCH83');
 //create order
 export const createOrder = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
     try {
         const {courseId,payment_info} = req.body as IOrder;
 
+        if(payment_info){
+            if("id" in payment_info){
+                const paymentIntentId = payment_info.id;
+                const paymentIntent = await stripe
+            }
+        }
         const user = await userModel.findById(req.user?._id);
 
         const courseExistUser = user?.courses.some((course:any)=> course._id.toString() === courseId);
@@ -91,3 +96,34 @@ export const getAllOrders = CatchAsyncError(async (req: Request, res: Response, 
 
     }
 });
+
+// send stripe publishble key
+export const sendStripePublishableKey = CatchAsyncError(async(req: Request, res: Response) => {
+    res.status(200).json({
+      publishablekey: process.env.STRIPE_PUBLISHABLE_KEY
+    })
+  });
+  
+  // new payment
+  export const newPayment = CatchAsyncError(async(req: Request, res: Response, next: NextFunction) => {
+    try {
+      const myPayment = await stripe.paymentIntents.create({
+        amount: req.body.amount,
+        currency: "USD",
+        metadata: {
+          company: "E-Learning",
+        },
+        automatic_payment_methods: {
+          enabled: true,
+        }
+      });
+  
+      res.status(201).json({
+        success: true,
+        client_secret: myPayment.client_secret
+      })
+  
+    } catch (error:any) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })

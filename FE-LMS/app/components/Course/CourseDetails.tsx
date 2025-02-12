@@ -72,6 +72,7 @@ const CourseDetails = ({ data }: Props) => {
                                 <CourseContentList 
                                     data={data?.courseData}
                                     isDemo={true}
+                                    activeVideo={0}
                                 />
                             </div>
                             <br />
