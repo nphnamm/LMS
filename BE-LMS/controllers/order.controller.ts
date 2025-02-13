@@ -1,4 +1,3 @@
-require('dotenv');
 import { NextFunction, Request, Response } from "express";
 import { CatchAsyncError } from "../middleware/cacthAsyncErrors";
 import OrderModel, { IOrder } from "../models/order.model";
@@ -10,7 +9,10 @@ import sendMail from "../utils/sendMail";
 import NotificationModel from "../models/notification.model";
 import ErrorHandler from "../utils/ErrorHandler";
 import { getAllOrdersService, newOrder } from "../services/order.service";
-const stripe = require('stripe')('sk_test_51PYKQtKvZ8GzQADcyjUg0RpQOM5MsxqM9jBjTzML6Yh7qeLUiOKbscvnjbTWQzgLI2EHlBnMSGe4nVmsSPvdriFW00KvZRCH83');
+import { redis } from "../utils/redis";
+
+require("dotenv").config();
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 //create order
 export const createOrder = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -19,7 +21,12 @@ export const createOrder = CatchAsyncError(async (req: Request, res: Response, n
         if(payment_info){
             if("id" in payment_info){
                 const paymentIntentId = payment_info.id;
-                const paymentIntent = await stripe
+                const paymentIntent = await stripe.paymentIntents.retrieve(
+                    paymentIntentId
+                );
+                if(paymentIntent.status !=="succeeded"){
+                    return next(new ErrorHandler("Payment not authorized",400))
+                }
             }
         }
         const user = await userModel.findById(req.user?._id);
@@ -32,7 +39,6 @@ export const createOrder = CatchAsyncError(async (req: Request, res: Response, n
         }
 
         const course = await CourseModel.findById(courseId);
-        
         if(!course){
             return next(new ErrorHandler('Course not found',404));
 
@@ -66,7 +72,8 @@ export const createOrder = CatchAsyncError(async (req: Request, res: Response, n
             
         }
         user?.courses.push(course?._id);
-        
+        await redis.set(req.user?._id,JSON.stringify(user))
+
         await user?.save();
         await NotificationModel.create({
             userId:user?._id,

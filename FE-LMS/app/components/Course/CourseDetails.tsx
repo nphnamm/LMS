@@ -2,8 +2,8 @@ import { styles } from "@/app/styles/style";
 import CoursePlayer from "@/app/utils/CoursePlayer";
 import Ratings from "@/app/utils/Ratings";
 import Link from "next/link";
-import React from "react";
-import { IoMdCheckmarkCircleOutline } from "react-icons/io";
+import React, { useState } from "react";
+import { IoMdCheckmarkCircleOutline, IoMdCloseCircleOutline } from "react-icons/io";
 import { useSelector } from "react-redux";
 import { format } from "timeago.js";
 import CourseContentList from "./CourseContentList";
@@ -15,13 +15,14 @@ type Props = {
 const CourseDetails = ({ data }: Props) => {
     const { user } = useSelector((state: any) => state.auth);
     const discountPercentenge = ((data?.estimatedPrice - data.price) / data.estimatedPrice) * 100;
-
+    const [open, setOpen] = useState(false);
     const discountPercentengePrice = discountPercentenge.toFixed(0);
     const isPurchased = user && user?.courses?.find((item: any) => item._id === data._id);
-    const handleOrder = (e: any) => {
-        //console.log("ggg");
-    };
+
     //console.log("data", data);
+    const handleOrder = (e: any) => {
+        setOpen(true);
+    };
 
     return (
         <div>
@@ -69,11 +70,7 @@ const CourseDetails = ({ data }: Props) => {
                                 <h1 className="text-[25px] font-Poppins font-[600] text-black dark:text-white">
                                     Course Overview
                                 </h1>
-                                <CourseContentList 
-                                    data={data?.courseData}
-                                    isDemo={true}
-                                    activeVideo={0}
-                                />
+                                <CourseContentList data={data?.courseData} isDemo={true} activeVideo={0} />
                             </div>
                             <br />
                             <br />
@@ -164,7 +161,7 @@ const CourseDetails = ({ data }: Props) => {
                                     </div>
                                 )}
                             </div>
-                            <br/>
+                            <br />
                             <p className="pb-1 text-black dark:text-white">* Source code included</p>
                             <p className="pb-1 text-black dark:text-white">* Full lifetime access</p>
                             <p className="pb-1 text-black dark:text-white">* Certificate of completion</p>
@@ -173,6 +170,19 @@ const CourseDetails = ({ data }: Props) => {
                     </div>
                 </div>
             </div>
+            <>
+                {open && (
+                    <div className="w-full h-screen bg-[#00000036] fixed top-0 left-0 z-50 flex items-center justify-center">
+                        <div className="w-[500px] min-h-[500px] bg-white rounded-xl shadow p-3">
+                            <IoMdCloseCircleOutline
+                                size={40}
+                                className="text-black cursor-pointer"
+                                onClick={() => setOpen(false)}
+                            />
+                        </div>
+                    </div>
+                )}
+            </>
         </div>
     );
 };
