@@ -7,12 +7,15 @@ import { IoMdCheckmarkCircleOutline, IoMdCloseCircleOutline } from "react-icons/
 import { useSelector } from "react-redux";
 import { format } from "timeago.js";
 import CourseContentList from "./CourseContentList";
-
+import { Elements } from "@stripe/react-stripe-js";
+import CheckOutForm from "../Payment/CheckOutForm";
 type Props = {
     data: any;
+    stripePromise:any;
+    clientSecret: any;
 };
 
-const CourseDetails = ({ data }: Props) => {
+const CourseDetails = ({ data,stripePromise,clientSecret  }: Props) => {
     const { user } = useSelector((state: any) => state.auth);
     const discountPercentenge = ((data?.estimatedPrice - data.price) / data.estimatedPrice) * 100;
     const [open, setOpen] = useState(false);
@@ -179,6 +182,15 @@ const CourseDetails = ({ data }: Props) => {
                                 className="text-black cursor-pointer"
                                 onClick={() => setOpen(false)}
                             />
+                            <div className="w-full">
+                                {stripePromise && clientSecret && (
+                                    <Elements stripe={stripePromise} options={{clientSecret}}>
+                                        <CheckOutForm setOpen={setOpen} data={data}/>
+
+                                    </Elements>
+
+                                )}
+                            </div>
                         </div>
                     </div>
                 )}

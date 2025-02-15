@@ -12,11 +12,9 @@ type Props = {
 };
 
 const CourseDetailsPage = ({ id }: Props) => {
-    //console.log(id);
     const [route, setRoute] = useState("Login");
     const [open, setOpen] = useState(false);
     const { data, isLoading } = useGetCourseDetailsQuery(id);
-    //console.log("data", data);
     const {data: config} = useGetStripePublishablekeyQuery({});
     const [createPaymenIntent,{data:paymentIntentData}] = useCreatePaymentIntentMutation();
     const [stripePromise, setStripePromise] = useState<any>(null);
@@ -51,7 +49,9 @@ const CourseDetailsPage = ({ id }: Props) => {
                         keywords={data?.course?.tags}
                     />
                     <Header open={open} setOpen={setOpen} activeItem={1} route={route} setRoute={setRoute} />
-                    <CourseDetails data={data.course} />
+                    {stripePromise && (
+                        <CourseDetails data={data.course} stripePromise={stripePromise} clientSecret={clientSecret}/>
+                    )}           
                 </div>
             )}
         </>
