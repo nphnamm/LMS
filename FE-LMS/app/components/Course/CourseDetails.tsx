@@ -11,21 +11,26 @@ import { Elements } from "@stripe/react-stripe-js";
 import CheckOutForm from "../Payment/CheckOutForm";
 type Props = {
     data: any;
-    stripePromise:any;
+    stripePromise: any;
     clientSecret: any;
 };
 
-const CourseDetails = ({ data,stripePromise,clientSecret  }: Props) => {
+const CourseDetails = ({ data, stripePromise, clientSecret }: Props) => {
     const { user } = useSelector((state: any) => state.auth);
     const discountPercentenge = ((data?.estimatedPrice - data.price) / data.estimatedPrice) * 100;
     const [open, setOpen] = useState(false);
     const discountPercentengePrice = discountPercentenge.toFixed(0);
     const isPurchased = user && user?.courses?.find((item: any) => item._id === data._id);
-
+    const options = {
+        // passing the client secret obtained from the server
+        clientSecret: clientSecret,
+    };
     //console.log("data", data);
     const handleOrder = (e: any) => {
         setOpen(true);
     };
+    // console.log('stripePromise',stripePromise);
+    // console.log('clientSecret',clientSecret)
 
     return (
         <div>
@@ -177,18 +182,20 @@ const CourseDetails = ({ data,stripePromise,clientSecret  }: Props) => {
                 {open && (
                     <div className="w-full h-screen bg-[#00000036] fixed top-0 left-0 z-50 flex items-center justify-center">
                         <div className="w-[500px] min-h-[500px] bg-white rounded-xl shadow p-3">
-                            <IoMdCloseCircleOutline
-                                size={40}
-                                className="text-black cursor-pointer"
-                                onClick={() => setOpen(false)}
-                            />
+                            <div
+                                className="w-full flex justify-end"
+                            >
+                                <IoMdCloseCircleOutline
+                                    size={40}
+                                    className="text-black cursor-pointer"
+                                    onClick={() => setOpen(false)}
+                                />
+                            </div>
                             <div className="w-full">
                                 {stripePromise && clientSecret && (
-                                    <Elements stripe={stripePromise} options={{clientSecret}}>
-                                        <CheckOutForm setOpen={setOpen} data={data}/>
-
+                                    <Elements stripe={stripePromise} options={options}>
+                                        <CheckOutForm setOpen={setOpen} data={data} />
                                     </Elements>
-
                                 )}
                             </div>
                         </div>

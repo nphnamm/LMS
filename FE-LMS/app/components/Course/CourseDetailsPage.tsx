@@ -17,24 +17,35 @@ const CourseDetailsPage = ({ id }: Props) => {
     const { data, isLoading } = useGetCourseDetailsQuery(id);
     const {data: config} = useGetStripePublishablekeyQuery({});
     const [createPaymenIntent,{data:paymentIntentData}] = useCreatePaymentIntentMutation();
-    const [stripePromise, setStripePromise] = useState<any>(null);
+    const [stripePromise, setStripePromise] = useState<any>("");
     const [clientSecret, setClientSecret] = useState("");
 
     useEffect(()=>{
         if(config){
-            const publishableKey = config?.publishableKey;
+            const publishableKey = config?.publishablekey;
+            console.log('config',config);
+            console.log('publishableKey',publishableKey);
+            console.log('loadStripe(publishableKey)',loadStripe(publishableKey));
+
             setStripePromise(loadStripe(publishableKey))
+            
         }
         if(data){
+            console.log('data',data.course);
+
             const amount = Math.round(data.course.price * 100);
             createPaymenIntent(amount);
         }
     },[config,data]);
     useEffect(()=>{
+
         if(paymentIntentData){
-            setClientSecret(paymentIntentData?.clientSecret);
+            setClientSecret(paymentIntentData?.client_secret);
         }
     },[paymentIntentData])
+    console.log('clientSecret',clientSecret);
+    console.log('stripePromise',stripePromise)
+
     return (
         <>
             {isLoading ? (

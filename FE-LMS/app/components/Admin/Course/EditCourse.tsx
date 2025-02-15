@@ -130,7 +130,7 @@ const EditCourse: FC<Props> = ({ id }) => {
             }
         }
     }, [isLoading, isSuccess, error]);
-    console.log("check", courseContentData);
+    // console.log("check", courseContentData);
     return (
         <div className="w-full flex min-h-screen">
             <div className="w-[80%]">

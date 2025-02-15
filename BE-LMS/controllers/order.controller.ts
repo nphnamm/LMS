@@ -17,28 +17,31 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 export const createOrder = CatchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
     try {
         const {courseId,payment_info} = req.body as IOrder;
-
+        console.log(courseId)
+        console.log(payment_info)
         if(payment_info){
             if("id" in payment_info){
                 const paymentIntentId = payment_info.id;
                 const paymentIntent = await stripe.paymentIntents.retrieve(
                     paymentIntentId
                 );
+                console.log(paymentIntent.status)
                 if(paymentIntent.status !=="succeeded"){
                     return next(new ErrorHandler("Payment not authorized",400))
                 }
             }
         }
         const user = await userModel.findById(req.user?._id);
-
+        console.log('user',user);
         const courseExistUser = user?.courses.some((course:any)=> course._id.toString() === courseId);
-
+        
         if(courseExistUser){
             return next(new ErrorHandler('You already purchased this course',400))
         
         }
 
         const course = await CourseModel.findById(courseId);
+        console.log('course',course)
         if(!course){
             return next(new ErrorHandler('Course not found',404));
 
