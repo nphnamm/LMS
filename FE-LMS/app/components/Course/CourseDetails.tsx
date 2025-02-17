@@ -2,7 +2,7 @@ import { styles } from "@/app/styles/style";
 import CoursePlayer from "@/app/utils/CoursePlayer";
 import Ratings from "@/app/utils/Ratings";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoMdCheckmarkCircleOutline, IoMdCloseCircleOutline } from "react-icons/io";
 import { useSelector } from "react-redux";
 import { format } from "timeago.js";
@@ -17,21 +17,25 @@ type Props = {
 };
 
 const CourseDetails = ({ data, stripePromise, clientSecret }: Props) => {
-    const {data:user} = useLoadUserQuery(undefined,{})
+    const { data: user } = useLoadUserQuery(undefined, {});
     const discountPercentenge = ((data?.estimatedPrice - data.price) / data.estimatedPrice) * 100;
     const [open, setOpen] = useState(false);
     const discountPercentengePrice = discountPercentenge.toFixed(0);
-    const isPurchased = user && user?.courses?.find((item: any) => item._id === data._id);
+    const [isPurchased, setIsPurchased] = useState(false);
     const options = {
         // passing the client secret obtained from the server
         clientSecret: clientSecret,
     };
-    //console.log("data", data);
     const handleOrder = (e: any) => {
         setOpen(true);
     };
     // console.log('stripePromise',stripePromise);
     // console.log('clientSecret',clientSecret)
+    useEffect(() => {
+        const isPurchased = user && user?.user?.courses?.find((item: any) => item._id === data._id);
+        console.log(isPurchased)
+        setIsPurchased(isPurchased);
+    }, [user]);
 
     return (
         <div>
@@ -183,9 +187,7 @@ const CourseDetails = ({ data, stripePromise, clientSecret }: Props) => {
                 {open && (
                     <div className="w-full h-screen bg-[#00000036] fixed top-0 left-0 z-50 flex items-center justify-center">
                         <div className="w-[500px] min-h-[500px] bg-white rounded-xl shadow p-3">
-                            <div
-                                className="w-full flex justify-end"
-                            >
+                            <div className="w-full flex justify-end">
                                 <IoMdCloseCircleOutline
                                     size={40}
                                     className="text-black cursor-pointer"

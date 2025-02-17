@@ -23,15 +23,15 @@ const CourseDetailsPage = ({ id }: Props) => {
     useEffect(()=>{
         if(config){
             const publishableKey = config?.publishablekey;
-            console.log('config',config);
-            console.log('publishableKey',publishableKey);
-            console.log('loadStripe(publishableKey)',loadStripe(publishableKey));
+           // console.log('config',config);
+            //console.log('publishableKey',publishableKey);
+            //console.log('loadStripe(publishableKey)',loadStripe(publishableKey));
 
             setStripePromise(loadStripe(publishableKey))
             
         }
         if(data){
-            console.log('data',data.course);
+           // console.log('data',data.course);
 
             const amount = Math.round(data.course.price * 100);
             createPaymenIntent(amount);
@@ -43,8 +43,8 @@ const CourseDetailsPage = ({ id }: Props) => {
             setClientSecret(paymentIntentData?.client_secret);
         }
     },[paymentIntentData])
-    console.log('clientSecret',clientSecret);
-    console.log('stripePromise',stripePromise)
+   // console.log('clientSecret',clientSecret);
+    //console.log('stripePromise',stripePromise)
 
     return (
         <>

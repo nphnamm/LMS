@@ -1,8 +1,10 @@
-import { useLoadUserQuery } from '@/redux/features/api/apiSlice';
-import React, { useEffect, useState } from "react";
+'use client'
+import CourseContent from "@/app/components/Course/CourseContent";
+import Loader from "@/app/components/Loader/Loader";
+import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 import { redirect } from "next/navigation";
-import CourseContent from '../../Course/CourseContent';
-import Loader from '../../Loader/Loader';
+import { useEffect } from "react";
+
 
 type Props = {
     params:any;
@@ -23,8 +25,8 @@ const page = ({params}: Props) => {
             }
         }
         
-    },[data,error])
-  
+    },[])
+    console.log('id',id)
     return (
     
     <>
