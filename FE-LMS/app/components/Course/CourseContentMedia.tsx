@@ -1,5 +1,6 @@
 import { styles } from "@/app/styles/style";
 import CoursePlayer from "@/app/utils/CoursePlayer";
+import Image from "next/image";
 import React, { useState } from "react";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 
@@ -8,10 +9,12 @@ type Props = {
     id: string;
     activeVideo: number;
     setActivevideo: (activeVideo: number) => void;
+    user: any;
 };
 
-const CourseContentMedia = ({ data, id, activeVideo, setActivevideo }: Props) => {
+const CourseContentMedia = ({ data, id, activeVideo, setActivevideo, user }: Props) => {
     const [activeBar, setActiveBar] = useState(0);
+    const [comment, setComment] = useState("");
     return (
         <div className="w-[95%] 800px:w-[86%] py-4 m-auto">
             <CoursePlayer title={data[activeVideo]?.title} videoUrl={data[activeVideo]?.videoUrl} />
@@ -40,7 +43,7 @@ const CourseContentMedia = ({ data, id, activeVideo, setActivevideo }: Props) =>
                 {["Overview", "Resources", "Q&A", "Reviews"].map((text, index) => (
                     <h5
                         key={index}
-                        className={`800px:text-[20px] cursor-pointer ${activeBar === index ? "text-red-500" :"text-black dark:text-white"}  `}
+                        className={`800px:text-[20px] cursor-pointer ${activeBar === index ? "text-red-500" : "text-black dark:text-white"}  `}
                         onClick={() => setActiveBar(index)}
                     >
                         {text}
@@ -50,6 +53,66 @@ const CourseContentMedia = ({ data, id, activeVideo, setActivevideo }: Props) =>
             <br />
             {activeBar === 0 && (
                 <p className="text-[18px] whitespace-pre-line mb-3">{data[activeVideo]?.description}</p>
+            )}
+            {activeBar === 1 && (
+                <div>
+                    {data[activeVideo]?.links.map((item: any, index: number) => (
+                        <div className="mb-5" key={index}>
+                            <h2 className="800px:text-[20px] 800px:inline-block dark:text-white text-black">
+                                {item.title && item.title + ":"}
+                            </h2>
+                            <a className="inline-block text-[#4395c4] 800px:text-[20px] 800px:pl-2" href={item.url}>
+                                {item.url}
+                            </a>
+                        </div>
+                    ))}
+                </div>
+            )}
+            {activeBar === 2 && (
+                <>
+                    {" "}
+                    <div className="flex w-full">
+                        <Image
+                            src={user?.avatar ? user.avatar.url : ""}
+                            width={50}
+                            height={50}
+                            alt=""
+                            className="rounded-full max-h-[50px] max-w-[50px]"
+                        />
+                        <textarea
+                            name=""
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                            id=""
+                            rows={4}
+                            cols={50}
+                            placeholder="Write your question..."
+                            className="outline-none bg-transparent ml-3 border border-[#ffffff57] 800px:w-full p-2 rounded w-[90%] 800px:text-[18px] font-Poppins"
+                        ></textarea>
+                    </div>
+                    <div className="w-full flex justify-end">
+                        <div className={`${styles.button} !w-[120px] !h-[40px] text-[18px] mt-5`}>Submit</div>
+                    </div>
+                    <br />
+                    <br />
+                    <div className="w-full h-[1px] bg-[#ffffff3b]"></div>
+                    <div>{/*comment Reply*/}</div>
+                </>
+            )}
+            {activeBar === 3 && (
+                <div className="w-full">
+                    {/*Reviews */}
+                    <div className="flex items-center">
+                        <Image
+                            src={user?.avatar ? user.avatar.url : ""}
+                            width={50}
+                            height={50}
+                            alt=""
+                            className="rounded-full max-h-[50px] max-w-[50px]"
+                        />
+                        <h2 className="800px:text-[20px] dark:text-white text-black ml-3">Your review</h2>
+                    </div>
+                </div>
             )}
         </div>
     );

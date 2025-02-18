@@ -7,9 +7,10 @@ import Header from "../Header";
 
 type Props = {
     id: string;
+    user:any;
 };
 
-const CourseContent = ({ id }: Props) => {
+const CourseContent = ({ id ,user}: Props) => {
     const { data: contentData, isLoading } = useGetCourseContentQuery(id);
     const data = contentData?.content;
     const [open, setOpen] = useState(false);
@@ -35,6 +36,7 @@ const CourseContent = ({ id }: Props) => {
                                 id={id}
                                 activeVideo={activeVideo}
                                 setActivevideo={setActiveVideo}
+                                user={user}
                             />
                         </div>
                     </div>
