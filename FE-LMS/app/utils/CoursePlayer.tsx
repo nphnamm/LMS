@@ -6,6 +6,7 @@ type Props = {
 };
 
 const CoursePlayer: FC<Props> = ({ videoUrl }) => {
+    console.log(videoUrl)
     return (
         <div style={{ paddingTop: "41%", position: "relative" }}>
             <iframe

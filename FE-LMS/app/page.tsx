@@ -10,6 +10,7 @@ import Courses from "./components/Route/Courses";
 import Reviews from "./components/Route/Reviews";
 import FAQ from "./components/FAQ/FAQ";
 import VideoUploader from "./components/Course/UploadVideo";
+import VideoUpload from "./components/Course/UploadVideo";
 
 interface Props {}
 
@@ -30,7 +31,6 @@ const Page: FC<Props> = (props) => {
             <Hero />
             <Courses />
             <Reviews />
-            <VideoUploader/>
             <FAQ />
         </div>
     );

@@ -5,6 +5,7 @@ import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { FaPencilAlt } from "react-icons/fa"; // From Font Awesome set
 import { BsLink45Deg } from "react-icons/bs";
 import toast from "react-hot-toast";
+import VideoUpload from "../../Course/UploadVideo";
 
 type Props = {
     active: number;
@@ -23,6 +24,7 @@ const CourseContent: FC<Props> = ({
 }) => {
     const [isCollapsed, setIsCollapsed] = useState(Array(courseContentData.length).fill(false));
     const [activeSection, setActiveSection] = useState(1);
+    const [isAutoUpload, setIsAutoUpload] = useState(true);
     const handleSubmit = (e: any) => {
         e.preventDefault();
     };
@@ -102,7 +104,16 @@ const CourseContent: FC<Props> = ({
             handleCourseSubmit();
         }
     };
-    // console.log('courseData', courseContentData)
+    const handleCheckboxChange = () => {
+        setIsAutoUpload(!isAutoUpload);
+    };
+    const handleVideoUpload = (index: number, videoUrl: string) => {
+        console.log('video' ,videoUrl)
+        const updatedData = [...courseContentData];
+        updatedData[index].videoUrl = videoUrl;
+        setCourseContentData(updatedData);
+    };
+    console.log('courseData', courseContentData)
     return (
         <div className="w-[80%] m-auto mt-24 p-3">
             <form className="shadow-xl ">
@@ -123,7 +134,7 @@ const CourseContent: FC<Props> = ({
                                                               item.videoSection === "Untitled Section"
                                                                   ? "w-[170px]"
                                                                   : "w-min"
-                                                          }  font-Poppins cursor-pointer dark:text-white text-black bg-transparent outline-none
+                                                          }  font-Poppins cursor-pointer dark:text-white text-black bg-transparent border border-2
                                                         `}
                                                 value={item.videoSection}
                                                 onChange={(e) => {
@@ -199,21 +210,44 @@ const CourseContent: FC<Props> = ({
                                                 }}
                                             />
                                         </div>
+                                        <div className="flex items-center gap-4 my-3">
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    checked={isAutoUpload}
+                                                    onChange={() => handleCheckboxChange()}
+                                                />{" "}
+                                                Auto Upload
+                                            </label>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    checked={!isAutoUpload}
+                                                    onChange={() => handleCheckboxChange()}
+                                                />{" "}
+                                                Embed Link
+                                            </label>
+                                        </div>
 
-                                        <div className="mb-3">
-                                            <label className={styles.label}>Video URL</label>
+                                        {isAutoUpload ? (
+                                            <VideoUpload
+                                                onUploadComplete={(videoUrl: string) =>
+                                                    handleVideoUpload(index, videoUrl)
+                                                }
+                                            />
+                                        ) : !isAutoUpload ? (
                                             <input
                                                 type="text"
-                                                placeholder="sdder"
+                                                placeholder="Enter video embed link"
                                                 className={`${styles.input}`}
                                                 value={item.videoUrl}
                                                 onChange={(e) => {
-                                                    const updateData = [...courseContentData];
-                                                    updateData[index].videoUrl = e.target.value;
-                                                    setCourseContentData(updateData);
+                                                    const updatedData = [...courseContentData];
+                                                    updatedData[index].videoUrl = e.target.value;
+                                                    setCourseContentData(updatedData);
                                                 }}
                                             />
-                                        </div>
+                                        ) : null}
 
                                         <div className="mb-3">
                                             <label className={styles.label}>Video Length (in minutes)</label>

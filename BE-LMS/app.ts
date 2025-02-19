@@ -19,7 +19,7 @@ import aiRouter from "./routes/ai.route";
 import uploadRouter from "./routes/uploadVideo.route";
 
 // body parser
-app.use(express.json({limit: "50mb"}));
+app.use(express.json({limit: "1000mb"}));
 
 
 // cookie parser

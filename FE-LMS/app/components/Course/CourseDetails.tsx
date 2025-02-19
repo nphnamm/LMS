@@ -36,7 +36,7 @@ const CourseDetails = ({ data, stripePromise, clientSecret }: Props) => {
         console.log(isPurchased)
         setIsPurchased(isPurchased);
     }, [user]);
-    
+    console.log("data",data)
     return (
         <div>
             <div className="w-[90%] 800px:w-[90%] m-auto py-5">

@@ -103,7 +103,7 @@ const CreateCourse = (props: Props) => {
             }
         }
     }, [isLoading, isSuccess, error]);
-    // console.log('check', courseData)
+     console.log('check', courseData)
     return (
         <div className="w-full flex min-h-screen">
             <div className="w-[80%]">
