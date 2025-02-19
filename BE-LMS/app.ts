@@ -16,6 +16,7 @@ import notificationRouter from "./routes/notification.route";
 import analyticsRouter from "./routes/analytics.route";
 import layoutRouter from "./routes/layout.route";
 import aiRouter from "./routes/ai.route";
+import uploadRouter from "./routes/uploadVideo.route";
 
 // body parser
 app.use(express.json({limit: "50mb"}));
@@ -43,6 +44,7 @@ app.use("/api/v1",notificationRouter)
 app.use("/api/v1",analyticsRouter)
 app.use("/api/v1",layoutRouter)
 app.use("/api/v1",aiRouter)
+app.use("/api/v1",uploadRouter)
 
 
 

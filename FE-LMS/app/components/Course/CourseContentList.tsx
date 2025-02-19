@@ -27,7 +27,7 @@ const CourseContentList: FC<Props> = (props) => {
         }
         setVisibleSections(newVisibleSections);
     };
-    console.log(props.data);
+    // console.log(props.data);
     return (
         <div className={`mt-[15px] w-full ${!props.isDemo} && 'ml-[-30px] sticky top-24 left-0 z-30'`}>
             {videoSections.map((section: string, sectionIndex: number) => {

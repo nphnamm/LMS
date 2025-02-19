@@ -221,7 +221,7 @@ const CourseContent: FC<Props> = ({
                                                 type="number"
                                                 placeholder="20"
                                                 className={`${styles.input}`}
-                                                value={item.videoUrl}
+                                                value={item.videoLength}
                                                 onChange={(e) => {
                                                     const updateData = [...courseContentData];
                                                     updateData[index].videoLength = e.target.value;

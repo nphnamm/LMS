@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {app} from './app';
 import connectDB from './utils/db';
 import {v2 as cloudinary} from 'cloudinary';
@@ -10,6 +11,9 @@ cloudinary.config({
     api_secret: process.env.CLOUD_API_SECRET,
 
 })
+
+
+
 
 
 // todo: create server
