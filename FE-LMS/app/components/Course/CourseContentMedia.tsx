@@ -5,6 +5,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { AiFillStar, AiOutlineArrowLeft, AiOutlineArrowRight, AiOutlineStar } from "react-icons/ai";
+import { format } from "timeago.js";
 
 type Props = {
     data: any;
@@ -15,15 +16,15 @@ type Props = {
     refetch: any;
 };
 
-const CourseContentMedia = ({ data, id, activeVideo, setActivevideo, user,refetch }: Props) => {
+const CourseContentMedia = ({ data, id, activeVideo, setActivevideo, user, refetch }: Props) => {
     const [activeBar, setActiveBar] = useState(0);
     const [comment, setComment] = useState("");
     const [question, setQuestion] = useState("");
     const isReviewExist = data?.review?.find((item: any) => item.user._id === user._id);
     const [rating, setRating] = useState(0);
-    const [answer,setAnswer] = useState("")
+    const [answer, setAnswer] = useState("");
     const [addNewQuestion, { isSuccess, error, isLoading: questionCreateLoading }] = useAddNewQuestionMutation();
-    const [answerId,setAnswerId] = useState("");
+    const [answerId, setAnswerId] = useState("");
     const handleQuestion = () => {
         if (question.length === 0) {
             toast.error("Question can't be empty");
@@ -43,7 +44,7 @@ const CourseContentMedia = ({ data, id, activeVideo, setActivevideo, user,refetc
                 toast.error(errorMessage.data.message);
             }
         }
-    },[isSuccess,error]);
+    }, [isSuccess, error]);
     return (
         <div className="w-[95%] 800px:w-[86%] py-4 m-auto">
             <CoursePlayer title={data[activeVideo]?.title} videoUrl={data[activeVideo]?.videoUrl} />
@@ -187,16 +188,11 @@ const CourseContentMedia = ({ data, id, activeVideo, setActivevideo, user,refetc
                                         Submit
                                     </div>
                                 </div>
-                                <br/>
-                                <br/>
-                                <div className="w-full h-[1px] bg-[#ffffff3b]">
-
-                                </div>
+                                <br />
+                                <br />
+                                <div className="w-full h-[1px] bg-[#ffffff3b]"></div>
                                 <div>
-                                    <CommentReply
-                                    
-                                    />
-
+                                    <CommentReply />
                                 </div>
                             </>
                         )}
@@ -207,21 +203,51 @@ const CourseContentMedia = ({ data, id, activeVideo, setActivevideo, user,refetc
     );
 };
 
-const CommentReply = ({
-    data,
-    activeVideo,
-    answer,
-    setAnswer,
-    handleAnswerSubmit,
-    user,
-    setAnswerId,
-}:any) =>{
-    return(
+const CommentReply = ({ data, activeVideo, answer, setAnswer, handleAnswerSubmit, user, setAnswerId }: any) => {
+    return (
         <>
             <div className="w-full my-3">
-
+                {data[activeVideo].question.map((item: any, index: any) => (
+                    <CommentItem
+                        key={index}
+                        data={data}
+                        activeVideo={activeVideo}
+                        item={item}
+                        index={index}
+                        answer={answer}
+                        setAnswer={setAnswer}
+                        handleAnswerSubmit={handleAnswerSubmit}
+                    />
+                ))}
             </div>
         </>
-    )
-}
+    );
+};
+
+const CommentItem = ({ data, activeVideo, item, answer, setAnswer, handleAnswerSubmit }: any) => {
+    console.log(item);
+    return (
+        <>
+            <div className="my-4">
+                <div className="flex mb-2">
+                    <div>
+                    <Image
+                            src={item?.user?.avatar ? item?.user.avatar.url : ""}
+                            width={50}
+                            height={50}
+                            alt=""
+                            className="rounded-full max-h-[50px] max-w-[50px]"
+                        />
+                    </div>
+
+                    <div className="pl-3 dark:text-white text-black">
+                        <h5 className="text-[20px]">{item.user.name}</h5>
+                        <p>{item?.question}</p>
+                        <small className="text-[#ffffff83]">{item.createdAt ? format(item.createdAt) : ""}</small>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+};
 export default CourseContentMedia;
