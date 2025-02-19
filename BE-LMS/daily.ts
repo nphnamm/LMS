@@ -5,6 +5,7 @@ import { CatchAsyncError } from "./middleware/cacthAsyncErrors";
 import { NextFunction, Request, Response } from "express";
 
 let upload_url: any;
+let access_token:any;
 const getUploadUrl = async (accessToken: string) => {
   try {
     const response = await axios.get(
@@ -44,7 +45,7 @@ export const getAccessToken = CatchAsyncError(
         }
       );
 
-      const accessToken = response.data.access_token;
+       accessToken = response.data.access_token;
       console.log("Access Token:", accessToken);
       const data = await axios.get(
         "https://api.dailymotion.com/file/upload",
@@ -100,3 +101,35 @@ export const createSet = CatchAsyncError(
     }
   }
 );
+export const publishVideo = CatchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { uploadUrl, title } = req.body;
+
+    if (!uploadUrl || !title) {
+        return res.status(400).json({ message: "Missing uploadUrl or title" });
+    }
+
+    try {
+        const response = await axios.post(
+            "https://api.dailymotion.com/me/videos",
+            new URLSearchParams({
+                url: uploadUrl,
+                title: title,
+                published: "true",
+            }).toString(),
+            {
+                headers: {
+                    Authorization: `Bearer ${access_token}`,
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+            }
+        );
+
+        res.json({ videoId: response.data.id, videoUrl: `https://www.dailymotion.com/video/${response.data.id}` });
+    } catch (error: any) {
+        console.error("Error publishing video:", error.response?.data || error.message);
+        res.status(500).json({ message: "Failed to publish video", error: error.response?.data || error.message });
+    }
+  }
+);
+

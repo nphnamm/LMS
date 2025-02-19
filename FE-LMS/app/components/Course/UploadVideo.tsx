@@ -4,6 +4,7 @@ import axios from "axios";
 const VideoUploader: React.FC = () => {
     const [file, setFile] = useState<File | null>(null);
     const [uploadUrl, setUploadUrl] = useState<string | null>(null);
+    const [videoUrl, setVideoUrl] = useState<string | null>(null);
     const [isUploading, setIsUploading] = useState(false);
     const [message, setMessage] = useState("");
 
@@ -47,9 +48,25 @@ const VideoUploader: React.FC = () => {
                 headers: { "Content-Type": "video/mp4" },
             });
 
-            setMessage("Upload successful!");
+            setMessage("Upload successful! Publishing video...");
+            publishVideo(url);
         } catch (error) {
             setMessage("Upload failed!");
+            setIsUploading(false);
+        }
+    };
+
+    const publishVideo = async (uploadedUrl: string) => {
+        try {
+            const response = await axios.post("http://localhost:8000/api/v1/publish-video", {
+                uploadUrl: uploadedUrl,
+                title: "My Video",
+            });
+
+            setVideoUrl(response.data.videoUrl);
+            setMessage("Video published successfully!");
+        } catch (error) {
+            setMessage("Failed to publish video!");
         } finally {
             setIsUploading(false);
         }
@@ -63,6 +80,11 @@ const VideoUploader: React.FC = () => {
                 {isUploading ? "Uploading..." : "Upload"}
             </button>
             {message && <p>{message}</p>}
+            {videoUrl && (
+                <p>
+                    Video URL: <a href={videoUrl} target="_blank" rel="noopener noreferrer">{videoUrl}</a>
+                </p>
+            )}
         </div>
     );
 };

@@ -1,6 +1,6 @@
 import express from 'express';
 import { authorizeRoles, isAuthenticated } from '../middleware/auth';
-import { getAccessToken, uploadVideoToDailymotion } from '../daily';
+import { getAccessToken, publishVideo, uploadVideoToDailymotion } from '../daily';
 const uploadRouter = express.Router();
 
 
@@ -11,6 +11,11 @@ uploadRouter.get(
 uploadRouter.post(
     '/upload-video',
     uploadVideoToDailymotion
+);
+
+uploadRouter.post(
+    '/publish-video',
+    publishVideo
 );
 
 
