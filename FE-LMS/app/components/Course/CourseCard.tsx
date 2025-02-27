@@ -6,12 +6,13 @@ import { AiOutlineUnorderedList } from "react-icons/ai";
 
 type Props = {
     item: any;
+    user: any;
     isProfile?: boolean;
     setRoute?: any;
     setOpen?: any;
 };
 
-const CourseCard: FC<Props> = ({ item, isProfile }) => {
+const CourseCard: FC<Props> = ({ item, isProfile, user }) => {
     // console.log("item", item);
     return (
         <Link href={!isProfile ? `/course/${item._id}` : `course-access/${item?._id}`}>
@@ -25,7 +26,9 @@ const CourseCard: FC<Props> = ({ item, isProfile }) => {
                     alt=""
                 />
                 <br />
-                <h1 className="font-Poppins text-[16px] text-black dark:text-[#fff] max-h-[48px] min-h-[48px]">{item?.name}</h1>
+                <h1 className="font-Poppins text-[16px] text-black dark:text-[#fff] max-h-[48px] min-h-[48px]">
+                    {item?.name}
+                </h1>
                 <div className="w-full flex items-center justify-between pt-2">
                     <Ratings rating={item?.ratings} />
                     <h5 className={`text-black dark:text-[#fff] ${isProfile && "hidden 800px:inline"}`}>

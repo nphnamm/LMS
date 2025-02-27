@@ -9,6 +9,7 @@ import ChangePassword from "./ChangePassword";
 import { sign } from "crypto";
 import toast from "react-hot-toast";
 import { useGetUsersAllCoursesQuery } from "@/redux/features/courses/coursesApi";
+import CourseCard from "../Course/CourseCard";
 type Props = {
     user: any;
 };
@@ -19,10 +20,14 @@ const Profile: FC<Props> = ({ user }) => {
     const [active, setActive] = useState(1);
     const [logout, setLogout] = useState(false);
 
-    const { data:logoutData, isLoading: logoutIsLoading, error: logoutError } = useLogOutQuery(undefined, { skip: !logout });
+    const {
+        data: logoutData,
+        isLoading: logoutIsLoading,
+        error: logoutError,
+    } = useLogOutQuery(undefined, { skip: !logout });
     const { data, isLoading } = useGetUsersAllCoursesQuery(undefined, {});
-    const [courses,setCourses] = useState([])
-    console.log('data',data)
+    const [courses, setCourses] = useState([]);
+    console.log("data", data);
     const logOutHandler = async () => {
         await signOut();
         setLogout(true);
@@ -47,18 +52,18 @@ const Profile: FC<Props> = ({ user }) => {
             console.error("Logout error:", logoutError); // Log the error for debugging
         }
     }, [logoutData, logoutIsLoading, logoutError]);
-    useEffect(()=>{
-        if(data){
+    useEffect(() => {
+        if (data) {
             const filteredcourses = user.courses
-            .map((userCourse:any)=> data.course.find((course:any)=> course._id === userCourse._id))
-            .filter((course:any)=> course !== undefined);
+                .map((userCourse: any) => data.course.find((course: any) => course._id === userCourse._id))
+                .filter((course: any) => course !== undefined);
 
             setCourses(filteredcourses);
         }
-    },[data])
+    }, [data]);
 
     return (
-        <div className="w-[100%] flex mx-auto h-[100vh]">
+        <div className="w-[100%] flex mx-auto h-[100vh] gap-12">
             <div
                 className={` w-[60px] 800px:w-[310px] h-[450px]  ${scroll ? "top-[120px]" : "top-[30px]"} 
                 dark:bg-slate-900 bg-opacity-90 border bg-white dark:border-[#ffffff1d] border-[#00000014] rounded-xl overflow-hidden shadow-sm mt-[80px] mb-[80px] sticky ${scroll ? "top-120px" : "top-[30px]"} left-[30px]`}
@@ -83,7 +88,20 @@ const Profile: FC<Props> = ({ user }) => {
             )}
             {active === 3 && (
                 <div className="w-full h-full bg-transparent mt-20">
-                    <ChangePassword />
+                    <div className="w-full pl-7 px-2 800px:px-10 800px:pl-8">
+                        <div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-2 lg:gap-[25px] xl:grid-cols-3 xl:gap-[16px]">
+                            {courses &&
+                                courses.map((item: any, index: number) => (
+                                    <CourseCard item={item} key={index} user={user} isProfile={true} />
+                                ))}
+                        </div>
+                        {courses.length === 0 && (
+                            <h1 className="text-center text-[18px] font-Poppins">
+                                {" "}
+                                You dont have any purchased courses!
+                            </h1>
+                        )}
+                    </div>
                 </div>
             )}
         </div>

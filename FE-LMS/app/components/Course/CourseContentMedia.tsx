@@ -320,7 +320,7 @@ const CourseContentMedia = ({ data, id, activeVideo, setActivevideo, user, refet
                                 <div className="w-full">
                                     {(course?.reviews && [...course.reviews].reverse())?.map(
                                         (item: any, index: number) => (
-                                            <div className="w-full my-5 dark:text-white text-black">
+                                            <div key={index} className="w-full my-5 dark:text-white text-black">
                                                 <div className="w-full flex">
                                                     <div>
                                                         <Image
@@ -371,7 +371,7 @@ const CourseContentMedia = ({ data, id, activeVideo, setActivevideo, user, refet
                                                     </div>
                                                 )}
                                                 {item.commentReplies.map((i: any, index: number) => (
-                                                    <div className="w-full flex 800px:ml-16 my-5">
+                                                    <div key={index} className="w-full flex 800px:ml-16 my-5">
                                                         <div className="w-[50px] h-[50px]">
                                                             <div className="w-[50px] h-[50px] bg-slate-600 rounded-[50px] flex items-center justify-center cursor-pointer">
                                                                 <h1 className="uppercase text-[18px]">
@@ -426,7 +426,6 @@ const CommentReply = ({ data, activeVideo, answer, setAnswer, handleAnswerSubmit
 };
 
 const CommentItem = ({ activeVideo, item, answer, setAnswer, handleAnswerSubmit, setQuestionId }: any) => {
-    console.log("item", item);
     const [replyActive, setReplyActive] = useState(false);
 
     return (
